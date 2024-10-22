@@ -12,11 +12,6 @@ def about(request):
     return render(request, 'bio_app/about.html')
 
 
-#Scenarios Analysis Page
-def scenarios_analysis(request):
-    return render(request, 'bio_app/scenarios_analysis.html')
-
-
 #Best Practices Page
 def best_practices(request):
     return render(request, 'bio_app/best_practices.html')

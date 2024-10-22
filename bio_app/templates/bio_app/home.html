@@ -1,8 +1,234 @@
-{% extends 'base.html' %}
-{% block content %}
-  <h1>Welcome to Circular Bioeconomy Smart Solution</h1>
-  <p>This is the home page</p>
-  <a href="{% url 'about' %}">About</a>
-  <a href="{% url 'best_practices' %}">Best Practices</a>
-  <a href="{% url 'faq' %}">FAQ</a>
-{% endblock %}
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Home - Circular Bioeconomy Smart Solutions | FUTURAL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Welcome to the Circular Bioeconomy Smart Solution by FUTURAL. Explore best practices, scenario analysis, and resources for sustainable regional development."
+    />
+    <img
+      alt="Logo"
+      src="https://appproject.dhiwise.com/dhiwise-logo.png?c=&v="
+      style="width: 0px; height: 0px; display: none"
+    />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/components.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/FHome.css' %}" />
+  </head>
+  <body>
+    <div class="f-home">
+      <!-- header section -->
+      <header class="header">
+        <img src="{% static 'images/img_header_logo.png' %}" alt="Headerlogo" class="header__logo" />
+        <ul class="header__menu">
+          <li>
+            <a href="#">
+              <div class="header__menu-item">
+                <p class="header__menu-link ui heading size-headingxs">Home</p>
+                <div class="header__menu-view"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <p class="ui text size-textxs">About</p>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <p class="ui text size-textxs">Scenarios Analysis</p>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <p class="ui text size-textxs">Best Practices</p>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <p class="ui text size-textxs">Contact</p>
+            </a>
+          </li>
+        </ul>
+      </header>
+      <div class="newscreenbody">
+        <!-- hero section -->
+        <div class="stackvectorfift">
+          <img src="{% static 'images/img_vector_59.svg' %}" alt="Vector Image" class="home__image" />
+          <div class="stack">
+            <div class="stack__settings">
+              <img src="{% static 'images/img_image_24.png' %}" alt="Image Twentyfour" class="stack__settings-image" />
+              <div class="stack__settings-row">
+                <button class="stack__settings-row-iconbutton ui button white_a700 size-sm fill circle">
+                  <img src="{% static 'images/img_group_1194.png' %}" />
+                </button>
+                <button class="stack__settings-row-iconbutton--settings ui button white_a700 size-sm fill circle">
+                  <img src="{% static 'images/img_settings.svg'  %}" />
+                </button>
+              </div>
+            </div>
+            <div class="stack__welcome">
+              <div class="stack__welcome-column">
+                <p class="stack__welcome-column-text--title ui text size-textxl">
+                  Welcome to<br />Circular Bioeconomy Smart Solution
+                </p>
+                <p class="stack__welcome-column-text--description ui text size-textlg">
+                  This is a text placeholder and should contain a short description of the SS.
+                </p>
+                <div class="stack__welcome-column-row">
+                  <button class="stack__welcome-column-row-button--regional ui button teal_50_02 size-xs fill round">
+                    Regionalverband Pongau
+                  </button>
+                  <button class="stack__welcome-column-row-button--explore ui button cyan_700 size-xs fill round">
+                    Explore Sankeys
+                  </button>
+                </div>
+              </div>
+            </div>
+            <img src="{% static 'images/img_vector_60.png' %}" alt="Vector Image" class="stack__image" />
+          </div>
+        </div>
+
+        <!-- explore section -->
+        <div class="columnline">
+          <div class="line"></div>
+          <div class="column-explore">
+            <p class="column-explore__title ui text size-textxl">Explore</p>
+            <div class="column-explore__list">
+              <div class="user-profile-text">
+                <p class="column-explore__title ui text size-textlg">Sankeys</p>
+              </div>
+              <div class="user-profile-text">
+                <p class="column-explore__title ui text size-textlg">Best Practices</p>
+              </div>
+              <div class="user-profile-text">
+                <p class="column-explore__title ui text size-textlg">About FUTURAL</p>
+              </div>
+              <div class="user-profile-text">
+                <p class="column-explore__title ui text size-textlg">About <br />Regionalverband<br />Pongau</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- faq section -->
+        <div class="column">
+          <div class="faq container-xs">
+            <div class="faq__divider"></div>
+            <p class="column-explore__title ui text size-textxl">Frequently Asked Questions</p>
+            <div class="faq__list">
+              <details class="case-studies-column" open>
+                <summary class="faq__item">
+                  <h1 class="ui heading size-textmd">What’s FUTURAL?</h1>
+                </summary>
+                <div class="faq__item--expanded">
+                  <p class="faq__answer ui text size-texts">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed arcu fermentum, blandit dolor sed,
+                    rhoncus libero. Etiam ut ipsum metus. Sed egestas ipsum id finibus auctor. Fusce ac pellentesque
+                    turpis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                  </p>
+                </div>
+              </details>
+              <details class="case-studies-column">
+                <summary class="faq__item">
+                  <h1 class="ui heading size-textmd">How can I use Sankeys?</h1>
+                </summary>
+                <div class="faq__item--expanded">
+                  <p class="faq__answer ui text size-texts">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed arcu fermentum, blandit dolor sed,
+                    rhoncus libero. Etiam ut ipsum metus. Sed egestas ipsum id finibus auctor. Fusce ac pellentesque
+                    turpis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                  </p>
+                </div>
+              </details>
+              <details class="case-studies-column">
+                <summary class="faq__item">
+                  <h1 class="ui heading size-textmd">Where can I find some case studies?</h1>
+                </summary>
+                <div class="faq__item--expanded">
+                  <p class="faq__answer ui text size-texts">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed arcu fermentum, blandit dolor sed,
+                    rhoncus libero. Etiam ut ipsum metus. Sed egestas ipsum id finibus auctor. Fusce ac pellentesque
+                    turpis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                  </p>
+                </div>
+              </details>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="footer">
+        <div class="footer__column">
+          <div>
+            <div class="footer__top-row">
+              <div class="footer__logo-container container-xs">
+                <img src="{% static 'images/img_logo_2.png' %}" alt="Secondary Logo" class="footer__logo" />
+                <div class="footer__navigation">
+                  <ul class="footer__nav-list">
+                    <li>
+                      <a href="Home" target="_blank" rel="noreferrer">
+                        <p class="ui text size-textxs">Home</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="About" target="_blank" rel="noreferrer">
+                        <p class="ui text size-textxs">About</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <p class="ui text size-textxs">Scenarios Analysis</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <p class="ui text size-textxs">Resources & Management</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="Support" target="_blank" rel="noreferrer">
+                        <p class="ui text size-textxs">Support</p>
+                      </a>
+                    </li>
+                  </ul>
+                  <div class="footer__social-media">
+                    <img
+                      src="{% static 'images/img_facebook.svg' %}"
+                      alt="Facebook Icon"
+                      class="footer__social-icon--facebook"
+                    />
+                    <img src="{% static 'images/img_link.svg' %}" alt="Linkedin Icon" class="footer__social-icon--facebook" />
+                    <img src="{% static 'images/img_vector.svg' %}" alt="Vector Icon" class="footer__social-icon--facebook" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="footer__bottom-row">
+              <div class="footer__info-container">
+                <p class="ui text size-textxs">2024</p>
+                <img src="{% static 'images/img_copyright.svg' %}" alt="Copyright Icon" class="footer__info-icon--copyright" />
+                <p class="ui text size-textxs">All rights reserved. Futural project</p>
+              </div>
+              <a href="#">
+                <p class="ui text size-textxs">Terms of condition</p>
+              </a>
+              <div class="footer__qr-container">
+                <img src="{% static 'images/img_qrcode.png' %}" alt="Qr Code Image" class="footer__qr-icon" />
+                <img src="{%  static 'images/img_en_fundedbytheeu_rgb_pos.png' %}" alt="Eu Logo" class="footer__eu-logo" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

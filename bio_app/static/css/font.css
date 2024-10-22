@@ -1,0 +1,43 @@
+@font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("../public/fonts/OpenSansRomanSemiBold.ttf");
+    font-family: "Open Sans";
+    font-weight: 600;
+  }
+  @font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("../public/fonts/OpenSansRomanRegular.ttf");
+    font-family: "Open Sans";
+    font-weight: 400;
+  }
+  @font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("../public/fonts/JostRomanRegular.ttf");
+    font-family: "Jost";
+    font-weight: 400;
+  }
+  @font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("../public/fonts/JostItalicExtraLight.ttf");
+    font-family: "Jost";
+    font-weight: 200;
+  }
+  @font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("../public/fonts/OpenSansRegular.ttf");
+    font-family: "Open Sans";
+    font-weight: 400;
+  }
+  @font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("../public/fonts/JostMedium.ttf");
+    font-family: "Jost";
+    font-weight: 500;
+  }
+  

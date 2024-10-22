@@ -1,0 +1,124 @@
+/*=========== TABLE OF CONTENTS ===========
+1. Button CSS
+2. Text CSS
+3. Heading CSS
+4. Container CSS
+==========================================*/
+
+/*-------------------------------------
+  1. Button CSS
+--------------------------------------*/
+.ui.button.round {
+    border-radius: var(--radius-xl);
+  }
+  
+  .ui.button.circle {
+    border-radius: 50%;
+  }
+  
+  .ui.button.size-xs {
+    height: 40px;
+    padding-left: var(--space-sm);
+    padding-right: var(--space-sm);
+    font-size: 14px;
+  }
+  
+  .ui.button.size-sm {
+    height: 52px;
+    padding-left: var(--space-xs);
+    padding-right: var(--space-xs);
+  }
+  
+  .ui.button.fill.teal_50_02 {
+    background-color: var(--teal_50_02);
+    color: var(--blue_gray_700);
+  }
+  
+  .ui.button.fill.cyan_700 {
+    background-color: var(--cyan_700);
+    color: var(--gray_200);
+  }
+  
+  .ui.button.fill.white_a700 {
+    background-color: var(--white_a700);
+  }
+  
+  .ui.button {
+    text-align: center;
+    display: flex;
+    cursor: pointer;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+  }
+  
+  /*-------------------------------------
+    2. Text CSS
+  --------------------------------------*/
+  .ui.text.size-textxs {
+    font-size: 14px;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .ui.text.size-texts {
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .ui.text.size-textlg {
+    font-size: 20px;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .ui.text.size-textxl {
+    font-size: 30px;
+    font-weight: 400;
+    font-style: normal;
+    @media only screen and (max-width: 1050px) {
+      font-size: 28px;
+    }
+  
+    @media only screen and (max-width: 550px) {
+      font-size: 26px;
+    }
+  }
+  
+  .ui.text {
+    color: var(--b_text);
+    font-family: Open Sans;
+  }
+  
+  /*-------------------------------------
+    3. Heading CSS
+  --------------------------------------*/
+  .ui.heading.size-textmd {
+    font-size: 18px;
+    font-weight: 500;
+    font-style: bold;
+  }
+  
+  .ui.heading.size-headingxs {
+    font-size: 14px;
+    font-weight: 600;
+    font-style: bold;
+  }
+  
+  .ui.heading {
+    color: var(--teal_700_01);
+    font-family: Jost;
+  }
+  
+  /*-------------------------------------
+    4. Container CSS
+  --------------------------------------*/
+  .container-xs {
+    max-width: 1200px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  

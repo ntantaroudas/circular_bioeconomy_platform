@@ -19,7 +19,12 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/font.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/components.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/FHome.css' %}" />
+
+      <!-- This allows child templates to inject their own styles -->
+      {% block head %}{% endblock %}
+
+
+
   </head>
   <body>
 

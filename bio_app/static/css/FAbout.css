@@ -1,0 +1,281 @@
+/*=========== TABLE OF CONTENTS ===========
+1. Common CSS
+2. Page CSS
+==========================================*/
+
+/*-------------------------------------
+  1. Common CSS
+--------------------------------------*/
+.stackvectorfift__column--introduct {
+    gap: var(--space-3xl);
+    display: flex;
+    width: 62%;
+    flex-direction: column;
+    align-items: start;
+    @media only screen and (max-width: 1050px) {
+      width: 100%;
+    }
+  }
+  
+  .stackvectorfift__text--description {
+    color: var(--black_900) !important;
+    font-family: Jost !important;
+    text-align: justify;
+    width: 100%;
+    line-height: 155%;
+  }
+  
+  .stackvectorfift__row--overview_one {
+    align-self: stretch;
+    display: flex;
+    padding: var(--space-md) var(--space-3xl);
+  }
+  
+  .stackvectorfift__text--overview_one {
+    color: var(--gray_800) !important;
+    font-weight: 300 !important;
+  }
+  
+  /*-------------------------------------
+    2. Page CSS
+  --------------------------------------*/
+  .columnvectorfif {
+    margin-top: 24px;
+    gap: var(--space-13xl);
+    display: flex;
+    flex-direction: column;
+    @media only screen and (max-width: 1050px) {
+      gap: 55px;
+    }
+  
+    @media only screen and (max-width: 550px) {
+      gap: 37px;
+    }
+  }
+  
+  .stackcircular {
+    height: 472px;
+    position: relative;
+  }
+  
+  .section__row {
+    height: 472px;
+    background-image: url(../images/img_group_1080.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding: 174px var(--space-11xl);
+    border-radius: var(--radius-3xl);
+    @media only screen and (max-width: 1050px) {
+      height: auto;
+      padding: var(--space-4xl);
+    }
+  }
+  
+  .section__column {
+    margin-bottom: 20px;
+    gap: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+  
+  .section__description {
+    color: var(--white_a700) !important;
+    font-family: Jost !important;
+    font-weight: 200 !important;
+    font-style: italic !important;
+  }
+  
+  .image__vectorfifty-one {
+    height: 452px;
+    width: 40%;
+    object-fit: contain;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    top: 0px;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  
+  .rowvectorfiftyo {
+    gap: var(--space-9xl);
+    display: flex;
+    align-items: start;
+    @media only screen and (max-width: 1050px) {
+      flex-direction: column;
+    }
+  }
+  
+  .stackvectorfift-1 {
+    height: 4444px;
+    margin-bottom: 334px;
+    flex: 1;
+    position: relative;
+    align-content: flex-end;
+    @media only screen and (max-width: 1050px) {
+      align-self: stretch;
+      width: 100%;
+      flex: unset;
+      height: auto;
+      padding-left: var(--space-4xl);
+      padding-right: var(--space-4xl);
+    }
+  }
+  
+  .stackvectorfift__image--vector51 {
+    height: 862px;
+    width: 82%;
+    object-fit: contain;
+    position: absolute;
+    left: 0px;
+    top: 15%;
+    margin: auto;
+  }
+  
+  .stackvectorfift__image--vector53 {
+    height: 862px;
+    margin-bottom: 862px;
+    width: 86%;
+    object-fit: contain;
+  }
+  
+  .stackvectorfift__column {
+    gap: var(--space-7xl);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    top: 0px;
+    height: max-content;
+    margin: auto;
+  }
+  
+  .stackvectorfift__column--one_one {
+    gap: 52px;
+    display: flex;
+    align-self: stretch;
+    flex-direction: column;
+    align-items: end;
+    @media only screen and (max-width: 550px) {
+      gap: 26px;
+    }
+  }
+  
+  .stackvectorfift__row--one_one {
+    background-color: var(--white_a700);
+    display: flex;
+    padding: 68px 26px;
+    border-radius: var(--radius-3xl);
+    @media only screen and (max-width: 1050px) {
+      padding-top: var(--space-4xl);
+      padding-bottom: var(--space-4xl);
+    }
+  
+    @media only screen and (max-width: 550px) {
+      padding: var(--space-4xl);
+    }
+  }
+  
+  .stackvectorfift__image--one_one {
+    height: 334px;
+    width: 100%;
+    object-fit: cover;
+    @media only screen and (max-width: 1050px) {
+      height: auto;
+    }
+  }
+  
+  .stackvectorfift__text--description-4 {
+    color: var(--black_900) !important;
+    font-family: Jost !important;
+    text-align: justify;
+    width: 62%;
+    line-height: 155%;
+    @media only screen and (max-width: 1050px) {
+      width: 100%;
+    }
+  }
+  
+  .stackvectorfift__text--description-span {
+    text-decoration: underline;
+    display: inline;
+  }
+  
+  .stackvectorfift__column--aboutfutu {
+    gap: var(--space-md);
+    width: 78%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    margin: auto;
+  }
+  
+  .stackvectorfift__text--aboutfutural {
+    color: var(--gray_700) !important;
+  }
+  
+  .stackvectorfift__button--challenges_from {
+    color: var(--b_text) !important;
+    padding-left: var(--space-3xl);
+    padding-right: var(--space-3xl);
+    font-size: 14px;
+    font-weight: 600;
+    background-color: var(--teal_50_04) !important;
+    height: 38px;
+    min-width: 262px;
+    border-radius: 8px !important;
+  }
+  
+  .stackvectorfift__text--about {
+    color: var(--gray_700) !important;
+    margin-top: 8px;
+  }
+  
+  .column-1 {
+    gap: 1768px;
+    align-self: end;
+    display: flex;
+    width: 18%;
+    flex-direction: column;
+    align-items: end;
+    @media only screen and (max-width: 1050px) {
+      align-self: auto;
+      width: 100%;
+      gap: 1326px;
+      padding-left: var(--space-4xl);
+      padding-right: var(--space-4xl);
+    }
+  
+    @media only screen and (max-width: 550px) {
+      gap: 884px;
+    }
+  }
+  
+  .column__image--vector-52 {
+    height: 862px;
+    width: 72%;
+    object-fit: contain;
+  }
+  
+  .column__image--vector-54 {
+    height: 862px;
+    object-fit: cover;
+    width: 100%;
+    @media only screen and (max-width: 1050px) {
+      height: auto;
+    }
+  }
+  

@@ -3,7 +3,7 @@
   <img src="{% static 'images/img_header_logo.png' %}" alt="Headerlogo" class="header__logo" />
   <ul class="header__menu">
     <li>
-      <a href="#">
+      <a href="{% url 'home' %}">
         <div class="header__menu-item">
           <p class="header__menu-link ui heading size-headingxs">Home</p>
           <div class="header__menu-view"></div>
@@ -11,17 +11,17 @@
       </a>
     </li>
     <li>
-      <a href="#">
+      <a href="{% url 'about' %}">
         <p class="ui text size-textxs">About</p>
       </a>
     </li>
     <li>
-      <a href="#">
+      <a href="{% url 'scenario_analysis' %}">
         <p class="ui text size-textxs">Scenarios Analysis</p>
       </a>
     </li>
     <li>
-      <a href="#">
+      <a href="{% url 'best_practices' %}">
         <p class="ui text size-textxs">Best Practices</p>
       </a>
     </li>

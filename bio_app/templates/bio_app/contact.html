@@ -1,0 +1,258 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Contact Futural - Get in Touch with Our Team</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Reach out to the Futural team for assistance, share your ideas, or provide feedback. We're here to help you with your Circular Bioeconomy queries."
+    />
+    <img
+      alt="Logo"
+      src="https://appproject.dhiwise.com/dhiwise-logo.png?c=&v="
+      style="width: 0px; height: 0px; display: none"
+    />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/components.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/FContact.css' %}" />
+  </head>
+  <body>
+    <div class="f-contact">
+      <!-- header section -->
+      <header class="header">
+        <div class="header__top-row container-xs">
+          <img src="{% static 'images/img_header_logo.png' %}" alt="Logoimage" class="header__logo" />
+          <ul class="header__menu">
+            <li>
+              <a href="#">
+                <div class="header__menu-item">
+                  <p class="header__menu-link ui heading size-headinglg">Home</p>
+                  <div class="header__menu-icon"></div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <p class="ui text size-textmd">About</p>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <p class="ui text size-textmd">Scenarios Analysis</p>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <p class="ui text size-textmd">Best Practices</p>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <p class="ui text size-textmd">Contact</p>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </header>
+
+      <!-- contact info section -->
+      <div class="row_two">
+        <div class="contact-section container-xs">
+          <div class="contact-section__content">
+            <img src="{% static 'images/img_vector_59_244x168.png' %}" alt="Image Fiftynine" class="contact-section__image" />
+            <div class="contact-section__content-row">
+              <img src="{% static 'images/img_ellipse_53.png' %}" alt="Image Row" class="contact-section__profile-image" />
+              <div class="contact-section__profile-details">
+                <img
+                  src="{% static 'images/img_ellipse_52_26x26.png' %}"
+                  alt="Image One"
+                  class="contact-section__profile-icon"
+                />
+                <div class="contact-section__info">
+                  <img src="{% static 'images/img_ellipse_54.png' %}" alt="Image Two" class="contact-section__info-image" />
+                  <div class="contact-section__info-row">
+                    <div class="contact-section__info-stack">
+                      <img
+                        src="{% static 'images/img_ellipse_55.png' %}"
+                        alt="Image Three"
+                        class="contact-section__info-icon"
+                      />
+                      <img
+                        src="{% static 'images/img_vector_63.png' %}"
+                        alt="Vector Sixtythree"
+                        class="contact-section__info-vector"
+                      />
+                      <div class="contact-section__form-stack">
+                        <div class="contact-section__form-column">
+                          <a href="#">
+                            <p class="contact-section__form-link ui text size-text5xl">Contact us</p>
+                          </a>
+                          <div class="contact-section__social-column">
+                            <div class="contact-section__feedback-column">
+                              <p class="contact-section__feedback-text ui text size-textlg">
+                                Let us know how we can help, your ideas and how we can improve
+                              </p>
+                              <div class="contact-section__input-group">
+                                <label class="contact-section__input-fullname ui input white_a700 size-xs fill round">
+                                  <input name="FullName Input" placeholder="Full Name" type="text" />
+                                </label>
+                                <label class="contact-section__input-fullname ui input white_a700 size-xs fill round">
+                                  <input name="Email Input" placeholder="Email" type="email" />
+                                </label>
+                                <textarea
+                                  class="contact-section__input-message ui textarea white_a700 size-xs taroutlinegray300 round"
+                                  name="Message TextArea"
+                                  placeholder="What’s up?"
+                                ></textarea>
+                                <button class="contact-section__submit-button ui button yellow_700 size-md fill round">
+                                  <span> Send</span>
+                                  <img src="{% static 'images/img_save.svg' %}" alt="Save" class="save" />
+                                </button>
+                              </div>
+                            </div>
+                            <div class="footer__social-container">
+                              <img
+                                src="{% static 'images/img_facebook.svg' %}"
+                                alt="Facebook Image"
+                                class="footer__social-icon--facebook"
+                              />
+                              <img
+                                src="{% static 'images/img_link.svg' %}"
+                                alt="Link Image"
+                                class="footer__social-icon--facebook"
+                              />
+                              <img
+                                src="{% static 'images/img_vector.svg' %}"
+                                alt="Triangle Image"
+                                class="footer__social-icon--facebook"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="contact-section__lock-stack">
+                          <img
+                            src="{% static 'images/img_ellipse_54_102x102.png' %}"
+                            alt="Image Four"
+                            class="contact-section__lock-image"
+                          />
+                          <img src="{% static 'images/img_lock.png' %}" alt="Lock Image" class="contact-section__lock-icon" />
+                        </div>
+                      </div>
+                    </div>
+                    <img
+                      src="{% static 'images/img_group_1205.png' %}"
+                      alt="Cloud Image"
+                      class="contact-section__cloud-image"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <img src="{% static 'images/img_vector_62.svg' %}" alt="Vector Sixtytwo" class="contact-section__vector-image" />
+        </div>
+      </div>
+      <div class="stacklineeight">
+        <div class="column_four">
+          <div class="column_two">
+            <footer class="footer-2">
+              <div>
+                <div>
+                  <div class="footer__top-row">
+                    <div class="footer__logo-container container-xs">
+                      <img src="{% static 'images/img_logo_2.png' %}" alt="Secondary Logo" class="footer__logo" />
+                      <div class="footer__nav-container">
+                        <ul class="footer__nav-list">
+                          <li>
+                            <a href="Home" target="_blank" rel="noreferrer">
+                              <p class="ui text size-textmd">Home</p>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="About" target="_blank" rel="noreferrer">
+                              <p class="ui text size-textmd">About</p>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <p class="ui text size-textmd">Scenarios Analysis</p>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <p class="ui text size-textmd">Resources & Management</p>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="Support" target="_blank" rel="noreferrer">
+                              <p class="ui text size-textmd">Support</p>
+                            </a>
+                          </li>
+                        </ul>
+                        <div class="footer__social-container">
+                          <img
+                            src="{% static 'images/img_facebook.svg' %}"
+                            alt="Facebook Icon"
+                            class="footer__social-icon--facebook"
+                          />
+                          <img
+                            src="{% static 'images/img_link.svg' %}"
+                            alt="Linkedin Icon"
+                            class="footer__social-icon--facebook"
+                          />
+                          <img
+                            src="{% static 'images/img_vector.svg' %}"
+                            alt="Twitter Icon"
+                            class="footer__social-icon--facebook"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="footer__bottom-row">
+                    <div class="footer__info-container container-xs">
+                      <div class="footer__info-zipcode">
+                        <p class="ui text size-textmd">2024</p>
+                        <img
+                          src="{% static 'images/img_copyright.svg' %}"
+                          alt="Copyright Icon"
+                          class="footer__copyright-icon"
+                        />
+                        <p class="ui text size-textmd">All rights reserved. Futural project</p>
+                      </div>
+                      <a href="#" class="terms-link-link">
+                        <p class="ui text size-textmd">Terms of condition</p>
+                      </a>
+                      <div class="footer__qr-container">
+                        <img src="{% static 'images/img_qrcode.png' %}" alt="Qr Code" class="footer__qr-code" />
+                        <img
+                          src="{% static 'images/img_en_fundedbytheeu_rgb_pos.png' %}"
+                          alt="Eu Logo"
+                          class="footer__eu-logo"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </footer>
+            <div class="columnview container-xs">
+              <div class="columnview__view"></div>
+            </div>
+          </div>
+          <div class="contact__column container-xs">
+            <img src="{% static 'images/img_group_gray_500.svg' %}" alt="Featured Image" class="contact__column__image" />
+          </div>
+        </div>
+        <img src="{% static 'images/img_en_fundedbytheeu_rgb_pos.png' %}" alt="Eu Funding Badge" class="f_contact__image" />
+      </div>
+    </div>
+  </body>
+</html>

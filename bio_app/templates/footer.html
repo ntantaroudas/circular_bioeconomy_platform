@@ -5,42 +5,42 @@
       <div class="footer__top-row">
         <div class="footer__logo-container container-xs">
           <img src="{% static 'images/img_logo_2.png' %}" alt="Secondary Logo" class="footer__logo" />
-          <div class="footer__navigation">
+          <div class="footer__nav-container">
             <ul class="footer__nav-list">
               <li>
                 <a href="Home" target="_blank" rel="noreferrer">
-                  <p class="ui text size-textxs">Home</p>
+                  <p class="ui text size-textmd">Home</p>
                 </a>
               </li>
               <li>
                 <a href="About" target="_blank" rel="noreferrer">
-                  <p class="ui text size-textxs">About</p>
+                  <p class="ui text size-textmd">About</p>
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <p class="ui text size-textxs">Scenarios Analysis</p>
+                  <p class="ui text size-textmd">Scenarios Analysis</p>
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <p class="ui text size-textxs">Resources & Management</p>
+                  <p class="ui text size-textmd">Resources & Management</p>
                 </a>
               </li>
               <li>
                 <a href="Support" target="_blank" rel="noreferrer">
-                  <p class="ui text size-textxs">Support</p>
+                  <p class="ui text size-textmd">Support</p>
                 </a>
               </li>
             </ul>
-            <div class="footer__social-media">
+            <div class="footer__social-container">
               <img
                 src="{% static 'images/img_facebook.svg' %}"
                 alt="Facebook Icon"
                 class="footer__social-icon--facebook"
               />
               <img src="{% static 'images/img_link.svg' %}" alt="Linkedin Icon" class="footer__social-icon--facebook" />
-              <img src="{% static 'images/img_vector.svg' %}" alt="Vector Icon" class="footer__social-icon--facebook" />
+              <img src="{% static 'images/img_vector.svg' %}" alt="Twitter Icon" class="footer__social-icon--facebook" />
             </div>
           </div>
         </div>
@@ -48,17 +48,19 @@
     </div>
     <div>
       <div class="footer__bottom-row">
-        <div class="footer__info-container">
-          <p class="ui text size-textxs">2024</p>
-          <img src="{% static 'images/img_copyright.svg' %}" alt="Copyright Icon" class="footer__info-icon--copyright" />
-          <p class="ui text size-textxs">All rights reserved. Futural project</p>
-        </div>
-        <a href="#">
-          <p class="ui text size-textxs">Terms of condition</p>
-        </a>
-        <div class="footer__qr-container">
-          <img src="{% static 'images/img_qrcode.png' %}" alt="Qr Code Image" class="footer__qr-icon" />
-          <img src="{%  static 'images/img_en_fundedbytheeu_rgb_pos.png' %}" alt="Eu Logo" class="footer__eu-logo" />
+        <div class="footer__info-container container-xs">
+          <div class="footer__info-zipcode">
+            <p class="ui text size-textmd">2024</p>
+            <img src="{% static 'images/img_copyright.svg' %}" alt="Copyright Icon" class="footer__copyright-icon" />
+            <p class="ui text size-textmd">All rights reserved. Futural project</p>
+          </div>
+          <a href="#" class="terms-link-link">
+            <p class="ui text size-textmd">Terms of condition</p>
+          </a>
+          <div class="footer__qr-container">
+            <img src="{% static 'images/img_qrcode.png' %}" alt="Qr Code" class="footer__qr-code" />
+            <img src="{% static 'images/img_en_fundedbytheeu_rgb_pos.png' %}" alt="Eu Logo" class="footer__eu-logo" />
+          </div>
         </div>
       </div>
     </div>

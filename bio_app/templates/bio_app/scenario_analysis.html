@@ -488,14 +488,6 @@
                 </div>
                 <div class="section__column--nonary">
                   <div class="section__stack--secondary">
-                    <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.452697041917!2d78.39076592375736!3d17.43803374982052!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb9144cdba8c47%3A0x937fe346f411a645!2sTutorials%20Point%20(India)%20Ltd.!5e0!3m2!1sen!2sin!4v1673629212535!5m2!1sen!2sin"
-                      allowfullscreen=""
-                      loading="lazy"
-                      referrerpolicy="no-referrer-when-downgrade"
-                      class="section__map"
-                    >
-                    </iframe>
                     <div class="section__stack--tertiary">
                       <div class="section__content-row--twenty-eighth">
                         <p class="best-practice-info__title ui text size-textxs">Forestry</p>
@@ -815,73 +807,9 @@
           </div>
         </div>
       </div>
-      <footer class="footer">
-        <div class="footer__column">
-          <div>
-            <div class="footer__top-row">
-              <div class="footer__logo-container container-xs">
-                <img src="{% static 'images/img_logo_2.png' %}" alt="Secondary Logo" class="footer__logo" />
-                <div class="footer__nav-container">
-                  <ul class="footer__nav-list">
-                    <li>
-                      <a href="Home" target="_blank" rel="noreferrer">
-                        <p class="ui text size-textmd">Home</p>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="About" target="_blank" rel="noreferrer">
-                        <p class="ui text size-textmd">About</p>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <p class="ui text size-textmd">Scenarios Analysis</p>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <p class="ui text size-textmd">Resources & Management</p>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="Support" target="_blank" rel="noreferrer">
-                        <p class="ui text size-textmd">Support</p>
-                      </a>
-                    </li>
-                  </ul>
-                  <div class="footer__social-container">
-                    <img
-                      src="{% static 'images/img_facebook.svg' %}"
-                      alt="Facebook Icon"
-                      class="footer__social-icon--facebook"
-                    />
-                    <img src="{% static 'images/img_link.svg' %}" alt="Linkedin Icon" class="footer__social-icon--facebook" />
-                    <img src="{% static 'images/img_vector.svg' %}" alt="Twitter Icon" class="footer__social-icon--facebook" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="footer__bottom-row">
-              <div class="footer__info-container container-xs">
-                <div class="footer__info-zipcode">
-                  <p class="ui text size-textmd">2024</p>
-                  <img src="{% static 'images/img_copyright.svg' %}" alt="Copyright Icon" class="footer__copyright-icon" />
-                  <p class="ui text size-textmd">All rights reserved. Futural project</p>
-                </div>
-                <a href="#" class="terms-link-link">
-                  <p class="ui text size-textmd">Terms of condition</p>
-                </a>
-                <div class="footer__qr-container">
-                  <img src="{% static 'images/img_qrcode.png' %}" alt="Qr Code" class="footer__qr-code" />
-                  <img src="{% static 'images/img_en_fundedbytheeu_rgb_pos.png' %}" alt="Eu Logo" class="footer__eu-logo" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
+
+      {% include "footer.html" %}
+
     </div>
   </body>
 </html>

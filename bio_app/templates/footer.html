@@ -8,27 +8,27 @@
           <div class="footer__nav-container">
             <ul class="footer__nav-list">
               <li>
-                <a href="Home" target="_blank" rel="noreferrer">
+                <a href="{% url 'home' %}" target="_blank" rel="noreferrer">
                   <p class="ui text size-textmd">Home</p>
                 </a>
               </li>
               <li>
-                <a href="About" target="_blank" rel="noreferrer">
+                <a href="{% url 'about' %}" target="_blank" rel="noreferrer">
                   <p class="ui text size-textmd">About</p>
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="{% url 'scenario_analysis' %}">
                   <p class="ui text size-textmd">Scenarios Analysis</p>
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="{% url 'best_practices' %}">
                   <p class="ui text size-textmd">Resources & Management</p>
                 </a>
               </li>
               <li>
-                <a href="Support" target="_blank" rel="noreferrer">
+                <a href="{% url 'contact' %}" target="_blank" rel="noreferrer">
                   <p class="ui text size-textmd">Support</p>
                 </a>
               </li>
@@ -54,8 +54,8 @@
             <img src="{% static 'images/img_copyright.svg' %}" alt="Copyright Icon" class="footer__copyright-icon" />
             <p class="ui text size-textmd">All rights reserved. Futural project</p>
           </div>
-          <a href="#" class="terms-link-link">
-            <p class="ui text size-textmd">Terms of condition</p>
+          <a href="https://futural-project.eu/el/privacy-policy/" class="terms-link-link">
+            <p class="ui text size-textmd">Privacy Policy</p>
           </a>
           <div class="footer__qr-container">
             <img src="{% static 'images/img_qrcode.png' %}" alt="Qr Code" class="footer__qr-code" />

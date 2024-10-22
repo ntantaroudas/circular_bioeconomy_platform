@@ -24,42 +24,8 @@
   <body>
     <div class="f-contact">
       <!-- header section -->
-      <header class="header">
-        <div class="header__top-row container-xs">
-          <img src="{% static 'images/img_header_logo.png' %}" alt="Logoimage" class="header__logo" />
-          <ul class="header__menu">
-            <li>
-              <a href="#">
-                <div class="header__menu-item">
-                  <p class="header__menu-link ui heading size-headinglg">Home</p>
-                  <div class="header__menu-icon"></div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <p class="ui text size-textmd">About</p>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <p class="ui text size-textmd">Scenarios Analysis</p>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <p class="ui text size-textmd">Best Practices</p>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <p class="ui text size-textmd">Contact</p>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </header>
-
+      {% include "navbar.html" %}
+      
       <!-- contact info section -->
       <div class="row_two">
         <div class="contact-section container-xs">

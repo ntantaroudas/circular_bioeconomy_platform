@@ -1,2 +1,36 @@
 {% load static %}
-
+<header class="header">
+    <div class="header__top-row container-xs">
+      <img src="{% static 'images/img_header_logo.png' %}" alt="Logoimage" class="header__logo" />
+      <ul class="header__menu">
+        <li>
+          <a href="{% url 'home' %}">
+            <div class="header__menu-item">
+              <p class="header__menu-link ui heading size-headinglg">Home</p>
+              <div class="header__menu-icon"></div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'about' %}">
+            <p class="ui text size-textmd">About</p>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'scenario_analysis' %}">
+            <p class="ui text size-textmd">Scenarios Analysis</p>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'best_practices' %}">
+            <p class="ui text size-textmd">Best Practices</p>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'contact' %}">
+            <p class="ui text size-textmd">Contact</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>

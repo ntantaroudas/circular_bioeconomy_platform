@@ -120,6 +120,7 @@
         <div class="section__column--nested-duodenary">
           <div class="section__aside container-xs">
             <div class="section__aside__grid">
+              {% for practice in best_practices %}
               <div class="best-practice-info">
                 <div class="best-practice-info__content">
                   <div class="best-practice-info__header">
@@ -127,19 +128,18 @@
                   </div>
                   <div class="best-practice-info__details">
                     <div class="best-practice-info__text-container">
-                      <p class="best-practice-info__title ui text size-textlg">Best Practice Title</p>
+                      <p class="best-practice-info__title ui text size-textlg">{{ practice.title }}</p>
                       <p class="best-practice-info__description ui text size-textmd">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse egestas iaculis est id
-                        laoreet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse egestas iaculis
-                        est id laoreet.
+                        {{ practice.description }}
                       </p>
                     </div>
-                    <a href="#" class="learn-more-link-link">
+                    <a href="{{ practice.link }}" target="_blank" class="learn-more-link-link">
                       <p class="best-practice-info__link ui text size-textmd">Learn more</p>
                     </a>
                   </div>
                 </div>
               </div>
+              {% endfor %}
             </div>
           </div>
         </div>

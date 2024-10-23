@@ -1,4 +1,105 @@
 {% load static %}
+
+<style>
+    /* Retain original styles while adding mobile responsiveness */
+    /* Reset body and html margin and padding */
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+    /* Sidebar styles for mobile view */
+    .sidebar {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        background-color: #01a9aa; /* Updated background color */
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px; /* To push links below the header */
+        }
+
+    .sidebar a {
+      padding: 10px 15px;
+      text-decoration: none;
+      font-size: 20px;
+      color: #fff; /* White text for better contrast */
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+      color: #f1f1f1;
+    }
+
+    .sidebar .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+    }
+
+    /* Open button for sidebar */
+    .openbtn {
+      font-size: 20px;
+      cursor: pointer;
+      background-color: transparent; /* Match the navbar */
+      color: #fff; /* Match the text color */
+      padding: 10px 15px;
+      border: none;
+    }
+
+    .openbtn:hover {
+      color: #ccc;
+    }
+
+    /* Main content */
+    .main-content {
+      transition: margin-left 0.5s;
+      padding: 20px;
+    }
+
+    /* Mobile adjustments */
+    @media screen and (max-width: 768px) {
+      .header__menu {
+        display: none; /* Hide top menu on mobile */
+      }
+
+      .openbtn {
+        display: block; /* Show hamburger button */
+      }
+
+      .main-content {
+        margin-top: 60px; /* Push down content when navbar is fixed */
+      }
+
+      .sidebar {
+        width: 250px;
+      }
+    }
+
+    /* Smooth scrolling for in-page navigation */
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+
+<!-- Sidebar navigation -->
+<div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <a href="#section1">Home</a>
+    <a href="#section2">About</a>
+    <a href="#section3">Scenarios Analysis</a>
+    <a href="#section4">Best Practices</a>
+    <a href="#section5">Contact</a>
+  </div>
+
+  <!-- Open button to toggle sidebar (visible on mobile) -->
+  <button class="openbtn" onclick="openNav()">☰</button>
+
 <header class="header">
     <div class="header__top-row container-xs">
         <img src="{% static 'images/img_header_logo.png' %}" alt="Logoimage" class="header__logo" />
@@ -35,5 +136,14 @@
     </div>
 </header>
 
-
+    <!-- Sidebar toggle JavaScript -->
+    <script>
+        function openNav() {
+          document.getElementById("mySidebar").style.width = "250px";
+        }
+  
+        function closeNav() {
+          document.getElementById("mySidebar").style.width = "0";
+        }
+      </script>
 

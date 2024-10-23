@@ -2515,8 +2515,13 @@
   margin-right: 0.5rem;
 }
 
+ /* Table header hidden by default */
+ .data-table thead {
+  display: none;
+}
+
  /* Canvas for Chart.js to make it responsive */
- .chart-container {
+ .chart-container  {
   position: relative;
   width: 100%;
   height: 400px; /* Initial height */
@@ -2524,4 +2529,20 @@
   padding-left: 5%;
   padding-right: 5%;
   box-sizing: border-box; /* Ensures padding does not affect overall width */
+}
+
+.mca-container {
+  position: relative;
+  width: 100%;
+  height: 400px;  /* Adjust this value based on your preferred height */
+  display: none;
+  padding-left: 5%;
+  padding-right: 5%;
+  box-sizing: border-box;
+}
+
+.mca-container canvas {
+  max-width: 100%;
+  height: auto;
+  padding-bottom: 5%;
 }

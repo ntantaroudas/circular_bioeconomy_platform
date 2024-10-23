@@ -29,8 +29,38 @@ const sankeyData = {
   }
 };
 
+// Function to hide the Sankey chart
+function hideSankeyChart() {
+  // Hide the Sankey chart container
+  document.querySelector('.chart-container').style.display = 'none';
+
+  // Destroy the existing chart instance if it exists
+  if (sankeyChart) {
+    sankeyChart.destroy();
+  }
+}
+
+// Function to hide the Scenarios section
+function hideScenarios() {
+  const scenariosSection = document.querySelector('.scenarios-container');
+  if (scenariosSection) {
+    scenariosSection.style.display = 'none';
+  } else {
+    console.warn('Scenarios section not found.');
+  }
+}
+
+// Function to hide MCA section
+function hideMCA() {
+  document.querySelector('.mca-container').style.display = 'none';
+}
+
 // Function to show Sankey diagram based on selected option
 function showSankeyDiagram() {
+  // Hide other sections (MCA and Scenarios)
+  hideMCA();  // Hides MCA section
+  hideScenarios();  // Hides Scenarios section
+
   // Get the selected value from the dropdown
   const selectedOption = document.getElementById('residueStream').value;
 
@@ -38,40 +68,70 @@ function showSankeyDiagram() {
   const sankeyInfo = sankeyData[selectedOption];
 
   // Display the Sankey chart container by setting display: block;
-  document.querySelector('.chart-container').style.display = 'block';
+  const chartContainer = document.querySelector('.chart-container');
+  chartContainer.style.display = 'block';  // Make container visible
 
-  // Destroy the existing chart instance if it exists
-  if (sankeyChart) {
-    sankeyChart.destroy();
-  }
+  // Delay the chart creation slightly to ensure it can properly calculate the canvas size
+  setTimeout(() => {
+    // Destroy the existing chart instance if it exists
+    if (sankeyChart) {
+      sankeyChart.destroy();
+    }
 
-  // Create the Sankey diagram
-  const ctx = document.getElementById('sankeyChart').getContext('2d');
-  sankeyChart = new Chart(ctx, {
-    type: 'sankey',
-    data: {
-      labels: sankeyInfo.labels,
-      datasets: [{
-        label: 'Flow',
-        data: sankeyInfo.data,
-        colorFrom: '#c0dfe1',
-        colorTo: '#70c5c7',
-        borderWidth: 1,
-        borderColor: '#000',
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        tooltip: {
-          callbacks: {
-            label: function(context) {
-              return `${context.raw.from} → ${context.raw.to}: ${context.raw.flow}`;
+    // Create the Sankey diagram
+    const ctx = document.getElementById('sankeyChart').getContext('2d');
+    sankeyChart = new Chart(ctx, {
+      type: 'sankey',
+      data: {
+        labels: sankeyInfo.labels,
+        datasets: [{
+          label: 'Flow',
+          data: sankeyInfo.data,
+          colorFrom: '#c0dfe1',
+          colorTo: '#70c5c7',
+          borderWidth: 1,
+          borderColor: '#000',
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return `${context.raw.from} → ${context.raw.to}: ${context.raw.flow}`;
+              }
             }
           }
         }
       }
-    }
-  });
+    });
+  }, 200); // Set a small delay (200ms) to ensure visibility before rendering
+}
+
+// Function to show the MCA diagram and hide others
+function showMCADiagram() {
+  // Hide the Sankey chart
+  hideSankeyChart();
+  
+  // Hide Scenarios section if needed
+  hideScenarios();
+
+  // Show the MCA diagram here
+  document.querySelector('.mca-container').style.display = 'block';
+
+  // Add your MCA chart generation logic here
+}
+
+// Function to show Scenarios section and hide others
+function showScenarios() {
+  // Hide the Sankey chart
+  hideSankeyChart();
+
+  // Hide MCA section
+  hideMCA();
+
+  // Show the Scenarios section (add your logic here)
+  document.querySelector('.scenarios-container').style.display = 'block';
 }

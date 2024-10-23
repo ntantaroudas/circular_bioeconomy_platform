@@ -440,3 +440,25 @@
     height: auto;
   }
 }
+/* Hide the element on screens smaller than 768px */
+@media screen and (max-width: 768px) {
+  .stackvectorfift__column--aboutfutu {
+    display: none;
+  }
+}
+
+/* Ensure equal spacing for all buttons */
+.stackvectorfift__column--aboutfutu a,
+.stackvectorfift__column--challenge-1 a {
+  display: block;
+  margin-bottom: 15px; /* Ensure all links have consistent spacing */
+}
+
+.stackvectorfift__button--challenges_from {
+  padding: 10px 20px;
+  margin-bottom: 0; /* No extra margin needed here */
+}
+
+.stackvectorfift__column--challenge-1 {
+  margin-top: 0; /* Ensure no extra top margin for inner sections */
+}

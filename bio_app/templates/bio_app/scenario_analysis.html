@@ -115,8 +115,8 @@
           <h3 class="mb-2" style="margin-top: 0;">Explore Analysis Tools</h3>  <!-- Reduced bottom margin for the heading -->
           <div class="btn-group">
             <a href="#sankey" class="btn btn-custom mr-2" onclick="showSankeyDiagram()">Sankey Diagrams</a>
-            <a href="#mca" class="btn btn-custom mr-2">MCA</a>
-            <a href="#scenarios" class="btn btn-custom">Scenarios</a>
+            <a href="#mca" class="btn btn-custom mr-2" onclick="showMCADiagram()">MCA</a>
+            <a href="#scenarios" class="btn btn-custom" onclick="showScenarios()">Scenarios</a>
           </div>
         </div>
         <!-- content analysis section -->
@@ -125,6 +125,42 @@
         <canvas id="sankeyChart"></canvas>
       </div>
 
+            <!-- MCA Analysis Sankey and Data Table (Hidden by default) -->
+          <div class="mca-container">
+            <canvas id="mcaSankeyChart"></canvas>
+            <table class="table table-striped data-table">
+              <thead>
+                <tr>
+                  <th>Source</th>
+                  <th>Target</th>
+                  <th>Unit</th>
+                  <th>Value</th>
+                  <th>Time Step</th>
+                  <th>Link Label</th>
+                </tr>
+              </thead>
+              <tbody id="mcaTableBody">
+                <!-- Table rows will be dynamically added here -->
+              </tbody>
+            </table>
+          </div>
+
+        <!-- Scenarios Analysis Container (hidden by default) -->
+        <div class="scenarios-container" style="display: none;">
+          <div class="row">
+            <div class="col-md-4">
+              <img src="{% static 'images/scenario1_option1.jpg' %}" alt="Scenario 1" class="img-fluid">
+            </div>
+            <div class="col-md-4">
+              <img src="{% static 'images/scenario2_option1.jpg' %}" alt="Scenario 2" class="img-fluid">
+            </div>
+            <div class="col-md-4">
+              <img src="{% static 'images/scenario3_option1.jpg' %}" alt="Scenario 3" class="img-fluid">
+            </div>
+          </div>
+        </div>
+
+
       </div>
 
       {% include "footer.html" %}
@@ -132,7 +168,8 @@
     </div>
     <!-- Reference the external sankey-diagram.js file -->
     <script src="{% static 'js/sankey-diagram.js' %}"></script>
-   
+    <script src="{% static 'js/mca-diagram.js' %}"></script>
+    <script src="{% static 'js/scenarios.js' %}"></script>
 
   </body>
 </html>

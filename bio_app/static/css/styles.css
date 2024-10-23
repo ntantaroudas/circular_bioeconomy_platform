@@ -647,3 +647,80 @@
     padding-right: var(--space-2xl);
   }
 }
+
+/* Ensure body takes up at least the full viewport height */
+html, body {
+  height: 100%;
+}
+
+/* Ensure the main container grows to accommodate dynamic content */
+.columnheader_logo-one {
+  min-height: 100vh; /* Ensure the container takes up at least the viewport height */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Flex-grow content area */
+.stackvectorfift-2 {
+  flex-grow: 1;
+}
+
+/* Ensure body and html take up the full viewport height */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll on small screens */
+}
+
+/* Ensure the main container grows to accommodate dynamic content */
+.columnheader_logo-one {
+  min-height: 100vh; /* Ensure the container takes up at least the viewport height */
+  display: flex;
+  flex-direction: column;
+}
+
+.stackvectorfift-2 {
+  flex-grow: 1;
+}
+
+/* Ensure footer sticks to the bottom */
+.footer {
+  flex-shrink: 0;
+  margin-top: auto; /* Ensure footer is at the bottom of the page when content is small */
+  width: 100%;
+}
+
+/* Chart and content spacing */
+.chart-container, .mca-container, .scenarios-container {
+  margin-bottom: 50px;
+  padding: 0 10%; /* Padding for mobile responsiveness */
+}
+
+/* Responsive layout for mobile */
+@media (max-width: 768px) {
+  /* Reduce padding for small screens */
+  .chart-container, .mca-container, .scenarios-container {
+    padding: 0 5%; /* Reduce padding for small devices */
+    margin-bottom: 30px; /* Adjust spacing */
+  }
+
+  /* Ensure the footer does not overlap content */
+  .footer {
+    position: static;
+    bottom: 0;
+    width: 100%;
+  }
+
+  /* Ensure images in the scenarios section are responsive */
+  .scenarios-container img {
+    width: 100%; /* Make images responsive */
+    margin-bottom: 10px; /* Add some spacing between images */
+  }
+
+  /* Ensure the page does not have unnecessary spacing or scrollbars */
+  body {
+    overflow-x: hidden;
+  }
+}
+

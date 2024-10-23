@@ -2528,6 +2528,7 @@
   display: none; /* Hide by default */
   padding-left: 5%;
   padding-right: 5%;
+  padding-bottom: 5%;
   box-sizing: border-box; /* Ensures padding does not affect overall width */
 }
 
@@ -2538,6 +2539,8 @@
   display: none;
   padding-left: 5%;
   padding-right: 5%;
+  padding-bottom: 5%;
+  margin-bottom: 800px;
   box-sizing: border-box;
 }
 
@@ -2545,4 +2548,58 @@
   max-width: 100%;
   height: auto;
   padding-bottom: 5%;
+}
+
+/* Apply padding to the entire scenarios-container */
+.scenarios-container {
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-bottom: 5%;
+  margin-bottom: 800px;
+}
+
+/* Optionally, if you want to fine-tune the text container and images, you can add: */
+.scenarios-text-container {
+  margin-bottom: 20px; /* Space between the text and images */
+}
+
+.scenarios-container img {
+  margin-bottom: 20px; /* Space between images */
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.columnheader_logo-one {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure it takes at least the full viewport height */
+}
+
+.stackvectorfift-2 {
+  flex-grow: 1; /* Allow the main content to grow and push the footer down */
+}
+
+.footer {
+  flex-shrink: 0; /* Prevent footer from shrinking or overlapping content */
+  margin-top: auto; /* Push the footer to the bottom if content is short */
+  width: 100%;
+}
+
+.mca-container {
+  min-height: 300px; /* Ensure the container takes at least 300px */
+  margin-bottom: 800px; /* Provide margin to push it away from the footer */
+}
+
+.table {
+  min-height: 100px; /* Minimum height for the table */
+}
+
+@media (max-width: 768px) {
+  .mca-container {
+    margin-bottom: 20px; /* Smaller margin on mobile */
+  }
 }

@@ -41,6 +41,14 @@ const mcaData = {
   }
 };
 
+// Text descriptions for each option
+const mcaText = {
+  'option1': "MCA Analysis for Option 1 focuses on energy conversion processes from sources A to B and C.",
+  'option2': "In Option 2, the MCA Analysis highlights the material flow between points X, Y, and Z, emphasizing the flow rates.",
+  'option3': "Option 3 MCA Analysis delves into waste management processes, with key flows between recycling and landfill."
+};
+
+
 // Function to show the MCA Sankey diagram and data table
 function showMCADiagram() {
   // Get the selected option from the dropdown
@@ -57,6 +65,9 @@ function showMCADiagram() {
   
   // Hide Scenarios section if needed
   hideScenarios();
+
+  // Update the text description in the mca-text-container
+  document.getElementById('mca-text-container').innerText = mcaText[selectedOption];
 
   // Show the MCA diagram here
   document.querySelector('.mca-container').style.display = 'block';

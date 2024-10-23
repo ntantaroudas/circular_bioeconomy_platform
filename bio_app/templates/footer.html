@@ -1,5 +1,5 @@
 {% load static %}
-<footer class="footer">
+<footer class="footer" style="padding-top: 20%;">
   <div class="footer__column">
     <div>
       <div class="footer__top-row">
@@ -66,3 +66,25 @@
     </div>
   </div>
 </footer>
+<script>
+  function adjustFooterForMobile() {
+  const footer = document.querySelector('.footer');
+  const contentHeight = document.body.offsetHeight;
+  const windowHeight = window.innerHeight;
+
+  if (contentHeight < windowHeight) {
+    footer.style.position = 'fixed';
+    footer.style.bottom = '0';
+    footer.style.width = '100%';
+  } else {
+    footer.style.position = 'static';
+  }
+}
+
+// Call this function after content is dynamically rendered
+adjustFooterForMobile();
+
+// Re-run when the window is resized
+window.addEventListener('resize', adjustFooterForMobile);
+
+</script>

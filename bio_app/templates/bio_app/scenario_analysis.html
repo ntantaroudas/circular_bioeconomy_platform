@@ -122,11 +122,16 @@
         <!-- content analysis section -->
        <!-- Chart.js canvas -->
       <div class="chart-container">
+        <div id="sankey-text-container" class="text-description mt-4 mb-4">
+        </div>
         <canvas id="sankeyChart"></canvas>
       </div>
 
             <!-- MCA Analysis Sankey and Data Table (Hidden by default) -->
           <div class="mca-container">
+            <div id="mca-text-container" class="text-description mt-4 mb-4">
+              <!-- Text will be dynamically inserted here by JavaScript -->
+            </div>
             <canvas id="mcaSankeyChart"></canvas>
             <table class="table table-striped data-table">
               <thead>
@@ -147,6 +152,9 @@
 
         <!-- Scenarios Analysis Container (hidden by default) -->
         <div class="scenarios-container" style="display: none;">
+          <div id="scenarios-text-container" class="text-description mt-4 mb-4">
+            <!-- Text will be dynamically inserted here by JavaScript -->
+          </div>
           <div class="row">
             <div class="col-md-4">
               <img src="{% static 'images/scenario1_option1.jpg' %}" alt="Scenario 1" class="img-fluid">

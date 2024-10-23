@@ -16,6 +16,13 @@ const scenariosData = {
       '{% static "images/scenario3_option3.jpg" %}'
     ]
   };
+
+  // Text descriptions for each option
+const scenariosText = {
+    'option1': "Scenario Analysis for Option 1 provides a detailed view of energy flow management with the following scenarios.",
+    'option2': "Option 2 focuses on material flow, showcasing different processes and optimizations for efficient material use.",
+    'option3': "In Option 3, the scenarios highlight waste flow and disposal mechanisms, emphasizing recycling and landfill management."
+  };
   
   // Function to hide all other sections (Sankey, MCA)
   function hideSankeyChart() {
@@ -49,6 +56,9 @@ const scenariosData = {
       img.src = scenarioImages[index];
     });
   
+    // Update the text description in the scenarios-text-container
+    document.getElementById('scenarios-text-container').innerText = scenariosText[selectedOption];
+
     // Show the Scenarios container
     scenariosContainer.style.display = 'block';
   }

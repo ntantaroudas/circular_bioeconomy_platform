@@ -29,6 +29,14 @@ const sankeyData = {
   }
 };
 
+
+// Text descriptions for each option
+const sankeyText = {
+  'option1': "This Sankey diagram represents the energy flow for Option 1. It shows the distribution from source A to targets B and C with specified flows.",
+  'option2': "Option 2 focuses on material flow, highlighting the flow of materials from X to Y and Z with the respective values of flow between these entities.",
+  'option3': "This Sankey diagram for Option 3 illustrates waste management, including the flows between recycling and landfill systems."
+};
+
 // Function to hide the Sankey chart
 function hideSankeyChart() {
   // Hide the Sankey chart container
@@ -67,9 +75,16 @@ function showSankeyDiagram() {
   // Get the corresponding Sankey data
   const sankeyInfo = sankeyData[selectedOption];
 
+  // Get the corresponding text for the selected option
+  const sankeyDescription = sankeyText[selectedOption];
+
   // Display the Sankey chart container by setting display: block;
   const chartContainer = document.querySelector('.chart-container');
   chartContainer.style.display = 'block';  // Make container visible
+
+  // Update the text description in the sankey-text-container
+  document.getElementById('sankey-text-container').innerText = sankeyDescription;
+
 
   // Delay the chart creation slightly to ensure it can properly calculate the canvas size
   setTimeout(() => {

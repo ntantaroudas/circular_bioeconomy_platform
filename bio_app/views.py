@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import BestPractice
+from django.db.models import Q  # Import Q for complex queries
 
 # Create your views here.
 #Home Page
@@ -16,10 +17,23 @@ def scenario_analysis(request):
     return render(request, 'bio_app/scenario_analysis.html')
 
 
-#Best Practices Page
+# Best Practices Page with search functionality
 def best_practices(request):
-    best_practices = BestPractice.objects.all().order_by('-created_at')  # Optional ordering by creation date
-    context = {'best_practices': best_practices}
+    query = request.GET.get('q')  # Get the search query from the request
+    if query:
+        # If there's a search query, filter the BestPractice model based on title or description
+        best_practices_list = BestPractice.objects.filter(
+            Q(title__icontains=query) | Q(description__icontains=query)
+        )
+    else:
+        # If no search query, return all BestPractice objects
+        best_practices_list = BestPractice.objects.all()
+
+    context = {
+        'best_practices': best_practices_list,
+        'query': query
+    }
+
     return render(request, 'bio_app/best_practices.html', context)
 
 

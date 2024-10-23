@@ -85,12 +85,15 @@
                                   class="section__main-stack__content-info__details-row__icon--favorite"
                                 />
                               </div>
-                              <label
-                                class="section__main-stack__content-info__details-row__search ui input white_a700 size-xs fill"
-                              >
-                                <input name="Search View" placeholder="Search" type="text" />
-                                <img src="{% static 'images/img_rewind.svg' %}" alt="Rewind" class="rewind" />
-                              </label>
+                                <!-- Search Form -->
+                                <form method="GET" action="{% url 'best_practices' %}" style="width: 100%; display: flex; align-items: center; padding-left: 10%;">
+                                  <label class="section__main-stack__content-info__details-row__search ui input white_a700 size-xs fill" style="width: 80%;">
+                                    <input type="text" name="q" placeholder="Search..." value="{{ request.GET.q|default_if_none:'' }}" style="width: 100%; padding: 10px;"/>
+                                  </label>
+                                  <button type="submit" style="background: none; border: none; padding-left: 10px;">
+                                    <img src="{% static 'images/img_rewind.svg' %}" alt="Search" class="rewind" />
+                                  </button>
+                                </form>
                               <img
                                 src="{% static 'images/img_ellipse_51.png' %}"
                                 alt="Ellipse Two Image"

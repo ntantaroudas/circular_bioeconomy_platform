@@ -22,7 +22,17 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/FScenarioAnalysisselected.css' %}" />
      <!-- Add Bootstrap CSS via CDN -->
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js Sankey Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-sankey"></script>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+     
 
+  
   </head>
   <body>
     <div class="columnheader_logo-one">
@@ -75,12 +85,12 @@
                     <div class="scenario-analysis__selection-column">
                       <p class="scenario-analysis__text ui text size-textxl">Please select a residue stream</p>
                       <select
-                        class="scenario-analysis__dropdown ui selectbox white_a700 size-sm fill"
+                      id="residueStream" class="scenario-analysis__dropdown ui selectbox white_a700 size-sm fill"
                         name="Dropdown Select"
                       >
-                        <option value="option1">Option1</option>
-                        <option value="option2">Option2</option>
-                        <option value="option3">Option3</option>
+                        <option value="option1">Option 1 - Energy Flow</option>
+                        <option value="option2">Option 2 - Material Flow</option>
+                        <option value="option3">Option 3 - Waste Flow</option>
                       </select>
                     </div>
                   </div>
@@ -104,17 +114,25 @@
         <div class="container text-center mt-0 p-0">  <!-- Removed top margin and padding -->
           <h3 class="mb-2" style="margin-top: 0;">Explore Analysis Tools</h3>  <!-- Reduced bottom margin for the heading -->
           <div class="btn-group">
-            <a href="#sankey" class="btn btn-custom mr-2">Sankey Diagrams</a>
+            <a href="#sankey" class="btn btn-custom mr-2" onclick="showSankeyDiagram()">Sankey Diagrams</a>
             <a href="#mca" class="btn btn-custom mr-2">MCA</a>
             <a href="#scenarios" class="btn btn-custom">Scenarios</a>
           </div>
         </div>
         <!-- content analysis section -->
-       
+       <!-- Chart.js canvas -->
+      <div class="chart-container">
+        <canvas id="sankeyChart"></canvas>
+      </div>
+
       </div>
 
       {% include "footer.html" %}
 
     </div>
+    <!-- Reference the external sankey-diagram.js file -->
+    <script src="{% static 'js/sankey-diagram.js' %}"></script>
+   
+
   </body>
 </html>

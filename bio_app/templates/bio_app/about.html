@@ -47,7 +47,7 @@
             <img src="{% static 'images/img_vector_51.png' %}" alt="Vector Image 51" class="stackvectorfift__image--vector51" />
             <img src="{% static 'images/img_vector_53.png' %}" alt="Vector Image 53" class="stackvectorfift__image--vector53" />
             <div class="stackvectorfift__column">
-              <div class="stackvectorfift__column--introduct">
+              <div id="introduction" class="stackvectorfift__column--introduct">
                 <p class="best-practice-info__title ui text size-text3xl">Introduction</p>
                 <p class="stackvectorfift__text--description ui text size-textxl">
                   +Nam scelerisque ligula lobortis ex finibus volutpat. Proin varius faucibus massa. Cras vel dolor est.
@@ -55,7 +55,7 @@
                   et, malesuada libero. Suspendisse vitae tortor in quam pharetra suscipit ac et neque.
                 </p>
               </div>
-              <div class="stackvectorfift__column--introduct">
+              <div id="overview" class="stackvectorfift__column--introduct">
                 <p class="best-practice-info__title ui text size-text3xl">Overview & Objectives</p>
                 <p class="stackvectorfift__text--description ui text size-textxl">
                   The Circular Bioeconomy SS designed by Alchemia aims to facilitate the transition to a circular
@@ -77,8 +77,8 @@
                   leading to reduced waste and enhanced resource efficiency in the area of Pongau.
                 </p>
               </div>
-              <div class="stackvectorfift__column--introduct">
-                <p class="best-practice-info__title ui text size-text3xl">Challenges from MAPs interaction</p>
+              <div id="challenges" class="stackvectorfift__column--introduct">
+                <p class="best-practice-info__title ui text size-text3xl">Co-creation Challenges</p>
                 <p class="stackvectorfift__text--description ui text size-textxl">
                   Specific co-creation activities have been carried out between the SS provider (Alchemia) and Pongau
                   region MAP. During these activities it was identified that a significant challenge is the language
@@ -105,7 +105,7 @@
                   evolving requirements and insights.
                 </p>
               </div>
-              <div class="stackvectorfift__column--introduct">
+              <div id="solution" class="stackvectorfift__column--introduct">
                 <p class="best-practice-info__title ui text size-text3xl">Solution Concept and Scope</p>
                 <p class="stackvectorfift__text--description ui text size-textxl">
                   In the preliminary stages of co-creation activities with the Pongau Map, an analysis of the current
@@ -123,7 +123,7 @@
                   this obstacle.
                 </p>
               </div>
-              <div class="stackvectorfift__column--one_one">
+              <div id="technology" class="stackvectorfift__column--one_one">
                 <div class="stackvectorfift__column--introduct">
                   <p class="best-practice-info__title ui text size-text3xl">Technology Specifications</p>
                   <p class="stackvectorfift__text--description ui text size-textxl">
@@ -181,7 +181,7 @@
                     economy efforts. In addition, to improve open governance in Pongau district, it is being examined
                     the possibility of setting up a dashboard as a tool on the Pongau website (</span
                   >
-                  <a href="#" class="stackvectorfift__text--description-span"> www.pongau.org</a>
+                  <a href="www.pongau.org" class="stackvectorfift__text--description-span"> www.pongau.org</a>
                   <span>
                     ). This would provide an easy way to access information, also considering data from the Pongau MAP.
                     This deployment strategy, coupled with considerations for long-term service availability and
@@ -192,23 +192,37 @@
               </div>
             </div>
             <div class="stackvectorfift__column--aboutfutu">
-              <p class="stackvectorfift__text--aboutfutural ui text size-textmd">About Futural</p>
+              <!-- Link to the Introduction section -->
+              <a href="#introduction">
+              <button class="stackvectorfift__button--challenges_from ui button teal_50_04 size-md fill">
+              Introduction
+              </button>
+              </a>
               <div class="stackvectorfift__column--challenge-1">
+              <!-- Link to the Overview & Objectives section -->
+              <a href="#overview">
                 <button class="stackvectorfift__button--challenges_from ui button teal_50_04 size-md fill">
-                  Challenges from MAPs interaction
+                Overview & Objectives
                 </button>
-                <div class="stackvectorfift__row--overview_one">
-                  <p class="stackvectorfift__text--overview_one ui text size-textmd">
-                    Challenges from MAPs interaction
-                  </p>
-                </div>
-                <div class="stackvectorfift__row--overview_one">
-                  <p class="stackvectorfift__text--overview_one ui text size-textmd">Solution Concept and Scope</p>
-                </div>
-                <div class="stackvectorfift__row--overview_one">
-                  <p class="stackvectorfift__text--overview_one ui text size-textmd">Technology Specifications</p>
-                </div>
-                <p class="stackvectorfift__text--about ui text size-textmd">About Regionalverband Pongau</p>
+              </a>
+    
+              <!-- Link to the Challenges section -->
+              <a href="#challenges">
+                <button class="stackvectorfift__button--challenges_from ui button teal_50_04 size-md fill">Co-creation Challenges 
+                </button>
+              </a>
+    
+              <!-- Link to the Solution Concept section -->
+              <a href="#solution">
+                <button class="stackvectorfift__button--challenges_from ui button teal_50_04 size-md fill">Solution Concept and Scope
+                </button>
+              </a>
+    
+              <!-- Link to the Technology Specifications section -->
+              <a href="#technology">
+                <button class="stackvectorfift__button--challenges_from ui button teal_50_04 size-md fill">Technology Specifications
+                </button>
+              </a>	
               </div>
             </div>
           </div>

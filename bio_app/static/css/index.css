@@ -74,3 +74,36 @@ textarea:focus-visible,
 select:focus-visible {
   outline: none;
 }
+
+/* Responsive adjustments for smaller screens */
+@media only screen and (max-width: 550px) {
+  body {
+    font-size: 14px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  a {
+    font-size: 14px;
+  }
+
+  ul {
+    padding-left: 20px;
+  }
+
+  input {
+    font-size: 14px;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  details > summary {
+    font-size: 16px;
+  }
+}

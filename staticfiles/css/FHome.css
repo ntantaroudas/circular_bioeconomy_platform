@@ -343,3 +343,29 @@ details[open] .faq-section__item::before {
   color: var(--blue_gray_800) !important;
   line-height: 155%;
 }
+
+/* Responsive adjustments for smaller screens */
+@media only screen and (max-width: 550px) {
+  .section__main-column-description {
+    width: 100%;
+  }
+
+  .section__top-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .columnline__list {
+    flex-direction: column;
+    gap: var(--space-4xl);
+  }
+
+  .faq-section__list {
+    margin-left: 0px;
+  }
+
+  .section__top-controls-item {
+    width: 40px;
+    height: 40px;
+  }
+}

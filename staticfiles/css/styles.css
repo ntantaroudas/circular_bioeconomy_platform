@@ -624,42 +624,26 @@
   object-fit: contain;
 }
 
-/* Add these at the bottom of your CSS */
-
-/* For screens smaller than 768px */
-@media (max-width: 768px) {
+/* Mobile responsive changes */
+@media only screen and (max-width: 550px) {
   .header__menu {
-      display: none; /* Initially hide the menu */
-      flex-direction: column;
-      position: absolute;
-      top: 60px; /* Adjust based on your header height */
-      left: 0;
-      width: 100%;
-      background-color: var(--white_a700);
-      padding: var(--space-md);
-      box-shadow: var(--shadow-xs);
-  }
-
-  .header__menu.open {
-      display: flex; /* Show when toggled */
+    flex-direction: column;
+    margin-right: 0px;
   }
 
   .header__top-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    padding-left: var(--space-2xl);
+    padding-right: var(--space-2xl);
   }
 
-  .menu-toggle {
-      display: block; /* Hamburger icon should be visible */
+  .section__image {
+    height: 100px;
+    margin: auto;
   }
 
-  .header__menu li {
-      margin: var(--space-md) 0;
+  .footer__logo-container {
+    flex-direction: column;
+    padding-left: var(--space-2xl);
+    padding-right: var(--space-2xl);
   }
-}
-
-/* Hide the toggle icon on larger screens */
-.menu-toggle {
-  display: none;
 }

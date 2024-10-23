@@ -2,12 +2,12 @@
 <header class="header">
     <div class="header__top-row container-xs">
         <img src="{% static 'images/img_header_logo.png' %}" alt="Logoimage" class="header__logo" />
-        <button class="menu-toggle" id="menuToggle">&#9776;</button> <!-- Hamburger icon -->
         <ul class="header__menu" id="navbar">
             <li>
                 <a href="{% url 'home' %}">
                     <div class="header__menu-item">
                         <p class="header__menu-link ui heading size-headinglg">Home</p>
+                        <div class="header__menu-icon"></div>
                     </div>
                 </a>
             </li>
@@ -35,55 +35,5 @@
     </div>
 </header>
 
-<style>
-  /* Basic styling */
-  .header__menu {
-      display: flex;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-  }
-
-  .header__menu li {
-      margin: 0 15px;
-  }
-
-  .menu-toggle {
-      display: none;
-      font-size: 30px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      color: #000;
-  }
-
-  /* For screens smaller than 768px */
-  @media (max-width: 768px) {
-      .header__menu {
-          display: none;
-          flex-direction: column;
-          position: absolute;
-          top: 60px; /* Adjust based on your header height */
-          left: 0;
-          width: 100%;
-          background-color: #fff;
-          padding: 10px;
-          box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-          z-index: 1;
-      }
-
-      .menu-toggle {
-          display: block;
-      }
-
-      .header__menu.open {
-          display: flex;
-      }
-
-      .header__menu li {
-          margin: 10px 0;
-      }
-  }
-</style>
 
 

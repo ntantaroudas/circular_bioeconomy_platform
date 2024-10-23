@@ -34,25 +34,13 @@
             <div class="contact-section__content-row">
               <img src="{% static 'images/img_ellipse_53.png' %}" alt="Image Row" class="contact-section__profile-image" />
               <div class="contact-section__profile-details">
-                <img
-                  src="{% static 'images/img_ellipse_52_26x26.png' %}"
-                  alt="Image One"
-                  class="contact-section__profile-icon"
-                />
+                <img src="{% static 'images/img_ellipse_52_26x26.png' %}" alt="Image One" class="contact-section__profile-icon" />
                 <div class="contact-section__info">
                   <img src="{% static 'images/img_ellipse_54.png' %}" alt="Image Two" class="contact-section__info-image" />
                   <div class="contact-section__info-row">
                     <div class="contact-section__info-stack">
-                      <img
-                        src="{% static 'images/img_ellipse_55.png' %}"
-                        alt="Image Three"
-                        class="contact-section__info-icon"
-                      />
-                      <img
-                        src="{% static 'images/img_vector_63.png' %}"
-                        alt="Vector Sixtythree"
-                        class="contact-section__info-vector"
-                      />
+                      <img src="{% static 'images/img_ellipse_55.png' %}" alt="Image Three" class="contact-section__info-icon" />
+                      <img src="{% static 'images/img_vector_63.png' %}" alt="Vector Sixtythree" class="contact-section__info-vector" />
                       <div class="contact-section__form-stack">
                         <div class="contact-section__form-column">
                           <a href="#">
@@ -63,58 +51,42 @@
                               <p class="contact-section__feedback-text ui text size-textlg">
                                 Let us know how we can help, your ideas and how we can improve
                               </p>
-                              <div class="contact-section__input-group">
-                                <label class="contact-section__input-fullname ui input white_a700 size-xs fill round">
-                                  <input name="FullName Input" placeholder="Full Name" type="text" />
-                                </label>
-                                <label class="contact-section__input-fullname ui input white_a700 size-xs fill round">
-                                  <input name="Email Input" placeholder="Email" type="email" />
-                                </label>
-                                <textarea
-                                  class="contact-section__input-message ui textarea white_a700 size-xs taroutlinegray300 round"
-                                  name="Message TextArea"
-                                  placeholder="What’s up?"
-                                ></textarea>
-                                <button class="contact-section__submit-button ui button yellow_700 size-md fill round">
-                                  <span> Send</span>
-                                  <img src="{% static 'images/img_save.svg' %}" alt="Save" class="save" />
-                                </button>
-                              </div>
+                              <form method="POST" action="{% url 'contact' %}">
+                                {% csrf_token %}
+                                <div class="contact-section__input-group">
+                                  <label class="contact-section__input-fullname ui input white_a700 size-xs fill round">
+                                    <input name="full_name" placeholder="Full Name" type="text" required />
+                                  </label>
+                                  <label class="contact-section__input-fullname ui input white_a700 size-xs fill round">
+                                    <input name="email" placeholder="Email" type="email" required />
+                                  </label>
+                                  <textarea
+                                    class="contact-section__input-message ui textarea white_a700 size-xs taroutlinegray300 round"
+                                    name="message"
+                                    placeholder="What’s up?"
+                                    required
+                                  ></textarea>
+                                  <button type="submit" class="contact-section__submit-button ui button yellow_700 size-md fill round">
+                                    <span>Send</span>
+                                    <img src="{% static 'images/img_save.svg' %}" alt="Save" class="save" />
+                                  </button>
+                                </div>
+                              </form>
                             </div>
                             <div class="footer__social-container">
-                              <img
-                                src="{% static 'images/img_facebook.svg' %}"
-                                alt="Facebook Image"
-                                class="footer__social-icon--facebook"
-                              />
-                              <img
-                                src="{% static 'images/img_link.svg' %}"
-                                alt="Link Image"
-                                class="footer__social-icon--facebook"
-                              />
-                              <img
-                                src="{% static 'images/img_vector.svg' %}"
-                                alt="Triangle Image"
-                                class="footer__social-icon--facebook"
-                              />
+                              <img src="{% static 'images/img_facebook.svg' %}" alt="Facebook Image" class="footer__social-icon--facebook" />
+                              <img src="{% static 'images/img_link.svg' %}" alt="Link Image" class="footer__social-icon--facebook" />
+                              <img src="{% static 'images/img_vector.svg' %}" alt="Triangle Image" class="footer__social-icon--facebook" />
                             </div>
                           </div>
                         </div>
                         <div class="contact-section__lock-stack">
-                          <img
-                            src="{% static 'images/img_ellipse_54_102x102.png' %}"
-                            alt="Image Four"
-                            class="contact-section__lock-image"
-                          />
+                          <img src="{% static 'images/img_ellipse_54_102x102.png' %}" alt="Image Four" class="contact-section__lock-image" />
                           <img src="{% static 'images/img_lock.png' %}" alt="Lock Image" class="contact-section__lock-icon" />
                         </div>
                       </div>
                     </div>
-                    <img
-                      src="{% static 'images/img_group_1205.png' %}"
-                      alt="Cloud Image"
-                      class="contact-section__cloud-image"
-                    />
+                    <img src="{% static 'images/img_group_1205.png' %}" alt="Cloud Image" class="contact-section__cloud-image" />
                   </div>
                 </div>
               </div>
@@ -123,6 +95,14 @@
           <img src="{% static 'images/img_vector_62.svg' %}" alt="Vector Sixtytwo" class="contact-section__vector-image" />
         </div>
       </div>
+      {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
 
             {% include "footer.html" %}
 

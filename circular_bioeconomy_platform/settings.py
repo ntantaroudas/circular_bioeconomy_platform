@@ -27,6 +27,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'your_email@gmail.com'  # Your Gmail address
+EMAIL_HOST_PASSWORD = 'your_email_password'  # Your Gmail app-specific password
+DEFAULT_FROM_EMAIL = 'your_email@gmail.com'
 
 # Application definition
 
@@ -51,6 +58,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'circular_bioeconomy_platform.urls'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 TEMPLATES = [
     {

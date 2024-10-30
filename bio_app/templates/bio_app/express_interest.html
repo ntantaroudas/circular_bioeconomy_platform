@@ -1,0 +1,126 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Express Interest</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<style>
+    /* Card Header Styling */
+    .card-header {
+        background-color: #C1E0E2 !important;
+        border-top: 4px solid #C1E0E2;
+        color: #ffffff;
+    }
+
+    /* Center and Size Form Elements */
+    .form-group {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    /* Form Input Styling */
+    .form-control {
+        border: 2px solid #C1E0E2 !important;
+        border-radius: 5px;
+        padding: 8px;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .form-control:focus {
+        border-color: #78a1a9 !important;
+        box-shadow: 0 0 5px rgba(193, 224, 226, 0.8);
+    }
+
+    /* Submit Button Styling */
+    .btn-submit {
+        background-color: #FAD7A0;
+        border-color: #FAD7A0;
+        color: #333;
+        font-size: 1rem;
+        font-weight: bold;
+        max-width: 200px;
+        margin: 1rem auto;
+    }
+
+    .btn-submit:hover {
+        background-color: #f5c27a;
+    }
+
+
+       /* Restore border and padding for input fields */
+       input[type="text"], input[type="email"], textarea, select {
+        border: 2px solid #C1E0E2 !important;
+        padding: 10px !important;
+        border-radius: 5px !important;
+        background-color: #fff;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #333;
+    }
+
+    input[type="text"]:focus, input[type="email"]:focus, textarea:focus, select:focus {
+        border-color: #78a1a9 !important;
+        box-shadow: 0 0 5px rgba(193, 224, 226, 0.8) !important;
+    }
+    
+</style>
+
+<body>
+<div class="f-home">
+    {% include "navbar.html" %}
+    
+    <div class="container mt-5">
+        <div class="card shadow-lg">
+            <div class="card-header text-center">
+                <h2>Express Interest in {{ building.name }}</h2>
+            </div>
+            <div class="card-body">
+                <form method="post" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ form.as_p }}
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-submit btn-block">Submit Interest</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% include "footer.html" %}
+</div>
+
+<!-- Optional JavaScript for Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Add form validation for mobile users -->
+<script>
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            var forms = document.getElementsByClassName('needs-validation');
+            Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+</body>
+</html>

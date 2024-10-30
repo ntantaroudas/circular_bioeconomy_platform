@@ -1,9 +1,12 @@
-from django.shortcuts import render, redirect
-from .models import BestPractice
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import BestPractice, VacantBuilding, Interest
 from django.db.models import Q  # Import Q for complex queries
 from django.core.mail import EmailMessage
 from django.contrib import messages  # For showing success messages
 from django.core.paginator import Paginator
+from .forms import InterestForm
+
+
 
 # Create your views here.
 #Home Page
@@ -22,7 +25,14 @@ def scenario_analysis(request):
 
 # Vacant Buildings Page
 def vacant_buildings(request):
-    return render(request, 'bio_app/vacant_buildings.html' )
+    query = request.GET.get('search', '')
+    if query:
+        vacant_buildings = VacantBuilding.objects.filter(name__icontains=query)
+    else:
+        vacant_buildings = VacantBuilding.objects.all()
+    context = {'vacant_buildings': vacant_buildings, 'query': query}
+    return render(request, 'bio_app/vacant_buildings.html', context)
+
 
 # Best Practices Page with search and pagination functionality
 def best_practices(request):
@@ -81,3 +91,19 @@ def contact(request):
     return render(request, 'bio_app/contact.html')
 
 
+#Express Interest View
+def express_interest(request, building_id):
+    building = get_object_or_404(VacantBuilding, id=building_id)
+    if request.method == 'POST':
+        form = InterestForm(request.POST)
+        if form.is_valid():
+            Interest.objects.create(
+                building=building,
+                name=form.cleaned_data['name'],
+                email=form.cleaned_data['email'],
+                message=form.cleaned_data['message']
+            )
+            return redirect('vacant_buildings')
+    else:
+        form = InterestForm()
+    return render(request, 'bio_app/express_interest.html', {'form': form, 'building': building})

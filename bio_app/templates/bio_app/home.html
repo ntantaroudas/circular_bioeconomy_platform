@@ -54,10 +54,10 @@
                     This is a text placeholder and should contain a short description of the SS.
                   </p>
                   <div class="section__main-column-actions">
-                    <button class="section__main-column-actions-button ui button teal_50_05 size-sm fill">
+                    <button onclick="window.location.href='{% url 'about' %}'" class="section__main-column-actions-button ui button teal_50_05 size-sm fill">
                       Regionalverband Pongau
                     </button>
-                    <button class="section__main-column-actions-button--explore ui button cyan_700_01 size-sm fill">
+                    <button  onclick="window.location.href='{% url 'scenario_analysis' %}'"  class="section__main-column-actions-button--explore ui button cyan_700_01 size-sm fill">
                       Explore Sankeys
                     </button>
                   </div>
@@ -76,21 +76,30 @@
               <p class="faq-section__title ui text size-text5xl">Explore</p>
               <div class="columnline__list">
                 <div class="user-profile-header">
-                  <p class="faq-section__title ui text size-text2xl">Sankeys</p>
+                  <a href="{% url 'scenario_analysis' %}">
+                    <p class="faq-section__title ui text size-text2xl">Sankeys</p>
+                  </a>
                 </div>
                 <div class="user-profile-header">
-                  <p class="faq-section__title ui text size-text2xl">Best Practices</p>
+                  <a href="{% url 'best_practices' %}">
+                    <p class="faq-section__title ui text size-text2xl">Best Practices</p>
+                  </a>
                 </div>
                 <div class="user-profile-header">
-                  <p class="faq-section__title ui text size-text2xl">About FUTURAL</p>
+                  <a href="https://futural-project.eu/" target="_blank" rel="noopener noreferrer">
+                    <p class="faq-section__title ui text size-text2xl">About FUTURAL</p>
+                  </a>
                 </div>
                 <div class="user-profile-header">
-                  <p class="faq-section__title ui text size-text2xl">About <br />Regionalverband<br />Pongau</p>
+                  <a href="{% url 'about' %}">
+                    <p class="faq-section__title ui text size-text2xl">About <br />Regionalverband<br />Pongau</p>
+                  </a>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        
 
         <!-- faq section -->
         <div class="column_one">

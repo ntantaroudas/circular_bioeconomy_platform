@@ -1,146 +1,104 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8" />
-    <title>Welcome to Circular Bioeconomy Smart Solution - Home</title>
+    <title>Vacant Buildings - Circular Bioeconomy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Explore the home of Circular Bioeconomy Smart Solution. Learn about Futural, Sankeys, best practices, and regional case studies in the Pongau area."
-    />
-    <img
-      alt="Logo"
-      src="https://appproject.dhiwise.com/dhiwise-logo.png?c=&v="
-      style="width: 0px; height: 0px; display: none"
-    />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/font.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/components.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/FHome.css' %}" />
-  </head>
-  <body>
-    <div class="f-home">
-      <!-- header section -->
-      
-      {% include "navbar.html" %}
-      
-      <div class="newscreenbody">
-        <!-- hero section -->
-        <div class="stackvectorfift">
-          <img src="{% static 'images/img_vector_59.svg' %}" alt="Vector Image" class="image" />
-          <div class="section container-xs">
-            <div class="section__content">
-              <div class="section__top">
-                <img src="{% static 'images/img_image_24.png' %}" alt="Profile Image" class="section__top-image" />
-                <div class="section__top-controls">
-                  <button class="section__top-controls-item ui button white_a700 size-lg fill circle">
-                    <img src="{% static 'images/img_group_1194.png' %}" />
-                  </button>
-                  <button class="section__top-controls-item--settings ui button white_a700 size-lg fill circle">
-                    <img src="{% static 'images/img_settings.svg' %}" />
-                  </button>
-                </div>
-              </div>
-              <div class="section__main">
-                <div class="section__main-column">
-                  <p class="section__main-column-title ui text size-text5xl">
-                    Welcome to<br />Circular Bioeconomy Smart Solution
-                  </p>
-                  <p class="section__main-column-description ui text size-text2xl">
-                    This is a text placeholder and should contain a short description of the SS.
-                  </p>
-                  <div class="section__main-column-actions">
-                    <button class="section__main-column-actions-button ui button teal_50_05 size-sm fill">
-                      Regionalverband Pongau
-                    </button>
-                    <button class="section__main-column-actions-button--explore ui button cyan_700_01 size-sm fill">
-                      Explore Sankeys
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <img src="{% static 'images/img_vector_60.png' %}" alt="Footer Image" class="section__image" />
-            </div>
-          </div>
-        </div>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        @media only screen and (max-width: 768px) {
+            .table thead {
+                display: none;
+            }
+            .table, .table tr, .table td {
+                display: block;
+                width: 100%;
+                text-align: center; /* Center-aligns text */
+            }
+            .table td {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 10px 5px;
+                border: 1px solid #ddd;
+            }
+            .table td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                text-transform: uppercase;
+                color: #333;
+                ;
+                margin-right: 10px;
+            }
+            .form-inline {
+                display: flex;
+                flex-direction: column;
+            }
+            .form-inline .form-control, .form-inline .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="f-home">
+    {% include "navbar.html" %}
 
-        <!-- explore section -->
-        <div class="column">
-          <div class="columnline container-xs">
-            <div class="columnline__separator"></div>
-            <div class="columnline__content">
-              <p class="faq-section__title ui text size-text5xl">Explore</p>
-              <div class="columnline__list">
-                <div class="user-profile-header">
-                  <p class="faq-section__title ui text size-text2xl">Sankeys</p>
-                </div>
-                <div class="user-profile-header">
-                  <p class="faq-section__title ui text size-text2xl">Best Practices</p>
-                </div>
-                <div class="user-profile-header">
-                  <p class="faq-section__title ui text size-text2xl">About FUTURAL</p>
-                </div>
-                <div class="user-profile-header">
-                  <p class="faq-section__title ui text size-text2xl">About <br />Regionalverband<br />Pongau</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="container mt-5">
+        <h1 class="mb-4">Vacant Buildings</h1>
 
-        <!-- faq section -->
-        <div class="column_one">
-          <div class="columnline container-xs">
-            <div class="faq-section__divider"></div>
-            <p class="faq-section__title ui text size-text5xl">Frequently Asked Questions</p>
-            <div class="faq-section__list">
-              <details class="case-studies-column" open>
-                <summary class="faq-section__item">
-                  <p class="faq-section__question ui text size-textxl">What’s FUTURAL?</p>
-                </summary>
-                <div class="faq-section__description-container">
-                  <p class="faq-section__description ui text size-textlg">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed arcu fermentum, blandit dolor sed,
-                    rhoncus libero. Etiam ut ipsum metus. Sed egestas ipsum id finibus auctor. Fusce ac pellentesque
-                    turpis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                  </p>
-                </div>
-              </details>
-              <details class="case-studies-column">
-                <summary class="faq-section__item">
-                  <p class="faq-section__question ui text size-textxl">How can I use Sankeys?</p>
-                </summary>
-                <div class="faq-section__description-container">
-                  <p class="faq-section__description ui text size-textlg">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed arcu fermentum, blandit dolor sed,
-                    rhoncus libero. Etiam ut ipsum metus. Sed egestas ipsum id finibus auctor. Fusce ac pellentesque
-                    turpis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                  </p>
-                </div>
-              </details>
-              <details class="case-studies-column">
-                <summary class="faq-section__item">
-                  <p class="faq-section__question ui text size-textxl">Where can I find some case studies?</p>
-                </summary>
-                <div class="faq-section__description-container">
-                  <p class="faq-section__description ui text size-textlg">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed arcu fermentum, blandit dolor sed,
-                    rhoncus libero. Etiam ut ipsum metus. Sed egestas ipsum id finibus auctor. Fusce ac pellentesque
-                    turpis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                  </p>
-                </div>
-              </details>
-            </div>
-          </div>
-        </div>
-      </div>
+        <!-- Search Bar -->
+        <form method="get" action="{% url 'vacant_buildings' %}" class="form-inline mb-4">
+            <input type="text" name="search" class="form-control mr-2" placeholder="Search buildings..." value="{{ query }}">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
 
-      {% include "footer.html" %}
-
-
+        <!-- Vacant Buildings Table -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Area (sq ft)</th>
+                    <th>Available From</th>
+                    <th>Construction Year</th>
+                    <th>Floor Number</th>
+                    <th>Suggested Purpose</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for building in vacant_buildings %}
+                <tr class="building-row">
+                    <td data-label="Name">{{ building.name }}</td>
+                    <td data-label="Address">{{ building.address }}</td>
+                    <td data-label="Area (sq ft)">{{ building.area_sq_ft }}</td>
+                    <td data-label="Available From">{{ building.available_from }}</td>
+                    <td data-label="Construction Year">{{ building.year }}</td>
+                    <td data-label="Floor Number">{{ building.floor }}</td>
+                    <td data-label="Suggested Purpose">{{ building.proposed_purpose }}</td>
+                    <td data-label="Action">
+                        <a href="{% url 'express_interest' building.id %}" class="btn btn-outline-primary btn-sm">
+                            Express Interest
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" class="text-center">No buildings found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-  </body>
+
+    {% include "footer.html" %}
+</div>
+</body>
 </html>

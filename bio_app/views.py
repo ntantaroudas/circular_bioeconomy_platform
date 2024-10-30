@@ -15,10 +15,14 @@ def home(request):
 def about(request):
     return render(request, 'bio_app/about.html')
 
-
+# Scenario Analysis Page
 def scenario_analysis(request):
     return render(request, 'bio_app/scenario_analysis.html')
 
+
+# Vacant Buildings Page
+def vacant_buildings(request):
+    return render(request, 'bio_app/vacant_buildings.html' )
 
 # Best Practices Page with search and pagination functionality
 def best_practices(request):
@@ -75,4 +79,5 @@ def contact(request):
         return redirect('contact')  # Redirect back to the contact page after submission
 
     return render(request, 'bio_app/contact.html')
+
 

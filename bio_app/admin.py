@@ -12,7 +12,10 @@ class BestPracticeAdmin(admin.ModelAdmin):
     list_filter = ('created_at',)  # Filter by creation date
 
 class VacantBuildingAdmin(admin.ModelAdmin):
-    list_display = ('name', 'address', 'area_sq_ft', 'available_from', 'year', 'floor', 'proposed_purpose')
+    list_display = (
+        'name', 'address', 'area_sq_ft', 'available_from', 
+        'year', 'floor', 'proposed_purpose', 'latitude', 'longitude'
+    )    
     search_fields = ('name', 'address', 'proposed_purpose')  # Allows searching by name, address, and proposed purpose
     list_filter = ('year', 'floor', 'available_from')  # Filter by year, floor, and available from date
 

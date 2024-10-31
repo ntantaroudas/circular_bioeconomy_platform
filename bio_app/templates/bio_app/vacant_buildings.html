@@ -10,95 +10,177 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'css/components.css' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+
     <style>
-        @media only screen and (max-width: 768px) {
-            .table thead {
-                display: none;
-            }
-            .table, .table tr, .table td {
-                display: block;
-                width: 100%;
-                text-align: center; /* Center-aligns text */
-            }
-            .table td {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 10px 5px;
-                border: 1px solid #ddd;
-            }
-            .table td::before {
-                content: attr(data-label);
-                font-weight: bold;
-                text-transform: uppercase;
-                color: #333;
-                ;
-                margin-right: 10px;
-            }
-            .form-inline {
-                display: flex;
+        /* Adjust font sizes for table */
+        .table-container table {
+            font-size: 0.7rem; /* Decrease overall table font size */
+        }
+    
+        /* Decrease header font size slightly */
+        .table-container th {
+            font-size: 0.75rem;
+        }
+    
+        /* Map and table layout adjustments */
+        .content-wrapper {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+        #map {
+            height: 600px;
+            width: 30%;
+            min-width: 250px;
+        }
+    
+        /* Enable horizontal scroll when needed */
+        .table-container {
+            width: 70%;
+            padding: 5px;
+            overflow-x: auto; /* Show horizontal scroll only when needed */
+        }
+    
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .content-wrapper {
                 flex-direction: column;
             }
-            .form-inline .form-control, .form-inline .btn {
+            #map, .table-container {
                 width: 100%;
-                margin-bottom: 10px;
             }
         }
     </style>
+    
+    
 </head>
 <body>
-<div class="f-home">
-    {% include "navbar.html" %}
+    <div class="f-home">
+        {% include "navbar.html" %}
+        
+        <div class="container mt-5">
+            <h1 class="mb-4">Vacant Buildings</h1>
+            <p class="lead text-muted">
+                Discover available properties in Pongau suited for various business needs. This platform enables companies and small businesses to easily search for vacant buildings that meet their requirements, whether for offices, retail spaces, warehouses, or industrial facilities. Contact our administration directly to express interest in a property and learn more about leasing opportunities.
+            </p>
+            <div class="content-wrapper">
+                <!-- Map Section -->
+                <div id="map"></div>
+                
+                <!-- Table Section -->
+                <div class="table-container">
+                    <form method="get" action="{% url 'vacant_buildings' %}" class="form-inline mb-4">
+                        <input type="text" name="search" class="form-control mr-2" placeholder="Search buildings..." value="{{ query }}">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
+    
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>Area (sq ft)</th>
+                                <th>Floor</th>
+                                <th>Available From</th>
+                                <th>Construction Year</th>
+                                <th>Proposed Purpose</th>
+                                <th>Description</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for building in page_obj %}
+                            <tr>
+                                <td>{{ building.name }}</td>
+                                <td>{{ building.address }}</td>
+                                <td>{{ building.area_sq_ft }}</td>
+                                <td>{{ building.floor }}</td>
+                                <td>{{ building.available_from }}</td>
+                                <td>{{ building.year }}</td>
+                                <td>{{ building.proposed_purpose}}</td>
+                                <td>{{ building.description }}</td>
+                                <td>
+                                    <a href="{% url 'express_interest' building.id %}" class="btn btn-outline-primary btn-sm">Express Interest</a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="6" class="text-center">No buildings found.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                <!-- Pagination Controls -->
+                <nav aria-label="Pagination">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1{% if query %}&search={{ query }}{% endif %}" aria-label="First">&laquo;&laquo;</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query %}&search={{ query }}{% endif %}" aria-label="Previous">&laquo;</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled"><a class="page-link">&laquo;&laquo;</a></li>
+                        <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+                        {% endif %}
 
-    <div class="container mt-5">
-        <h1 class="mb-4">Vacant Buildings</h1>
+                        <li class="page-item disabled"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
 
-        <!-- Search Bar -->
-        <form method="get" action="{% url 'vacant_buildings' %}" class="form-inline mb-4">
-            <input type="text" name="search" class="form-control mr-2" placeholder="Search buildings..." value="{{ query }}">
-            <button type="submit" class="btn btn-primary">Search</button>
-        </form>
-
-        <!-- Vacant Buildings Table -->
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Area (sq ft)</th>
-                    <th>Available From</th>
-                    <th>Construction Year</th>
-                    <th>Floor Number</th>
-                    <th>Suggested Purpose</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for building in vacant_buildings %}
-                <tr class="building-row">
-                    <td data-label="Name">{{ building.name }}</td>
-                    <td data-label="Address">{{ building.address }}</td>
-                    <td data-label="Area (sq ft)">{{ building.area_sq_ft }}</td>
-                    <td data-label="Available From">{{ building.available_from }}</td>
-                    <td data-label="Construction Year">{{ building.year }}</td>
-                    <td data-label="Floor Number">{{ building.floor }}</td>
-                    <td data-label="Suggested Purpose">{{ building.proposed_purpose }}</td>
-                    <td data-label="Action">
-                        <a href="{% url 'express_interest' building.id %}" class="btn btn-outline-primary btn-sm">
-                            Express Interest
-                        </a>
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="8" class="text-center">No buildings found.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query %}&search={{ query }}{% endif %}" aria-label="Next">&raquo;</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if query %}&search={{ query }}{% endif %}" aria-label="Last">&raquo;&raquo;</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled"><a class="page-link">&raquo;</a></li>
+                        <li class="page-item disabled"><a class="page-link">&raquo;&raquo;</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                </div>
+            </div>
+        </div>
+    
+        {% include "footer.html" %}
     </div>
+    
+    <!-- Leaflet and JavaScript for Map -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
-    {% include "footer.html" %}
-</div>
-</body>
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+<script>
+    // Initialize the map
+    var map = L.map('map').setView([{{ page_obj.0.latitude|default:"0" }}, {{ page_obj.0.longitude|default:"0" }}], 15);
+
+    // Add OpenStreetMap tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Add markers for each building
+    {% for building in page_obj %}
+        var marker = L.marker([{{ building.latitude }}, {{ building.longitude }}]).addTo(map);
+        marker.bindPopup(`
+            <b>{{ building.name }}</b><br>
+            {{ building.address }}<br>
+            <strong>Floor:</strong> {{ building.floor }}<br>
+            <strong>Area:</strong> {{ building.area_sq_ft }}<br>
+            <strong>Purpose:</strong> {{ building.proposed_purpose }}<br>
+            <strong>Year of Construction:</strong> {{ building.year }}<br>
+            <a href="{% url 'express_interest' building.id %}" style="color: black; font-weight: bold; text-decoration: none; background-color: #C1E0E2; padding: 8px 12px; border-radius: 4px; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#FFA500'" onmouseout="this.style.backgroundColor='#C1E0E2'">Express Interest</a>
+        `);
+    {% endfor %}
+</script>
+
+
+
+    </body>
+
 </html>

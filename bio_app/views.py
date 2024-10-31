@@ -27,10 +27,22 @@ def scenario_analysis(request):
 def vacant_buildings(request):
     query = request.GET.get('search', '')
     if query:
-        vacant_buildings = VacantBuilding.objects.filter(name__icontains=query)
+        vacant_buildings = VacantBuilding.objects.filter(
+            Q(name__icontains=query) |
+            Q(address__icontains=query) |
+            Q(proposed_purpose__icontains=query) |
+            Q(description__icontains=query) |
+            Q(year__icontains=query)
+        )
     else:
         vacant_buildings = VacantBuilding.objects.all()
-    context = {'vacant_buildings': vacant_buildings, 'query': query}
+
+    # Add pagination (set to 10 items per page)
+    paginator = Paginator(vacant_buildings, 10)  # Adjust the number if needed
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {'page_obj': page_obj, 'query': query}
     return render(request, 'bio_app/vacant_buildings.html', context)
 
 

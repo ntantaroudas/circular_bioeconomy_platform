@@ -106,37 +106,36 @@
         <img src="{% static 'images/img_header_logo.png' %}" alt="Logoimage" class="header__logo" />
         <ul class="header__menu" id="navbar">
             <li>
-                <a href="{% url 'home' %}">
-                    <div class="header__menu-item">
-                        <p class="header__menu-link ui heading size-headinglg">Home</p>
-                        <div class="header__menu-icon"></div>
-                    </div>
-                </a>
+              <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                <div class="header__menu-item">
+                    <p class="ui text size-textmd">Home</p>
+                </div>
+            </a>
             </li>
             <li>
-                <a href="{% url 'about' %}">
-                    <p class="ui text size-textmd">About</p>
-                </a>
+              <a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                <p class="ui text size-textmd">About</p>
+            </a>
             </li>
             <li>
-                <a href="{% url 'scenario_analysis' %}">
-                    <p class="ui text size-textmd">Scenarios Analysis</p>
-                </a>
+              <a href="{% url 'scenario_analysis' %}" class="{% if request.resolver_match.url_name == 'scenario_analysis' %}active{% endif %}">
+                <p class="ui text size-textmd">Scenarios Analysis</p>
+            </a>
             </li>
             <li>
-              <a href="{% url 'vacant_buildings' %}">
-                  <p class="ui text size-textmd">Vacant Buildings</p>
-              </a>
+              <a href="{% url 'vacant_buildings' %}" class="{% if request.resolver_match.url_name == 'vacant_buildings' %}active{% endif %}">
+                <p class="ui text size-textmd">Vacant Buildings</p>
+            </a>
           </li>
             <li>
-                <a href="{% url 'best_practices' %}">
-                    <p class="ui text size-textmd">Best Practices</p>
-                </a>
+              <a href="{% url 'best_practices' %}" class="{% if request.resolver_match.url_name == 'best_practices' %}active{% endif %}">
+                <p class="ui text size-textmd">Best Practices</p>
+            </a>
             </li>
             <li>
-                <a href="{% url 'contact' %}">
-                    <p class="ui text size-textmd">Contact</p>
-                </a>
+              <a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
+                <p class="ui text size-textmd">Contact</p>
+            </a>
             </li>
         </ul>
     </div>

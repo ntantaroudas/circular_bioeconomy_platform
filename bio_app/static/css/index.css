@@ -109,6 +109,10 @@ select:focus-visible {
 }
 
 
+.header__menu a.active p {
+  font-weight: bold;
+  color: #d67f0d; /* Change to any color you prefer */
+}
 
 
 

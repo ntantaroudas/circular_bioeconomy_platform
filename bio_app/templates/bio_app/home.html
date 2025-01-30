@@ -36,7 +36,7 @@
             <div class="section__content">
               <div class="section__top">
                 <img src="{% static 'images/img_image_24.png' %}" alt="Profile Image" class="section__top-image" />
-                <div class="section__top-controls">
+                <div class="section__top-controls" style="padding-left: 65%; padding-bottom:1%;">
                   <button class="section__top-controls-item ui button white_a700 size-lg fill circle">
                     <img src="{% static 'images/img_group_1194.png' %}" />
                   </button>
@@ -47,16 +47,15 @@
               </div>
               <div class="section__main">
                 <div class="section__main-column">
-                  <p class="section__main-column-title ui text size-text5xl">
+                  <p class="section__main-column-title ui text size-text4xl">
                     Welcome to<br />Circular Bioeconomy Smart Solution
                   </p>
-                  <p class="section__main-column-description ui text size-text2xl">
-                    This is a text placeholder and should contain a short description of the SS.
-                  </p>
-                  <div class="section__main-column-actions">
-                    <button onclick="window.location.href='{% url 'about' %}'" class="section__main-column-actions-button ui button teal_50_05 size-sm fill">
-                      Regionalverband Pongau
-                    </button>
+                  <p class="section__main-column-description ui text size-text1xl">
+                    The Circular Bioeconomy Smart Solution for Pongau promotes sustainability by mapping material flows, identifying reuse opportunities, and optimizing vacant buildings for circular economy practices. Using Sankey diagrams, multi-criteria assessments, and mind-mapping, it helps stakeholders repurpose biomass ashes, sewage sludge, food waste, and also identify underutilized spaces to support sustainable regional development in Pongau.                    
+                    <div class="section__main-column-actions">
+                      <button onclick="window.location.href='{% url 'about' %}'" class="section__main-column-actions-button ui button teal_50_05 size-sm fill">
+                        Regionalverband Pongau
+                      </button>
                     <button  onclick="window.location.href='{% url 'scenario_analysis' %}'"  class="section__main-column-actions-button--explore ui button cyan_700_01 size-sm fill">
                       Explore Sankeys
                     </button>
@@ -109,38 +108,97 @@
             <div class="faq-section__list">
               <details class="case-studies-column" open>
                 <summary class="faq-section__item">
-                  <p class="faq-section__question ui text size-textxl">What’s FUTURAL?</p>
+                  <p class="faq-section__question ui text size-textxl">What is the Circular Bioeconomy Smart Solution?</p>
                 </summary>
                 <div class="faq-section__description-container">
                   <p class="faq-section__description ui text size-textlg">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed arcu fermentum, blandit dolor sed,
-                    rhoncus libero. Etiam ut ipsum metus. Sed egestas ipsum id finibus auctor. Fusce ac pellentesque
-                    turpis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                    The Circular Bioeconomy Smart Solution is an interactive platform designed to support the sustainable management of natural resources in the Pongau region. It provides decision-making tools like Sankey diagrams, multi-criteria assessments, and mind-mapping techniques to visualize and evaluate different pathways for converting local waste streams, such as biomass ashes, sewage sludge, and food waste, into valuable resources.
                   </p>
                 </div>
               </details>
               <details class="case-studies-column">
                 <summary class="faq-section__item">
-                  <p class="faq-section__question ui text size-textxl">How can I use Sankeys?</p>
+                  <p class="faq-section__question ui text size-textxl">Who can use the Circular Bioeconomy platform?</p>
                 </summary>
                 <div class="faq-section__description-container">
                   <p class="faq-section__description ui text size-textlg">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed arcu fermentum, blandit dolor sed,
-                    rhoncus libero. Etiam ut ipsum metus. Sed egestas ipsum id finibus auctor. Fusce ac pellentesque
-                    turpis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                    The platform is intended for a wide range of users, including local authorities, policymakers, businesses, and community members in Pongau interested in promoting circular economy practices. Stakeholders involved in waste management, agriculture, tourism, and regional development will particularly benefit from the platform’s insights.
                   </p>
                 </div>
               </details>
               <details class="case-studies-column">
                 <summary class="faq-section__item">
-                  <p class="faq-section__question ui text size-textxl">Where can I find some case studies?</p>
+                  <p class="faq-section__question ui text size-textxl">What types of waste streams does the platform focus on?</p>
                 </summary>
                 <div class="faq-section__description-container">
                   <p class="faq-section__description ui text size-textlg">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed arcu fermentum, blandit dolor sed,
-                    rhoncus libero. Etiam ut ipsum metus. Sed egestas ipsum id finibus auctor. Fusce ac pellentesque
-                    turpis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                    The platform primarily focuses on three key waste streams in Pongau: biomass ashes from heating plants, sewage sludge from wastewater treatment plants, and food waste generated by the tourism industry. It helps identify and assess valorization pathways for converting these waste streams into resources that can contribute to regional sustainability.
                   </p>
+                </div>
+              </details>
+              <details class="case-studies-column">
+                <summary class="faq-section__item">
+                  <p class="faq-section__question ui text size-textxl">How does the Circular Bioeconomy SS support decision-making?
+                  </p>
+                </summary>
+                <div class="faq-section__description-container">
+                  <p class="faq-section__description ui text size-textlg">
+                    The platform offers advanced decision-support tools like multi-criteria assessments (MCA) and Sankey diagrams to help users analyze various resource flow scenarios. These tools evaluate the environmental, economic, and technical feasibility of different circular economy options, guiding users toward the most sustainable solutions.
+                  </p>
+                </div>
+              </details>
+              <details class="case-studies-column">
+                <summary class="faq-section__item">
+                  <p class="faq-section__question ui text size-textxl">How can the platform help reduce waste in the region?
+                  </p>
+                </summary>
+                <div class="faq-section__description-container">
+                  <p class="faq-section__description ui text size-textlg">
+                    By providing a comprehensive analysis of how waste streams can be converted into valuable resources, the platform encourages the adoption of circular economy practices. This reduces waste production by promoting the reuse, recycling, and transformation of waste into new products, helping to close the loop and reduce environmental impact.
+                  </p>
+                </div>
+              </details>
+              <details class="case-studies-column">
+                <summary class="faq-section__item">
+                  <p class="faq-section__question ui text size-textxl">What role do local stakeholders play in the platform?
+                  </p>
+                </summary>
+                <div class="faq-section__description-container">
+                  <p class="faq-section__description ui text size-textlg">
+                    Local stakeholders, including regional authorities, businesses, and citizens, play a crucial role by providing input, feedback, and data on regional waste management practices. Their involvement ensures that the solutions developed are realistic, feasible, and aligned with the specific needs of Pongau.
+                  </p>
+                </div>
+              </details>
+              <details class="case-studies-column">
+                <summary class="faq-section__item">
+                  <p class="faq-section__question ui text size-textxl"> Can the Circular Bioeconomy SS be used outside Pongau?
+                  </p>
+                </summary>
+                <div class="faq-section__description-container">
+                  <p class="faq-section__description ui text size-textlg">
+                    Yes, while the platform is specifically tailored for the Pongau region, its tools and methodologies can be adapted for use in other regions. The decision-making frameworks, such as the multi-criteria analysis and resource flow diagrams, can be customized to reflect local conditions and resource streams in other areas.
+                  </p>
+                </div>
+              </details>
+              <details class="case-studies-column">
+                <summary class="faq-section__item">
+                  <p class="faq-section__question ui text size-textxl"> What kind of data is needed to use the platform effectively?
+                  </p>
+                </summary>
+                <div class="faq-section__description-container">
+                  <p class="faq-section__description ui text size-textlg">
+                    To provide accurate analyses, the platform relies on data about local waste streams, such as the volume of biomass ashes, sewage sludge, and food waste. It also uses economic data, technical specifications, and environmental impact assessments to offer robust decision-support insights.
+                  </p>
+                </div>
+              </details>
+              <details class="case-studies-column">
+                <summary class="faq-section__item">
+                  <p class="faq-section__question ui text size-textxl"> How can I get involved with the Circular Bioeconomy initiative in Pongau?
+                  </p>
+                </summary>
+                <div class="faq-section__description-container">
+                  <p class="faq-section__description ui text size-textlg">
+                    If you are a resident, business owner, or policymaker in the Pongau region, you can get involved by attending local stakeholder meetings, providing feedback on proposed solutions, or contributing data to the platform. You can also contact the Regionalverband Pongau for more information on how to participate.</p>
                 </div>
               </details>
             </div>

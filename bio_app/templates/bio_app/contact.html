@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/components.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/FContact.css' %}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   </head>
   <body>
     <div class="f-contact">
@@ -95,17 +96,49 @@
           <img src="{% static 'images/img_vector_62.svg' %}" alt="Vector Sixtytwo" class="contact-section__vector-image" />
         </div>
       </div>
-      {% if messages %}
-        <ul class="messages">
-          {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
 
-
-            {% include "footer.html" %}
-
+      <!-- Bootstrap Modal for Messages -->
+      <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="messageModalLabel">Notification</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              {% if messages %}
+                {% for message in messages %}
+                  <div class="alert alert-{% if message.tags == 'success' %}success{% elif message.tags == 'error' %}danger{% else %}info{% endif %}" role="alert">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
       </div>
+
+      {% include "footer.html" %}
+
+    </div>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript to Auto-Trigger Modal -->
+    <script>
+      $(document).ready(function () {
+        {% if messages %}
+          $('#messageModal').modal('show');
+        {% endif %}
+      });
+    </script>
+
   </body>
 </html>

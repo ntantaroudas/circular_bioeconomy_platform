@@ -62,8 +62,7 @@
         <div class="container mt-5">
             <h1 class="mb-4">Vacant Buildings</h1>
             <p class="lead text-muted">
-                Discover available properties in Pongau suited for various business needs. This platform enables companies and small businesses to easily search for vacant buildings that meet their requirements, whether for offices, retail spaces, warehouses, or industrial facilities. Contact our administration directly to express interest in a property and learn more about leasing opportunities.
-            </p>
+                Find the perfect space for your business in Pongau! Our platform makes it easy for companies and entrepreneurs to explore available properties, from offices and retail spaces to warehouses and industrial facilities. Discover opportunities that match your needs and connect directly with our administration to express interest and learn more about leasing options.</p>
             <div class="content-wrapper">
                 <!-- Map Section -->
                 <div id="map"></div>
@@ -101,7 +100,13 @@
                                 <td>{{ building.proposed_purpose}}</td>
                                 <td>{{ building.description }}</td>
                                 <td>
-                                    <a href="{% url 'express_interest' building.id %}" class="btn btn-outline-primary btn-sm">Express Interest</a>
+                                    <button class="btn btn-outline-primary btn-sm express-interest-btn" 
+                                        data-id="{{ building.id }}" 
+                                        data-name="{{ building.name }}" 
+                                        data-toggle="modal" 
+                                        data-target="#expressInterestModal">
+                                        Express Interest
+                                    </button>
                                 </td>
                             </tr>
                             {% empty %}
@@ -178,6 +183,89 @@
         `);
     {% endfor %}
 </script>
+
+<!-- Express Interest Modal -->
+<!-- Express Interest Modal -->
+<div id="expressInterestModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Express Interest</h5>
+                <button type="button" class="close-modal btn-close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="modalBuildingInfo">Interested in this property? Fill in the details below and contact the administration.</p>
+                <form method="POST" action="{% url 'express_interest' 0 %}" id="expressInterestForm">
+                    {% csrf_token %}
+                    <input type="hidden" name="building_id" id="modalBuildingId">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" name="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" name="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea name="message" class="form-control" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Submit Interest</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Bootstrap and jQuery Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+
+$(document).ready(function () {
+    $(".express-interest-btn").click(function () {
+        var buildingId = $(this).data("id");
+        var buildingName = $(this).data("name");
+
+        $("#modalBuildingInfo").html(`Interested in <b>${buildingName}</b>? Fill in the details below and contact the administration.`);
+
+        // Pass the ID into the form action dynamically
+        $("#modalBuildingId").val(buildingId);
+        $("#modalBuildingName").text(buildingName);
+        $("#expressInterestForm").attr("action", "/express-interest/" + buildingId + "/");
+
+        // Open the modal
+        $("#expressInterestModal").modal("show");
+    });
+
+    $(".close-modal").click(function () {
+        $("#expressInterestModal").modal("hide");
+    });
+});
+
+</script>
+
+
+<style>
+    /* Style for Close Button */
+    .close-modal {
+        font-size: 24px;
+        font-weight: bold;
+        color: black;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+    }
+
+    .close-modal:hover {
+        color: red;
+    }
+</style>
+
 
 
 

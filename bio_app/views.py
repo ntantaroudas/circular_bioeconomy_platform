@@ -88,7 +88,7 @@ def contact(request):
         # Send the email
         try:
             email_message = EmailMessage(
-                email_subject, email_body, 'your_email@gmail.com', ['ntantaroudas@gmail.com']
+                email_subject, email_body, 'ntantaroudas@gmail.com', ['ntantaroudas@gmail.com']
             )
             email_message.send()
             messages.success(request, 'Your message has been sent successfully!')

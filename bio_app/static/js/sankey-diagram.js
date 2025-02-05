@@ -1,4 +1,6 @@
-// Global variable to store the chart instance
+/* sankey-diagram.js */
+
+// Global variable to store the Sankey Chart instance
 let sankeyChart;
 
 // Sample data for Sankey diagrams based on the selected option
@@ -29,7 +31,6 @@ const sankeyData = {
   }
 };
 
-
 // Text descriptions for each option
 const sankeyText = {
   'option1': "This Sankey diagram represents the energy flow for Option 1. It shows the distribution from source A to targets B and C with specified flows.",
@@ -37,63 +38,59 @@ const sankeyText = {
   'option3': "This Sankey diagram for Option 3 illustrates waste management, including the flows between recycling and landfill systems."
 };
 
-// Function to hide the Sankey chart
+// Function to hide the Sankey chart container and destroy the chart instance
 function hideSankeyChart() {
-  // Hide the Sankey chart container
-  document.querySelector('.chart-container').style.display = 'none';
-
-  // Destroy the existing chart instance if it exists
+  const chartContainer = document.querySelector('.chart-container');
+  if (chartContainer) {
+    chartContainer.style.display = 'none';
+  }
   if (sankeyChart) {
     sankeyChart.destroy();
+    sankeyChart = null;
   }
 }
 
 // Function to hide the Scenarios section
 function hideScenarios() {
-  const scenariosSection = document.querySelector('.scenarios-container');
-  if (scenariosSection) {
-    scenariosSection.style.display = 'none';
-  } else {
-    console.warn('Scenarios section not found.');
+  const scenariosContainer = document.querySelector('.scenarios-container');
+  if (scenariosContainer) {
+    scenariosContainer.style.display = 'none';
   }
 }
 
-// Function to hide MCA section
+// Function to hide the MCA section (container and table)
 function hideMCA() {
-  document.querySelector('.mca-container').style.display = 'none';
+  const mcaContainer = document.querySelector('.mca-container');
+  if (mcaContainer) {
+    mcaContainer.style.display = 'none';
+  }
 }
 
-// Function to show Sankey diagram based on selected option
+// Function to show the Sankey diagram based on the selected option
 function showSankeyDiagram() {
   // Hide other sections (MCA and Scenarios)
-  hideMCA();  // Hides MCA section
-  hideScenarios();  // Hides Scenarios section
+  hideMCA();
+  hideScenarios();
 
-  // Get the selected value from the dropdown
+  // Get the selected option from the dropdown
   const selectedOption = document.getElementById('residueStream').value;
-
-  // Get the corresponding Sankey data
   const sankeyInfo = sankeyData[selectedOption];
-
-  // Get the corresponding text for the selected option
   const sankeyDescription = sankeyText[selectedOption];
 
-  // Display the Sankey chart container by setting display: block;
+  // Display the Sankey chart container
   const chartContainer = document.querySelector('.chart-container');
-  chartContainer.style.display = 'block';  // Make container visible
+  chartContainer.style.display = 'block';
 
   // Update the text description in the sankey-text-container
   document.getElementById('sankey-text-container').innerText = sankeyDescription;
 
-
-  // Delay the chart creation slightly to ensure it can properly calculate the canvas size
+  // Delay chart creation slightly (to ensure proper canvas sizing)
   setTimeout(() => {
     // Destroy the existing chart instance if it exists
     if (sankeyChart) {
       sankeyChart.destroy();
     }
-
-    // Create the Sankey diagram
+    // Create the new Sankey diagram
     const ctx = document.getElementById('sankeyChart').getContext('2d');
     sankeyChart = new Chart(ctx, {
       type: 'sankey',
@@ -122,31 +119,5 @@ function showSankeyDiagram() {
         }
       }
     });
-  }, 200); // Set a small delay (200ms) to ensure visibility before rendering
-}
-
-// Function to show the MCA diagram and hide others
-function showMCADiagram() {
-  // Hide the Sankey chart
-  hideSankeyChart();
-  
-  // Hide Scenarios section if needed
-  hideScenarios();
-
-  // Show the MCA diagram here
-  document.querySelector('.mca-container').style.display = 'block';
-
-  // Add your MCA chart generation logic here
-}
-
-// Function to show Scenarios section and hide others
-function showScenarios() {
-  // Hide the Sankey chart
-  hideSankeyChart();
-
-  // Hide MCA section
-  hideMCA();
-
-  // Show the Scenarios section (add your logic here)
-  document.querySelector('.scenarios-container').style.display = 'block';
+  }, 200); // Small delay to ensure canvas visibility
 }

@@ -1,3 +1,5 @@
+/* mca-diagram.js */
+
 // Global variable to store the MCA Sankey chart instance
 let mcaSankeyChart;
 
@@ -48,33 +50,37 @@ const mcaText = {
   'option3': "Option 3 MCA Analysis delves into waste management processes, with key flows between recycling and landfill."
 };
 
-
 // Function to show the MCA Sankey diagram and data table
 function showMCADiagram() {
+  // *** NEW: Reposition the MCA container to load immediately below the buttons ***
+  const buttonsContainer = document.querySelector('.container.text-center.mt-0.p-0');
+  const mcaContainer = document.querySelector('.mca-container');
+  if (buttonsContainer && mcaContainer) {
+    buttonsContainer.insertAdjacentElement('afterend', mcaContainer);
+  }
+  
+  // Hide other sections (Sankey and Scenarios)
+  hideSankeyChart();
+  hideScenarios();
+
   // Get the selected option from the dropdown
   const selectedOption = document.getElementById('residueStream').value;
-
-  // Get the corresponding data
   const mcaInfo = mcaData[selectedOption];
 
-  // Show the MCA container and thead (hidden by default)
-  document.querySelector('.mca-container').style.display = 'block';
-  document.querySelector('.data-table thead').style.display = 'table-header-group';  // Show table header
-
-  hideSankeyChart();
-  
-  // Hide Scenarios section if needed
-  hideScenarios();
+  // Show the MCA container and ensure the table header is visible
+  mcaContainer.style.display = 'block';
+  const tableHead = document.querySelector('.data-table thead');
+  if (tableHead) {
+    tableHead.style.display = 'table-header-group';
+  }
 
   // Update the text description in the mca-text-container
   document.getElementById('mca-text-container').innerText = mcaText[selectedOption];
 
-  // Show the MCA diagram here
-  document.querySelector('.mca-container').style.display = 'block';
-
-  // Destroy existing chart if it exists
+  // Destroy existing MCA chart if it exists
   if (mcaSankeyChart) {
     mcaSankeyChart.destroy();
+    mcaSankeyChart = null;
   }
 
   // Create the MCA Sankey diagram
@@ -107,11 +113,9 @@ function showMCADiagram() {
     }
   });
 
-  // Populate the data table with the relevant MCA data
+  // Populate the data table (matrix) with the relevant MCA data
   const tableBody = document.getElementById('mcaTableBody');
-  tableBody.innerHTML = ''; // Clear existing rows
-
-  // Add new rows based on the selected option
+  tableBody.innerHTML = ''; // Clear any existing rows
   mcaInfo.table.forEach(row => {
     const tableRow = `
       <tr>

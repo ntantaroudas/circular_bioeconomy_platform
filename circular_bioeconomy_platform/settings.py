@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-1d7lj%@)=!ops0dne1(o+uad@953@gke$m0s+qhwd4wwp=6!lj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ASPAX.pythonanywhere.com', 'circulareconomy-ASPAX.pythonanywhere.com']
+ALLOWED_HOSTS = ['ASPAX.pythonanywhere.com', 'circulareconomy-ASPAX.pythonanywhere.com', 'circular-bioeconomy.futural-project.eu']
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

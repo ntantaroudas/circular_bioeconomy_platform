@@ -8,7 +8,7 @@
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="Delve into our Scenario Analysis for effective biomass residue stream management. Utilize Sankey Diagrams and MCA Analysis to optimize valorization pathways and enhance regional sustainability."
+      content="Delve into our Scenario Analysis for effective biomass residue stream management. Utilize Sankey Diagrams to optimize valorization pathways and enhance regional sustainability."
     />
     <img
       alt="Logo"
@@ -32,14 +32,15 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 <style>
-
-/* CSS for Sankey chart (unchanged except for added padding) */
+/* CSS for Sankey chart with proper spacing */
 .chart-container {
   position: relative;
-  height: 500px;  /* fixed height for Sankey chart */
+  height: 600px; /* Increased height */
   width: 100%;
-  padding: 0 40px;  /* Added left and right padding */
-  box-sizing: border-box;  /* ensures padding is included within width */
+  padding: 0 40px;
+  box-sizing: border-box;
+  display: none;
+  margin-bottom: 150px; /* Large margin to prevent footer overlap */
 }
 
 #sankeyChart {
@@ -47,46 +48,190 @@
   width: 100% !important;
 }
 
-/* Container for MCA Chart only */
-.mca-chart-container {
+/* Scenario buttons in a single row with overflow scroll */
+.scenario-buttons {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto; /* Horizontal scroll for many buttons */
+  overflow-y: visible;
+  padding: 10px 0;
+  margin: 20px 0;
+  min-height: 60px; /* Fixed height to prevent layout jumps */
+  align-items: center;
+  scrollbar-width: thin;
+  scrollbar-color: #70c5c7 #f1f1f1;
+}
+
+/* Custom scrollbar for webkit browsers */
+.scenario-buttons::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scenario-buttons::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.scenario-buttons::-webkit-scrollbar-thumb {
+  background: #70c5c7;
+  border-radius: 3px;
+}
+
+.scenario-buttons::-webkit-scrollbar-thumb:hover {
+  background: #5a9fa1;
+}
+
+.scenario-btn {
+  background: #ffffff;
+  border: 2px solid #70c5c7;
+  color: #2c3e50;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-size: 0.9rem;
+  min-width: 200px; /* Fixed minimum width */
+  max-width: 280px; /* Maximum width */
+  text-align: center;
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Show ... for long text */
+  flex-shrink: 0; /* Prevent shrinking */
+  height: 45px; /* Fixed height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scenario-btn:hover {
+  background: #70c5c7;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.scenario-btn.active {
+  background: #70c5c7;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+/* Text description with proper spacing */
+.text-description {
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 10px;
+  border-left: 4px solid #70c5c7;
+  margin: 30px 0; /* Space above and below */
+  font-size: 1rem;
+  line-height: 1.6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure adequate spacing from footer */
+.columnvectorfif-1 {
+  margin-bottom: 200px; /* Large bottom margin */
+  padding-bottom: 50px;
+}
+
+/* Footer positioning fix */
+footer {
+  margin-top: auto;
   position: relative;
-  height: 500px;  /* fixed height for MCA chart */
-  width: 100%;
-  padding: 0 40px;  /* Added horizontal padding */
-  box-sizing: border-box;
+  z-index: 1;
 }
 
-#mcaSankeyChart {
-  height: 100% !important;
-  width: 100% !important;
+/* Container adjustments */
+.scenario-analysis {
+  margin-bottom: 40px;
 }
 
-/* MCA container now has no fixed height and no overflow restriction.
-   Added horizontal padding for the table as well */
-.mca-container {
-  width: 100%;
-  padding: 0 40px;  /* Added left/right padding */
-  box-sizing: border-box;
-  overflow: visible;
-  margin-top: 20px; /* Optional spacing */
+/* Responsive design */
+@media (max-width: 768px) {
+  .scenario-buttons {
+    justify-content: flex-start; /* Left-align on mobile */
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  .scenario-btn {
+    min-width: 180px;
+    font-size: 0.85rem;
+    padding: 8px 16px;
+  }
+  
+  .chart-container {
+    height: 500px;
+    margin-bottom: 100px;
+    padding: 0 20px;
+  }
+  
+  .text-description {
+    padding: 20px;
+    margin: 20px 0;
+  }
+  
+  .columnvectorfif-1 {
+    margin-bottom: 150px;
+  }
 }
 
-/* Add padding to the Scenarios container as well */
-.scenarios-container {
-  width: 100%;
-  padding: 0 40px;  /* Added horizontal padding */
-  box-sizing: border-box;
+@media (max-width: 480px) {
+  .scenario-btn {
+    min-width: 160px;
+    font-size: 0.8rem;
+    padding: 8px 12px;
+  }
+  
+  .chart-container {
+    height: 400px;
+    padding: 0 10px;
+  }
 }
 
+/* Ensure page has enough height */
+html, body {
+  min-height: 100vh;
+}
 
+/* Page layout */
+.columnheader_logo-one {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Scroll hint for buttons */
+.scenario-buttons::after {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  color: #6c757d;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.scenario-buttons:hover::after {
+  opacity: 1;
+}
+
+/* Hide scroll hint on mobile */
+@media (max-width: 768px) {
+  .scenario-buttons::after {
+    display: none;
+  }
+}
 </style>
-
 
   </head>
   <body>
     <div class="columnheader_logo-one">
       <!-- header navigation section -->
-
       {% include "navbar.html" %}
 
       <div class="columnvectorfif-1">
@@ -108,8 +253,11 @@
               class="rowvectorsixty__image--lime-1"
             />
           </div>
+          
           <div class="scenario-analysis container-xs">
             <p class="scenario-analysis__title ui text size-text5xl">Scenario Analysis</p>
+            
+            <!-- City and Scenario Selection -->
             <div class="scenario-analysis__content">
               <div class="scenario-analysis__row-1">
                 <div class="scenario-analysis__sub-row">
@@ -132,15 +280,24 @@
                       class="scenario-analysis__icon--ellipse"
                     />
                     <div class="scenario-analysis__selection-column">
-                      <p class="scenario-analysis__text ui text size-textxl">Please select a residue stream</p>
+                      <p class="scenario-analysis__text ui text size-textxl">Please select a city and scenario</p>
+                      
+                      <!-- City Selection Dropdown -->
                       <select
-                      id="residueStream" class="scenario-analysis__dropdown ui selectbox white_a700 size-sm fill"
-                        name="Dropdown Select"
+                        id="cityDropdown" 
+                        class="scenario-analysis__dropdown ui selectbox white_a700 size-sm fill"
+                        name="City Select"
+                        style="margin-bottom: 25px;"
                       >
-                        <option value="option1">Option 1 - Energy Flow</option>
-                        <option value="option2">Option 2 - Material Flow</option>
-                        <option value="option3">Option 3 - Waste Flow</option>
+                        <option value="">Select a city</option>
+                        <option value="salzburg">Salzburg</option>
+                        <option value="pongau">Pongau</option>
                       </select>
+                      
+                      <!-- Scenario Selection Buttons (in a horizontal row) -->
+                      <div class="scenario-buttons" id="scenarioButtons">
+                        <p style="text-align: center; color: #6c757d; margin: 20px 0; width: 100%;">Please select a city to view available scenarios.</p>
+                      </div>
                     </div>
                   </div>
                   <div class="scenario-analysis__icon-row--small">
@@ -160,77 +317,24 @@
             </div>
           </div>
         </div>
-        <div class="container text-center mt-0 p-0">  <!-- Removed top margin and padding -->
-          <h3 class="mb-2" style="margin-top: 0;">Explore Analysis Tools</h3>  <!-- Reduced bottom margin for the heading -->
-          <div class="btn-group">
-            <a href="#sankey" class="btn btn-custom mr-2" onclick="showSankeyDiagram()">Sankey Diagrams</a>
-            <a href="#mca" class="btn btn-custom mr-2" onclick="showMCADiagram()">MCA</a>
-            <a href="#scenarios" class="btn btn-custom" onclick="showScenarios()">Scenarios</a>
+
+        <!-- Sankey Chart Container -->
+        <div class="chart-container">
+          <div id="sankey-text-container" class="text-description">
+            Select a city and scenario to view the Sankey diagram visualization.
           </div>
+          <canvas id="sankeyChart"></canvas>
         </div>
-        <!-- content analysis section -->
-       <!-- Chart.js canvas -->
-      <div class="chart-container">
-        <div id="sankey-text-container" class="text-description mt-4 mb-4">
-        </div>
-        <canvas id="sankeyChart"></canvas>
-      </div>
-
-            <!-- MCA Analysis Sankey and Data Table (Hidden by default) -->
-            <div class="mca-container" style="display: none;">
-              <div id="mca-text-container" class="text-description mt-4 mb-4">
-                <!-- Text will be dynamically inserted here by JavaScript -->
-              </div>
-              <!-- NEW: Wrap the MCA canvas inside its own container -->
-              <div class="mca-chart-container">
-                <canvas id="mcaSankeyChart"></canvas>
-              </div>
-              <table class="table table-striped data-table">
-                <thead>
-                  <tr>
-                    <th>Source</th>
-                    <th>Target</th>
-                    <th>Unit</th>
-                    <th>Value</th>
-                    <th>Time Step</th>
-                    <th>Link Label</th>
-                  </tr>
-                </thead>
-                <tbody id="mcaTableBody">
-                  <!-- Table rows will be dynamically added here -->
-                </tbody>
-              </table>
-            </div>
-
-
-        <!-- Scenarios Analysis Container (hidden by default) -->
-        <div class="scenarios-container" style="display: none;">
-          <div id="scenarios-text-container" class="text-description mt-4 mb-4">
-            <!-- Text will be dynamically inserted here by JavaScript -->
-          </div>
-          <div class="row">
-            <div class="col-md-4">
-              <img src="{% static 'images/scenario1_option1.jpg' %}" alt="Scenario 1" class="img-fluid">
-            </div>
-            <div class="col-md-4">
-              <img src="{% static 'images/scenario2_option1.jpg' %}" alt="Scenario 2" class="img-fluid">
-            </div>
-            <div class="col-md-4">
-              <img src="{% static 'images/scenario3_option1.jpg' %}" alt="Scenario 3" class="img-fluid">
-            </div>
-          </div>
-        </div>
-
 
       </div>
 
       {% include "footer.html" %}
-
     </div>
-    <!-- Reference the external sankey-diagram.js file -->
-    <script src="{% static 'js/sankey-diagram.js' %}"></script>
-    <script src="{% static 'js/mca-diagram.js' %}"></script>
-    <script src="{% static 'js/scenarios.js' %}"></script>
+
+    <!-- Reference the JavaScript files -->
+    <script src="{% static 'js/scenario-data.js' %}"></script>
+    <script src="{% static 'js/dropdown-scenario-controller.js' %}"></script>
+    <script src="{% static 'js/final-sankey-diagram.js' %}"></script>
 
   </body>
 </html>

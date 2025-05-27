@@ -1,0 +1,230 @@
+/* updated-mca-diagram.js */
+
+// Global variable to store the MCA Sankey chart instance
+let mcaSankeyChart;
+
+// Function to show the MCA Sankey diagram and data table
+function showMCADiagram() {
+  // Hide other sections
+  hideSankeyChart();
+  hideScenarios();
+
+  // Get current scenario data
+  const scenarioData = getCurrentScenarioData();
+  if (!scenarioData) {
+    console.error('No scenario selected');
+    return;
+  }
+
+  // Show the MCA container
+  const mcaContainer = document.querySelector('.mca-container');
+  mcaContainer.style.display = 'block';
+
+  // Update the text description
+  const textContainer = document.getElementById('mca-text-container');
+  textContainer.innerHTML = `
+    <h5>Multi-Criteria Analysis: ${scenarioData.name}</h5>
+    <h6 class="text-muted">${scenarioData.subtitle}</h6>
+    <p>This MCA analysis provides a detailed breakdown of material flows, quantities, and environmental impacts for ${scenarioData.name.toLowerCase()}. 
+    The table below shows the quantitative data behind the Sankey diagram visualization.</p>
+  `;
+
+  // Create MCA Sankey chart
+  setTimeout(() => {
+    createMCASankeyChart(scenarioData);
+    populateMCATable(scenarioData);
+  }, 200);
+}
+
+function createMCASankeyChart(scenarioData) {
+  // Destroy existing MCA chart if it exists
+  if (mcaSankeyChart) {
+    mcaSankeyChart.destroy();
+  }
+
+  // Get unique nodes from the flows
+  const nodes = new Set();
+  scenarioData.flows.forEach(flow => {
+    nodes.add(flow.from);
+    nodes.add(flow.to);
+  });
+
+  // Create labels array with proper names
+  const labels = Array.from(nodes).map(nodeId => {
+    const nodeLabel = window.scenarioData.nodeLabels[nodeId];
+    return nodeLabel || nodeId;
+  });
+
+  // Transform flows to match Chart.js sankey format
+  const sankeyFlows = scenarioData.flows.map(flow => ({
+    from: window.scenarioData.nodeLabels[flow.from] || flow.from,
+    to: window.scenarioData.nodeLabels[flow.to] || flow.to,
+    flow: flow.flow
+  }));
+
+  // Create the MCA Sankey diagram
+  const ctx = document.getElementById('mcaSankeyChart').getContext('2d');
+  mcaSankeyChart = new Chart(ctx, {
+    type: 'sankey',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'MCA Flow Analysis',
+        data: sankeyFlows,
+        colorFrom: function(context) {
+          const flow = scenarioData.flows[context.dataIndex];
+          return flow ? flow.color : '#c0dfe1';
+        },
+        colorTo: function(context) {
+          const flow = scenarioData.flows[context.dataIndex];
+          if (flow && flow.color) {
+            return adjustColorBrightness(flow.color, -20);
+          }
+          return '#70c5c7';
+        },
+        borderWidth: 2,
+        borderColor: '#333',
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        title: {
+          display: true,
+          text: `MCA Analysis: ${scenarioData.name}`,
+          font: {
+            size: 16,
+            weight: 'bold'
+          }
+        },
+        legend: {
+          display: true,
+          position: 'bottom',
+          labels: {
+            generateLabels: function(chart) {
+              // Create legend items based on flow types
+              const uniqueLabels = [...new Set(scenarioData.flows.map(f => f.label))];
+              return uniqueLabels.slice(0, 6).map((label, index) => {
+                const flow = scenarioData.flows.find(f => f.label === label);
+                return {
+                  text: label,
+                  fillStyle: flow ? flow.color : '#c0dfe1',
+                  strokeStyle: '#333',
+                  lineWidth: 1
+                };
+              });
+            }
+          }
+        },
+        tooltip: {
+          callbacks: {
+            title: function(context) {
+              return 'Material Flow Details';
+            },
+            label: function(context) {
+              const flow = scenarioData.flows[context.dataIndex];
+              return [
+                `Source: ${context.raw.from}`,
+                `Target: ${context.raw.to}`,
+                `Quantity: ${context.raw.flow} ${flow ? flow.unit : 't TS'}`,
+                `Material: ${flow ? flow.label : 'Unknown'}`,
+                `Efficiency: ${calculateEfficiency(flow, scenarioData)}%`
+              ];
+            }
+          },
+          backgroundColor: 'rgba(0, 0, 0, 0.9)',
+          titleColor: '#fff',
+          bodyColor: '#fff',
+          borderColor: '#70c5c7',
+          borderWidth: 2
+        }
+      }
+    }
+  });
+
+  // Store chart instance globally
+  window.mcaSankeyChart = mcaSankeyChart;
+}
+
+function populateMCATable(scenarioData) {
+  const tableBody = document.getElementById('mcaTableBody');
+  tableBody.innerHTML = ''; // Clear existing rows
+
+  scenarioData.flows.forEach((flow, index) => {
+    const sourceLabel = window.scenarioData.nodeLabels[flow.from] || flow.from;
+    const targetLabel = window.scenarioData.nodeLabels[flow.to] || flow.to;
+    const efficiency = calculateEfficiency(flow, scenarioData);
+    
+    const tableRow = document.createElement('tr');
+    tableRow.innerHTML = `
+      <td><strong>${sourceLabel}</strong></td>
+      <td><strong>${targetLabel}</strong></td>
+      <td>${flow.unit}</td>
+      <td class="text-right"><strong>${flow.flow.toLocaleString()}</strong></td>
+      <td><span class="badge badge-info">${flow.label}</span></td>
+      <td>
+        <div style="width: 20px; height: 20px; background-color: ${flow.color}; border: 1px solid #333; border-radius: 3px; display: inline-block;"></div>
+        <small class="ml-2">${flow.color}</small>
+      </td>
+    `;
+    
+    // Add hover effects
+    tableRow.addEventListener('mouseenter', function() {
+      this.style.backgroundColor = '#f8f9fa';
+      this.style.cursor = 'pointer';
+    });
+    
+    tableRow.addEventListener('mouseleave', function() {
+      this.style.backgroundColor = '';
+      this.style.cursor = 'default';
+    });
+    
+    tableBody.appendChild(tableRow);
+  });
+  
+  // Add summary row
+  const totalFlow = scenarioData.flows.reduce((sum, flow) => sum + flow.flow, 0);
+  const summaryRow = document.createElement('tr');
+  summaryRow.style.backgroundColor = '#e9ecef';
+  summaryRow.style.fontWeight = 'bold';
+  summaryRow.innerHTML = `
+    <td colspan="3"><strong>Total Material Flow</strong></td>
+    <td class="text-right"><strong>${totalFlow.toLocaleString()}</strong></td>
+    <td colspan="2"><span class="badge badge-success">Summary</span></td>
+  `;
+  tableBody.appendChild(summaryRow);
+}
+
+// Calculate efficiency metric for MCA analysis
+function calculateEfficiency(flow, scenarioData) {
+  // Simple efficiency calculation based on flow type and magnitude
+  const maxFlow = Math.max(...scenarioData.flows.map(f => f.flow));
+  const efficiency = Math.round((flow.flow / maxFlow) * 100);
+  
+  // Adjust based on flow type
+  if (flow.label.includes('reused') || flow.label.includes('phosphorus') || flow.label.includes('nutrient')) {
+    return Math.min(efficiency + 20, 100); // Boost for beneficial flows
+  } else if (flow.label.includes('emission') || flow.label.includes('ash') || flow.label.includes('landfill')) {
+    return Math.max(efficiency - 30, 0); // Reduce for waste flows
+  }
+  
+  return efficiency;
+}
+
+// Utility function to adjust color brightness (reused from sankey)
+function adjustColorBrightness(hex, amount) {
+  const usePound = hex.charAt(0) === '#';
+  const col = usePound ? hex.slice(1) : hex;
+  
+  const num = parseInt(col, 16);
+  let r = (num >> 16) + amount;
+  let g = (num >> 8 & 0x00FF) + amount;
+  let b = (num & 0x0000FF) + amount;
+  
+  r = r > 255 ? 255 : r < 0 ? 0 : r;
+  g = g > 255 ? 255 : g < 0 ? 0 : g;
+  b = b > 255 ? 255 : b < 0 ? 0 : b;
+  
+  return (usePound ? '#' : '') + (r << 16 | g << 8 | b).toString(16).padStart(6, '0');
+}

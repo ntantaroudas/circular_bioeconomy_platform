@@ -67,63 +67,44 @@ function createSankeyChart(scenarioDataForChart) {
     return;
   }
 
-  // Get unique nodes from the flows
-  const nodes = new Set();
-  scenarioDataForChart.flows.forEach(flow => {
-    nodes.add(flow.from);
-    nodes.add(flow.to);
-  });
+  // SOLUTION: Create unique target nodes for flows with same destination
+  // This will separate flows that go to the same target
+  const processedFlows = preprocessFlowsForSeparation(scenarioDataForChart.flows);
+  
+  console.log('Original flows:', scenarioDataForChart.flows.length);
+  console.log('Processed flows:', processedFlows.sankeyFlows.length);
 
-  console.log('Unique nodes found:', Array.from(nodes));
-
-  // Create labels array with proper names
-  const labels = Array.from(nodes).map(nodeId => {
-    const nodeLabel = scenarioData.nodeLabels[nodeId];
-    return nodeLabel || nodeId;
-  });
-
-  // Transform flows to match Chart.js sankey format
-  const sankeyFlows = scenarioDataForChart.flows.map(flow => ({
-    from: scenarioData.nodeLabels[flow.from] || flow.from,
-    to: scenarioData.nodeLabels[flow.to] || flow.to,
-    flow: flow.flow
-  }));
-
-  console.log('Chart data prepared:', { 
-    labels: labels.length, 
-    flows: sankeyFlows.length,
-    sampleFlow: sankeyFlows[0]
-  });
-
-  // Create the new Sankey diagram
+  // Create the new Sankey diagram with slightly increased separation
   const ctx = document.getElementById('sankeyChart').getContext('2d');
   sankeyChart = new Chart(ctx, {
     type: 'sankey',
     data: {
-      labels: labels,
+      labels: processedFlows.labels,
       datasets: [{
         label: 'Material Flow',
-        data: sankeyFlows,
+        data: processedFlows.sankeyFlows,
         colorFrom: function(context) {
-          // Find the original flow data to get the color
-          const flow = scenarioDataForChart.flows[context.dataIndex];
-          return flow && flow.color ? flow.color : '#c0dfe1';
+          const originalFlow = processedFlows.originalFlowsMap[context.dataIndex];
+          return originalFlow && originalFlow.color ? originalFlow.color : '#c0dfe1';
         },
         colorTo: function(context) {
-          // Use a slightly different shade for the target
-          const flow = scenarioDataForChart.flows[context.dataIndex];
-          if (flow && flow.color) {
-            return adjustColorBrightness(flow.color, -20);
+          const originalFlow = processedFlows.originalFlowsMap[context.dataIndex];
+          if (originalFlow && originalFlow.color) {
+            return adjustColorBrightness(originalFlow.color, -15);
           }
           return '#70c5c7';
         },
-        borderWidth: 1,
-        borderColor: '#333',
+        borderWidth: 5, // Increased from 4 to 5 for better separation
+        borderColor: '#000', // Black borders for maximum contrast
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      interaction: {
+        intersect: false,
+        mode: 'point' // More precise interaction
+      },
       plugins: {
         title: {
           display: true,
@@ -135,7 +116,7 @@ function createSankeyChart(scenarioDataForChart) {
           color: '#2c3e50',
           padding: {
             top: 10,
-            bottom: 20
+            bottom: 25
           }
         },
         legend: {
@@ -143,76 +124,203 @@ function createSankeyChart(scenarioDataForChart) {
           position: 'bottom',
           labels: {
             generateLabels: function(chart) {
-              // Create legend items based on unique flow types
               const uniqueLabels = [...new Set(scenarioDataForChart.flows.map(f => f.label))];
-              return uniqueLabels.slice(0, 8).map((label, index) => {
+              return uniqueLabels.map((label, index) => {
                 const flow = scenarioDataForChart.flows.find(f => f.label === label);
                 return {
                   text: label,
                   fillStyle: flow ? flow.color : '#c0dfe1',
-                  strokeStyle: '#333',
-                  lineWidth: 1
+                  strokeStyle: '#000',
+                  lineWidth: 2
                 };
               });
             },
-            boxWidth: 15,
+            boxWidth: 20,
             boxHeight: 15,
-            padding: 10,
+            padding: 15,
             font: {
-              size: 11
+              size: 12
             }
           }
         },
         tooltip: {
+          enabled: true,
+          mode: 'point',
+          intersect: false,
           callbacks: {
             title: function(context) {
               return 'Material Flow Details';
             },
             label: function(context) {
-              const flow = scenarioDataForChart.flows[context.dataIndex];
+              const originalFlow = processedFlows.originalFlowsMap[context.dataIndex];
+              const originalSource = scenarioData.nodeLabels[originalFlow.originalFrom] || originalFlow.originalFrom;
+              const originalTarget = scenarioData.nodeLabels[originalFlow.originalTo] || originalFlow.originalTo;
+              
               return [
-                `Source: ${context.raw.from}`,
-                `Target: ${context.raw.to}`,
-                `Quantity: ${context.raw.flow.toLocaleString()} ${flow ? flow.unit : 't TS'}`,
-                `Material Type: ${flow ? flow.label : 'Material'}`
+                `From: ${originalSource}`,
+                `To: ${originalTarget}`,
+                `Quantity: ${originalFlow.flow.toLocaleString()} ${originalFlow.unit || 't TS'}`,
+                `Material: ${originalFlow.label || 'Material'}`
               ];
+            },
+            footer: function(tooltipItems) {
+              const originalFlow = processedFlows.originalFlowsMap[tooltipItems[0].dataIndex];
+              const totalFlow = scenarioDataForChart.flows.reduce((sum, f) => sum + f.flow, 0);
+              const percentage = ((originalFlow.flow / totalFlow) * 100).toFixed(1);
+              return `${percentage}% of total flow`;
             }
           },
-          backgroundColor: 'rgba(44, 62, 80, 0.95)',
+          backgroundColor: 'rgba(0, 0, 0, 0.9)',
           titleColor: '#fff',
           bodyColor: '#fff',
+          footerColor: '#ffd700',
           borderColor: '#70c5c7',
-          borderWidth: 2,
-          cornerRadius: 8,
+          borderWidth: 3,
+          cornerRadius: 10,
           displayColors: true,
           titleFont: {
             size: 14,
             weight: 'bold'
           },
           bodyFont: {
-            size: 12
+            size: 13
           },
-          padding: 12
+          footerFont: {
+            size: 12,
+            style: 'italic'
+          },
+          padding: 15
         }
       },
       layout: {
         padding: {
-          top: 20,
-          bottom: 30,
-          left: 20,
-          right: 20
+          top: 45, // Increased from 40 to 45
+          bottom: 65, // Increased from 60 to 65
+          left: 45, // Increased from 40 to 45
+          right: 45 // Increased from 40 to 45
         }
       },
       animation: {
-        duration: 1200,
+        duration: 1500,
         easing: 'easeInOutQuart'
+      },
+      // More increased separation settings
+      sankey: {
+        node: {
+          width: 32, // Increased from 28 to 32
+          padding: 35, // Increased from 30 to 35
+          borderWidth: 4, // Increased from 3 to 4
+          borderColor: '#000'
+        },
+        link: {
+          minHeight: 12, // Increased from 10 to 12
+          opacity: 0.85,
+          hoverOpacity: 1.0,
+          // More vertical separation
+          curvature: 0.75 // Increased from 0.7 to 0.75
+        }
+      },
+      // Chart area settings for maximum space utilization
+      scales: {
+        x: {
+          display: false
+        },
+        y: {
+          display: false
+        }
       }
     }
   });
 
+  // Enhanced hover effects
+  ctx.canvas.addEventListener('mousemove', function(event) {
+    const rect = ctx.canvas.getBoundingClientRect();
+    const elements = sankeyChart.getElementsAtEventForMode(event, 'point', { intersect: false }, false);
+    ctx.canvas.style.cursor = elements.length > 0 ? 'pointer' : 'default';
+  });
+
   // Store chart instance globally
   window.sankeyChart = sankeyChart;
-  console.log('✅ Sankey chart created successfully');
+  console.log('✅ Slightly improved separation Sankey chart created successfully');
+}
+
+// NEW FUNCTION: Preprocess flows to create unique targets for better separation
+function preprocessFlowsForSeparation(originalFlows) {
+  const sankeyFlows = [];
+  const labels = new Set();
+  const originalFlowsMap = {};
+  
+  // Group flows by target to identify conflicts
+  const flowsByTarget = {};
+  originalFlows.forEach((flow, index) => {
+    const targetKey = flow.to;
+    if (!flowsByTarget[targetKey]) {
+      flowsByTarget[targetKey] = [];
+    }
+    flowsByTarget[targetKey].push({ ...flow, originalIndex: index });
+  });
+  
+  let flowIndex = 0;
+  
+  // Process each target group
+  Object.keys(flowsByTarget).forEach(targetKey => {
+    const targetFlows = flowsByTarget[targetKey];
+    
+    if (targetFlows.length === 1) {
+      // Single flow to this target - no separation needed
+      const flow = targetFlows[0];
+      const sourceLabel = scenarioData.nodeLabels[flow.from] || flow.from;
+      const targetLabel = scenarioData.nodeLabels[flow.to] || flow.to;
+      
+      sankeyFlows.push({
+        from: sourceLabel,
+        to: targetLabel,
+        flow: flow.flow
+      });
+      
+      labels.add(sourceLabel);
+      labels.add(targetLabel);
+      
+      originalFlowsMap[flowIndex] = {
+        ...flow,
+        originalFrom: flow.from,
+        originalTo: flow.to
+      };
+      flowIndex++;
+      
+    } else {
+      // Multiple flows to same target - create unique targets
+      targetFlows.forEach((flow, subIndex) => {
+        const sourceLabel = scenarioData.nodeLabels[flow.from] || flow.from;
+        const baseTargetLabel = scenarioData.nodeLabels[flow.to] || flow.to;
+        
+        // Create unique target label by adding material type
+        const uniqueTargetLabel = `${baseTargetLabel}\n(${flow.label})`;
+        
+        sankeyFlows.push({
+          from: sourceLabel,
+          to: uniqueTargetLabel,
+          flow: flow.flow
+        });
+        
+        labels.add(sourceLabel);
+        labels.add(uniqueTargetLabel);
+        
+        originalFlowsMap[flowIndex] = {
+          ...flow,
+          originalFrom: flow.from,
+          originalTo: flow.to
+        };
+        flowIndex++;
+      });
+    }
+  });
+  
+  return {
+    sankeyFlows,
+    labels: Array.from(labels),
+    originalFlowsMap
+  };
 }
 
 // Utility function to adjust color brightness

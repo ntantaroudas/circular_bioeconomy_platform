@@ -137,6 +137,8 @@ function selectScenario(scenarioId) {
     setTimeout(() => {
         if (typeof showSankeyDiagram === 'function') {
             showSankeyDiagram();
+        } else {
+            console.error('showSankeyDiagram function not found');
         }
     }, 100);
 }
@@ -158,9 +160,15 @@ function hideChart() {
         chartContainer.style.display = 'none';
     }
     
-    // Destroy existing chart
-    if (window.sankeyChart) {
-        window.sankeyChart.destroy();
+    // Safely destroy existing chart
+    try {
+        if (window.sankeyChart && typeof window.sankeyChart.destroy === 'function') {
+            window.sankeyChart.destroy();
+            window.sankeyChart = null;
+        }
+    } catch (error) {
+        console.warn('Error destroying chart:', error);
+        // Clear the reference anyway
         window.sankeyChart = null;
     }
 }

@@ -131,6 +131,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "bio_app/static"]
   # Your static directories
 STATIC_ROOT = BASE_DIR / "staticfiles"    # Add this line
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 
 

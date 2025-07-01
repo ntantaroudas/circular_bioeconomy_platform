@@ -81,7 +81,11 @@ function updateScenarioButtons(city) {
     scenarioButtonsContainer.innerHTML = '';
     
     if (scenarios.length === 0) {
-        scenarioButtonsContainer.innerHTML = '<p style="text-align: center; color: #6c757d;">No scenarios available for this city.</p>';
+        const lang = getCurrentLanguage();
+        const noScenariosText = lang === 'de' 
+            ? 'Keine Szenarien für diese Stadt verfügbar.' 
+            : 'No scenarios available for this city.';
+        scenarioButtonsContainer.innerHTML = `<p style="text-align: center; color: #6c757d;">${noScenariosText}</p>`;
         return;
     }
     
@@ -91,11 +95,14 @@ function updateScenarioButtons(city) {
         button.className = 'scenario-btn';
         button.dataset.scenario = scenario.id;
         
+        // Get translated name
+        const scenarioName = getTranslation(scenario.name);
+        
         // Use shorter name for button text to fit better
-        let buttonText = scenario.name;
+        let buttonText = scenarioName;
         if (buttonText.length > 30) {
             // Extract just the scenario number and type for cleaner display
-            if (buttonText.includes('SZENARIO')) {
+            if (buttonText.includes('SZENARIO') || buttonText.includes('SCENARIO')) {
                 const parts = buttonText.split(':');
                 if (parts.length > 1) {
                     buttonText = parts[0].trim() + ': ' + parts[1].trim().substring(0, 15) + '...';
@@ -104,7 +111,7 @@ function updateScenarioButtons(city) {
         }
         
         button.textContent = buttonText;
-        button.title = scenario.subtitle; // Full subtitle on hover
+        button.title = getTranslation(scenario.subtitle); // Full subtitle on hover
         
         button.addEventListener('click', function() {
             console.log('Scenario selected:', scenario.id);
@@ -120,7 +127,11 @@ function updateScenarioButtons(city) {
 function clearScenarioButtons() {
     const scenarioButtonsContainer = document.getElementById('scenarioButtons');
     if (scenarioButtonsContainer) {
-        scenarioButtonsContainer.innerHTML = '<p style="text-align: center; color: #6c757d; margin: 20px 0;">Please select a city to view available scenarios.</p>';
+        const lang = getCurrentLanguage();
+        const selectCityText = lang === 'de' 
+            ? 'Bitte wählen Sie eine Stadt aus, um verfügbare Szenarien zu sehen.' 
+            : 'Please select a city to view available scenarios.';
+        scenarioButtonsContainer.innerHTML = `<p style="text-align: center; color: #6c757d; margin: 20px 0;">${selectCityText}</p>`;
     }
 }
 

@@ -1,0 +1,220 @@
+{% load static %}
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <title>Best Practices in der Kreislauf-Bioökonomie - Lernen und Umsetzen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Zugang zu Top Best Practices, Fallstudien und Leitfäden in der Kreislauf-Bioökonomie. Bleiben Sie informiert über regulatorische Compliance und treiben Sie nachhaltige Entwicklung in Ihrer Branche voran."
+    />
+    <img
+      alt="Logo"
+      src="https://appproject.dhiwise.com/dhiwise-logo.png?c=&v="
+      style="width: 0px; height: 0px; display: none"
+    />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/components.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/FBestPracticesOne.css' %}" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  </head>
+  <body>
+    <div class="f-home">
+      <!-- header navigation section -->
+      {% include "navbar.html" %}
+      
+      <div class="column_one-1">
+        <!-- hero banner section -->
+        <div class="container-xs">
+          <div class="section__background">
+            <div class="section__main__stack__column">
+              <img
+                src="{% static 'images/img_noiseeffect_vector.svg' %}"
+                alt="Noise Effect Image"
+                class="section__main__stack__image"
+              />
+              <div class="section__header">
+                <div class="section__main-2">
+                  <div class="section__main-stack">
+                    <div class="section__main-stack__images">
+                      <img
+                        src="{% static 'images/img_vector_59_teal_50_03.svg' %}"
+                        alt="Vector Fifty-nine Image"
+                        class="section__main__stack__column__stack__image--first"
+                      />
+                      <img
+                        src="{% static 'images/img_vector_60_teal_50_03.svg' %}"
+                        alt="Vector Sixty Image"
+                        class="section__main__stack__column__stack__image--second"
+                      />
+                      <img
+                        src="{% static 'images/img_vector_61.svg' %}"
+                        alt="Vector Sixty-one Image"
+                        class="section__main-stack__image"
+                      />
+                      <div class="section__main-stack__content">
+                        <div class="section__main-stack__content-header">
+                          <img
+                            src="{% static 'images/img_ellipse_50.png' %}"
+                            alt="Ellipse Image"
+                            class="section__main-stack__content-header__icon"
+                          />
+                          <p class="section__main-stack__content-header__title ui text size-text4xl">Best Practices</p>
+                        </div>
+                        <div class="section__main-stack__content-info">
+                          <img
+                            src="{% static 'images/img_ellipse_52.png' %}"
+                            alt="Ellipse One Image"
+                            class="section__main-stack__content-info__icon"
+                          />
+                          <div class="section__main-stack__content-info__details">
+                            <div class="section__main-stack__content-info__details-row">
+                              <div class="section__main-stack__content-info__details-row__icons">
+                                <img
+                                  src="{% static 'images/img_user.svg' %}"
+                                  alt="User Image"
+                                  class="section__main-stack__content-info__details-row__icon--user"
+                                />
+                                <img
+                                  src="{% static 'images/img_favorite.svg' %}"
+                                  alt="Favorite Image"
+                                  class="section__main-stack__content-info__details-row__icon--favorite"
+                                />
+                              </div>
+                                <!-- Search Form -->
+                                <form method="GET" action="{% url 'best_practices' %}" style="width: 100%; display: flex; align-items: center; padding-left: 10%;">
+                                  <label class="section__main-stack__content-info__details-row__search ui input white_a700 size-xs fill" style="width: 110%;">
+                                    <input type="text" name="q" placeholder="Suchen..." value="{{ request.GET.q|default_if_none:'' }}" style="width: 100%; padding: 10px;"/>
+                                  </label>
+                                  <button type="submit" style="background: none; border: none; padding-left: 10px;">
+                                    <img src="{% static 'images/img_rewind.svg' %}" alt="Search" class="rewind" />
+                                  </button>
+                                </form>
+                              <img
+                                src="{% static 'images/img_ellipse_51.png' %}"
+                                alt="Ellipse Two Image"
+                                class="section__main-stack__content-info__details-row__icon"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <h1 class="section__main__stack__column__stack__info__title ui heading size-headingxl">
+                    Best Practices
+                  </h1>
+                </div>
+              </div>
+            </div>
+            <img
+              src="{% static 'images/img_noiseeffect_vector.svg' %}"
+              alt="Noise Effect Image Bottom"
+              class="section__background-image"
+            />
+          </div>
+        </div>
+
+        <!-- featured articles section -->
+        <div class="section__column--nested-duodenary">
+          <div class="section__aside container-xs">
+            <div class="section__aside__grid">
+              {% for practice in best_practices %}
+              <div class="best-practice-info">
+                <div class="best-practice-info__content">
+                  <div class="best-practice-info__header">
+                    <img src="{% static 'images/img_globe.svg' %}" alt="Globe Image" class="best-practice-info__image" />
+                  </div>
+                  <div class="best-practice-info__details">
+                    <div class="best-practice-info__text-container">
+                      <p class="best-practice-info__title ui text size-textlg">{{ practice.title }}</p>
+                      <p class="best-practice-info__description ui text size-textmd">
+                        {{ practice.description }}
+                      </p>
+                    </div>
+                    <a href="{{ practice.link }}" target="_blank" class="learn-more-link-link">
+                      <p class="best-practice-info__link ui text size-textmd">Mehr erfahren</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <nav aria-label="Best Practices Paginierung">
+          <ul class="pagination justify-content-center">
+            <!-- First and Previous buttons -->
+            {% if best_practices.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page=1{% if query %}&q={{ query }}{% endif %}" aria-label="Erste">
+                  <span aria-hidden="true">&laquo;&laquo;</span>
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{ best_practices.previous_page_number }}{% if query %}&q={{ query }}{% endif %}" aria-label="Vorherige">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+            {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" aria-disabled="true" aria-label="Erste">
+                  <span aria-hidden="true">&laquo;&laquo;</span>
+                </a>
+              </li>
+              <li class="page-item disabled">
+                <a class="page-link" aria-disabled="true" aria-label="Vorherige">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+            {% endif %}
+        
+            <!-- Current page display -->
+            <li class="page-item disabled">
+              <span class="page-link">
+                Seite {{ best_practices.number }} von {{ best_practices.paginator.num_pages }}
+              </span>
+            </li>
+        
+            <!-- Next and Last buttons -->
+            {% if best_practices.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ best_practices.next_page_number }}{% if query %}&q={{ query }}{% endif %}" aria-label="Nächste">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{ best_practices.paginator.num_pages }}{% if query %}&q={{ query }}{% endif %}" aria-label="Letzte">
+                  <span aria-hidden="true">&raquo;&raquo;</span>
+                </a>
+              </li>
+            {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" aria-disabled="true" aria-label="Nächste">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+              <li class="page-item disabled">
+                <a class="page-link" aria-disabled="true" aria-label="Letzte">
+                  <span aria-hidden="true">&raquo;&raquo;</span>
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+        
+
+      </div>
+
+      <!-- footer section -->
+      {% include "footer.html" %}
+      
+    </div>
+  </body>
+</html>

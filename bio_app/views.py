@@ -5,29 +5,46 @@ from django.core.mail import EmailMessage
 from django.contrib import messages  # For showing success messages
 from django.core.paginator import Paginator
 from .forms import InterestForm
+from django.utils import translation
+from django.conf import settings
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
+
+def get_template_name(base_template_name):
+    """Helper function to get the correct template based on current language"""
+    current_language = translation.get_language()
+    if current_language == 'de':
+        # Insert _de before .html
+        parts = base_template_name.rsplit('.', 1)
+        if len(parts) == 2:
+            return f"{parts[0]}_de.{parts[1]}"
+    return base_template_name
 
 
 # Create your views here.
 #Home Page
 def home(request):
-    return render(request, 'bio_app/home.html')
+    template_name = get_template_name('bio_app/home.html')
+    return render(request, template_name)
 
 
 #About Page
 def about(request):
-    return render(request, 'bio_app/about.html')
+    template_name = get_template_name('bio_app/about.html')
+    return render(request, template_name)
 
 # Scenario Analysis Page
 def scenario_analysis(request):
-    return render(request, 'bio_app/scenario_analysis.html')
+    template_name = get_template_name('bio_app/scenario_analysis.html')
+    return render(request, template_name)
 
 
 # Vacant Buildings Page
 def vacant_buildings(request):
     query = request.GET.get('search', '')
     if query:
-        vacant_buildings = VacantBuilding.objects.filter(
+        vacant_buildings_list = VacantBuilding.objects.filter(
             Q(name__icontains=query) |
             Q(address__icontains=query) |
             Q(proposed_purpose__icontains=query) |
@@ -35,15 +52,26 @@ def vacant_buildings(request):
             Q(year__icontains=query)
         )
     else:
-        vacant_buildings = VacantBuilding.objects.all()
+        vacant_buildings_list = VacantBuilding.objects.all()
 
+    # Debug: print the count
+    print(f"Found {vacant_buildings_list.count()} buildings")
+    
     # Add pagination (set to 10 items per page)
-    paginator = Paginator(vacant_buildings, 10)  # Adjust the number if needed
+    paginator = Paginator(vacant_buildings_list, 10)  # Adjust the number if needed
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    
+    # Get all buildings for the map (not just the paginated ones)
+    all_buildings = VacantBuilding.objects.all()
 
-    context = {'page_obj': page_obj, 'query': query}
-    return render(request, 'bio_app/vacant_buildings.html', context)
+    context = {
+        'page_obj': page_obj, 
+        'query': query,
+        'all_buildings': all_buildings  # Add all buildings for map markers
+    }
+    template_name = get_template_name('bio_app/vacant_buildings.html')
+    return render(request, template_name, context)
 
 
 # Best Practices Page with search and pagination functionality
@@ -59,7 +87,7 @@ def best_practices(request):
         best_practices_list = BestPractice.objects.all()
 
     # Pagination settings: Show 8 best practices per page
-    paginator = Paginator(best_practices_list, 8)  # Show 10 best practices per page
+    paginator = Paginator(best_practices_list, 8)  # Show 8 best practices per page
 
     page_number = request.GET.get('page')  # Get the current page number
     best_practices = paginator.get_page(page_number)  # Get the best practices for the current page
@@ -69,7 +97,8 @@ def best_practices(request):
         'query': query
     }
 
-    return render(request, 'bio_app/best_practices.html', context)
+    template_name = get_template_name('bio_app/best_practices.html')
+    return render(request, template_name, context)
 
 
 # Contact Page with Email Sending functionality
@@ -100,7 +129,8 @@ def contact(request):
 
         return redirect('contact')  # Redirect back to the contact page after submission
 
-    return render(request, 'bio_app/contact.html')
+    template_name = get_template_name('bio_app/contact.html')
+    return render(request, template_name)
 
 
 #Express Interest View
@@ -118,4 +148,6 @@ def express_interest(request, building_id):
             return redirect('vacant_buildings')
     else:
         form = InterestForm()
-    return render(request, 'bio_app/express_interest.html', {'form': form, 'building': building})
+    
+    template_name = get_template_name('bio_app/express_interest.html')
+    return render(request, template_name, {'form': form, 'building': building})

@@ -1,4 +1,8 @@
 {% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+{% get_language_info_list for LANGUAGES as languages %}
 
 <style>
     /* Retain original styles while adding mobile responsiveness */
@@ -42,19 +46,84 @@
       margin-left: 50px;
     }
 
-    /* Open button for sidebar */
-   /* .openbtn {
-      font-size: 20px;
-      cursor: pointer;
-      background-color: transparent; /* Match the navbar */
-    /*  color: #fff; /* Match the text color */
-    /*  padding: 10px 15px;
-      border: none;
-    }*/
+    /* Language Dropdown Styles */
+    .language-switcher {
+        position: relative;
+        display: inline-block;
+        margin-left: 20px;
+    }
 
-    /* .openbtn:hover {
-      color: #ccc;
-    } */
+    .language-dropdown {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px 10px;
+        transition: all 0.3s ease;
+    }
+
+    .language-dropdown:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 5px;
+    }
+
+    .flag-icon {
+        width: 24px;
+        height: 18px;
+        object-fit: cover;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 2px;
+    }
+
+    .dropdown-arrow {
+        font-size: 12px;
+        color: #fff;
+        transition: transform 0.3s ease;
+    }
+
+    .language-switcher.active .dropdown-arrow {
+        transform: rotate(180deg);
+    }
+
+    .language-options {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        overflow: hidden;
+        margin-top: 5px;
+        min-width: 120px;
+        z-index: 1001;
+    }
+
+    .language-switcher.active .language-options {
+        display: block;
+    }
+
+    .language-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 15px;
+        text-decoration: none;
+        color: #333;
+        transition: background 0.3s ease;
+    }
+
+    .language-option:hover {
+        background: #f5f5f5;
+        text-decoration: none;
+        color: #333;
+    }
+
+    .language-option.active {
+        background: #e9ecef;
+    }
 
     /* Main content */
     .main-content {
@@ -79,6 +148,11 @@
       .sidebar {
         width: 250px;
       }
+
+      .language-switcher {
+        margin-left: auto;
+        margin-right: 10px;
+      }
     }
 
     /* Smooth scrolling for in-page navigation */
@@ -90,16 +164,13 @@
 <!-- Sidebar navigation -->
 <div id="mySidebar" class="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-    <a href="{% url 'home' %}">Home</a>
-    <a href="{% url 'about' %}">About</a>
-    <a href="{% url 'scenario_analysis' %}">Scenarios Analysis</a>
-    <a href="{% url 'vacant_buildings' %}">Vacant Buildings</a>
-    <a href="{% url 'best_practices' %}">Best Practices</a>
-    <a href="{% url 'contact' %}">Contact</a>
+    <a href="{% url 'home' %}">{% trans "Home" %}</a>
+    <a href="{% url 'about' %}">{% trans "About" %}</a>
+    <a href="{% url 'scenario_analysis' %}">{% trans "Scenarios Analysis" %}</a>
+    <a href="{% url 'vacant_buildings' %}">{% trans "Vacant Buildings" %}</a>
+    <a href="{% url 'best_practices' %}">{% trans "Best Practices" %}</a>
+    <a href="{% url 'contact' %}">{% trans "Contact" %}</a>
   </div>
-
-  <!-- Open button to toggle sidebar (visible on mobile) -->
-  <!-- <button class="openbtn" onclick="openNav()">☰</button> -->
 
 <header class="header">
     <div class="header__top-row container-xs">
@@ -108,36 +179,68 @@
             <li>
               <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
                 <div class="header__menu-item">
-                    <p class="ui text size-textmd">Home</p>
+                    <p class="ui text size-textmd">{% trans "Home" %}</p>
                 </div>
             </a>
             </li>
             <li>
               <a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">
-                <p class="ui text size-textmd">About</p>
+                <p class="ui text size-textmd">{% trans "About" %}</p>
             </a>
             </li>
             <li>
               <a href="{% url 'scenario_analysis' %}" class="{% if request.resolver_match.url_name == 'scenario_analysis' %}active{% endif %}">
-                <p class="ui text size-textmd">Scenarios Analysis</p>
+                <p class="ui text size-textmd">{% trans "Scenarios Analysis" %}</p>
             </a>
             </li>
             <li>
               <a href="{% url 'vacant_buildings' %}" class="{% if request.resolver_match.url_name == 'vacant_buildings' %}active{% endif %}">
-                <p class="ui text size-textmd">Vacant Buildings</p>
+                <p class="ui text size-textmd">{% trans "Vacant Buildings" %}</p>
             </a>
           </li>
             <li>
               <a href="{% url 'best_practices' %}" class="{% if request.resolver_match.url_name == 'best_practices' %}active{% endif %}">
-                <p class="ui text size-textmd">Best Practices</p>
+                <p class="ui text size-textmd">{% trans "Best Practices" %}</p>
             </a>
             </li>
             <li>
               <a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
-                <p class="ui text size-textmd">Contact</p>
+                <p class="ui text size-textmd">{% trans "Contact" %}</p>
             </a>
             </li>
         </ul>
+        
+        <!-- Language Switcher -->
+        <div class="language-switcher" id="languageSwitcher">
+            <button class="language-dropdown" onclick="toggleLanguageDropdown()">
+                {% if LANGUAGE_CODE == 'en' %}
+                    <img src="{% static 'images/flags/uk.png' %}" alt="English" class="flag-icon">
+                    <span style="color: #fff;">EN</span>
+                {% elif LANGUAGE_CODE == 'de' %}
+                    <img src="{% static 'images/flags/de.png' %}" alt="Deutsch" class="flag-icon">
+                    <span style="color: #fff;">DE</span>
+                {% endif %}
+                <span class="dropdown-arrow">▼</span>
+            </button>
+            <div class="language-options">
+                {% for language in languages %}
+                    <form action="{% url 'set_language' %}" method="post" style="margin: 0;">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ request.get_full_path|slice:'3:' }}">
+                        <input name="language" type="hidden" value="{{ language.code }}">
+                        <button type="submit" class="language-option {% if language.code == LANGUAGE_CODE %}active{% endif %}" style="width: 100%; border: none; background: none; text-align: left;">
+                            {% if language.code == 'en' %}
+                                <img src="{% static 'images/flags/uk.png' %}" alt="English" class="flag-icon">
+                                <span>English</span>
+                            {% elif language.code == 'de' %}
+                                <img src="{% static 'images/flags/de.png' %}" alt="Deutsch" class="flag-icon">
+                                <span>Deutsch</span>
+                            {% endif %}
+                        </button>
+                    </form>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </header>
 
@@ -150,5 +253,17 @@
         function closeNav() {
           document.getElementById("mySidebar").style.width = "0";
         }
-      </script>
 
+        function toggleLanguageDropdown() {
+            const switcher = document.getElementById('languageSwitcher');
+            switcher.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const switcher = document.getElementById('languageSwitcher');
+            if (!switcher.contains(event.target)) {
+                switcher.classList.remove('active');
+            }
+        });
+      </script>

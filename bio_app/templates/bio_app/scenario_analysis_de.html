@@ -1,0 +1,340 @@
+{% load static %}
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <title>Szenarioanalyse - Management von Biomasse-Reststoffströmen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Vertiefen Sie sich in unsere Szenarioanalyse für effektives Management von Biomasse-Reststoffströmen. Nutzen Sie Sankey-Diagramme zur Optimierung von Verwertungswegen und zur Verbesserung der regionalen Nachhaltigkeit."
+    />
+    <img
+      alt="Logo"
+      src="https://appproject.dhiwise.com/dhiwise-logo.png?c=&v="
+      style="width: 0px; height: 0px; display: none"
+    />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/components.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/FScenarioAnalysisselected.css' %}" />
+     <!-- Add Bootstrap CSS via CDN -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js Sankey Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-sankey"></script>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<style>
+/* CSS for Sankey chart with proper spacing */
+.chart-container {
+  position: relative;
+  height: 600px; /* Increased height */
+  width: 100%;
+  padding: 0 40px;
+  box-sizing: border-box;
+  display: none;
+  margin-bottom: 150px; /* Large margin to prevent footer overlap */
+}
+
+#sankeyChart {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+/* Scenario buttons in a single row with overflow scroll */
+.scenario-buttons {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto; /* Horizontal scroll for many buttons */
+  overflow-y: visible;
+  padding: 10px 0;
+  margin: 20px 0;
+  min-height: 60px; /* Fixed height to prevent layout jumps */
+  align-items: center;
+  scrollbar-width: thin;
+  scrollbar-color: #70c5c7 #f1f1f1;
+}
+
+/* Custom scrollbar for webkit browsers */
+.scenario-buttons::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scenario-buttons::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.scenario-buttons::-webkit-scrollbar-thumb {
+  background: #70c5c7;
+  border-radius: 3px;
+}
+
+.scenario-buttons::-webkit-scrollbar-thumb:hover {
+  background: #5a9fa1;
+}
+
+.scenario-btn {
+  background: #ffffff;
+  border: 2px solid #70c5c7;
+  color: #2c3e50;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-size: 0.9rem;
+  min-width: 200px; /* Fixed minimum width */
+  max-width: 280px; /* Maximum width */
+  text-align: center;
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Show ... for long text */
+  flex-shrink: 0; /* Prevent shrinking */
+  height: 45px; /* Fixed height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scenario-btn:hover {
+  background: #70c5c7;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.scenario-btn.active {
+  background: #70c5c7;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+/* Text description with proper spacing */
+.text-description {
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 10px;
+  border-left: 4px solid #70c5c7;
+  margin: 30px 0; /* Space above and below */
+  font-size: 1rem;
+  line-height: 1.6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure adequate spacing from footer */
+.columnvectorfif-1 {
+  margin-bottom: 200px; /* Large bottom margin */
+  padding-bottom: 50px;
+}
+
+/* Footer positioning fix */
+footer {
+  margin-top: auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Container adjustments */
+.scenario-analysis {
+  margin-bottom: 40px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .scenario-buttons {
+    justify-content: flex-start; /* Left-align on mobile */
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .scenario-btn {
+    min-width: 180px;
+    font-size: 0.85rem;
+    padding: 8px 16px;
+  }
+
+  .chart-container {
+    height: 500px;
+    margin-bottom: 100px;
+    padding: 0 20px;
+  }
+
+  .text-description {
+    padding: 20px;
+    margin: 20px 0;
+  }
+
+  .columnvectorfif-1 {
+    margin-bottom: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .scenario-btn {
+    min-width: 160px;
+    font-size: 0.8rem;
+    padding: 8px 12px;
+  }
+
+  .chart-container {
+    height: 400px;
+    padding: 0 10px;
+  }
+}
+
+/* Ensure page has enough height */
+html, body {
+  min-height: 100vh;
+}
+
+/* Page layout */
+.columnheader_logo-one {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Scroll hint for buttons */
+.scenario-buttons::after {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  color: #6c757d;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.scenario-buttons:hover::after {
+  opacity: 1;
+}
+
+/* Hide scroll hint on mobile */
+@media (max-width: 768px) {
+  .scenario-buttons::after {
+    display: none;
+  }
+}
+</style>
+
+  </head>
+  <body>
+    <div class="columnheader_logo-one">
+      <!-- header navigation section -->
+      {% include "navbar.html" %}
+
+      <div class="columnvectorfif-1">
+        <!-- hero banner section -->
+        <div class="stackvectorfift-2">
+          <div class="section container-xs">
+            <img src="{% static 'images/img_rectangle_156.png' %}" alt="Thumbnail" class="scenario-analysis__image-1" />
+          </div>
+          <img src="{% static 'images/img_vector_59_1.png' %}" alt="Vector Image" class="scenario-analysis__image" />
+          <div class="rowvectorsixty">
+            <img
+              src="{% static 'images/img_vector_60_lime_100.svg' %}"
+              alt="Vector Image 1"
+              class="rowvectorsixty__image--lime"
+            />
+            <img
+              src="{% static 'images/img_vector_61_lime_100.svg' %}"
+              alt="Vector Image 2"
+              class="rowvectorsixty__image--lime-1"
+            />
+          </div>
+
+          <div class="scenario-analysis container-xs">
+            <p class="scenario-analysis__title ui text size-text5xl">Szenarioanalyse</p>
+
+            <!-- City and Scenario Selection -->
+            <div class="scenario-analysis__content">
+              <div class="scenario-analysis__row-1">
+                <div class="scenario-analysis__sub-row">
+                  <div class="scenario-analysis__icon-row">
+                    <img
+                      src="{% static 'images/img_vector_62_orange_300.svg' %}"
+                      alt="Vector Image"
+                      class="scenario-analysis__icon--vector"
+                    />
+                    <img
+                      src="{% static 'images/img_settings_orange_300.svg' %}"
+                      alt="Settings Image"
+                      class="scenario-analysis__icon--settings"
+                    />
+                  </div>
+                  <div class="scenario-analysis__selection-row">
+                    <img
+                      src="{% static 'images/img_ellipse_50_62x62.png' %}"
+                      alt="Ellipse Image"
+                      class="scenario-analysis__icon--ellipse"
+                    />
+                    <div class="scenario-analysis__selection-column">
+                      <p class="scenario-analysis__text ui text size-textxl">Bitte wählen Sie eine Stadt und ein Szenario aus</p>
+
+                      <!-- City Selection Dropdown -->
+                      <select
+                        id="cityDropdown"
+                        class="scenario-analysis__dropdown ui selectbox white_a700 size-sm fill"
+                        name="City Select"
+                        style="margin-bottom: 25px;"
+                      >
+                        <option value="">Stadt auswählen</option>
+                        <option value="salzburg">Salzburg</option>
+                        <option value="pongau">Pongau</option>
+                      </select>
+
+                      <!-- Scenario Selection Buttons (in a horizontal row) -->
+                      <div class="scenario-buttons" id="scenarioButtons">
+                        <p style="text-align: center; color: #6c757d; margin: 20px 0; width: 100%;">Bitte wählen Sie eine Stadt aus, um verfügbare Szenarien zu sehen.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="scenario-analysis__icon-row--small">
+                    <img
+                      src="{% static 'images/img_ellipse_52_28x28.png' %}"
+                      alt="Small Ellipse Image"
+                      class="scenario-analysis__icon--ellipse-small"
+                    />
+                    <img
+                      src="{% static 'images/img_ellipse_51_26x26.png' %}"
+                      alt="Tiny Ellipse Image"
+                      class="scenario-analysis__icon--ellipse-smaller"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sankey Chart Container -->
+        <div class="chart-container">
+          <div id="sankey-text-container" class="text-description">
+            Wählen Sie eine Stadt und ein Szenario aus, um die Sankey-Diagramm-Visualisierung anzuzeigen.
+          </div>
+          <canvas id="sankeyChart"></canvas>
+        </div>
+
+      </div>
+
+      {% include "footer.html" %}
+    </div>
+
+    <!-- Reference the JavaScript files -->
+    <script src="{% static 'js/scenario-data.js' %}"></script>
+    <script src="{% static 'js/dropdown-scenario-controller.js' %}"></script>
+    <script src="{% static 'js/final-sankey-diagram.js' %}"></script>
+
+  </body>
+</html>

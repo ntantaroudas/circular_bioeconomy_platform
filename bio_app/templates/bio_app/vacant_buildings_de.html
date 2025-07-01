@@ -1,0 +1,318 @@
+{% load static %}
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8" />
+    <title>Leerstehende Gebäude - Kreislauf-Bioökonomie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+
+    <style>
+        /* Adjust font sizes for table */
+        .table-container table {
+            font-size: 0.7rem; /* Decrease overall table font size */
+        }
+    
+        /* Decrease header font size slightly */
+        .table-container th {
+            font-size: 0.75rem;
+        }
+    
+        /* Map and table layout adjustments */
+        .content-wrapper {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+        #map {
+            height: 600px;
+            width: 30%;
+            min-width: 250px;
+        }
+    
+        /* Enable horizontal scroll when needed */
+        .table-container {
+            width: 70%;
+            padding: 5px;
+            overflow-x: auto; /* Show horizontal scroll only when needed */
+        }
+    
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+            #map, .table-container {
+                width: 100%;
+            }
+        }
+    </style>
+    
+    
+</head>
+<body>
+    <div class="f-home">
+        {% include "navbar.html" %}
+        
+        <div class="container mt-5">
+            <h1 class="mb-4">Leerstehende Gebäude</h1>
+            <p class="lead text-muted">
+                Finden Sie den perfekten Raum für Ihr Unternehmen im Pongau! Unsere Plattform erleichtert es Unternehmen und Unternehmern, verfügbare Immobilien zu erkunden, von Büros und Einzelhandelsflächen bis hin zu Lagerhallen und Industrieanlagen. Entdecken Sie Möglichkeiten, die Ihren Bedürfnissen entsprechen, und kontaktieren Sie direkt unsere Verwaltung, um Interesse zu bekunden und mehr über Mietoptionen zu erfahren.</p>
+            <div class="content-wrapper">
+                <!-- Map Section -->
+                <div id="map"></div>
+                
+                <!-- Table Section -->
+                <div class="table-container">
+                    <form method="get" action="{% url 'vacant_buildings' %}" class="form-inline mb-4">
+                        <input type="text" name="search" class="form-control mr-2" placeholder="Gebäude suchen..." value="{{ query }}">
+                        <button type="submit" class="btn btn-primary">Suchen</button>
+                    </form>
+    
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Adresse</th>
+                                <th>Fläche (m²)</th>
+                                <th>Etage</th>
+                                <th>Verfügbar ab</th>
+                                <th>Baujahr</th>
+                                <th>Vorgeschlagene Nutzung</th>
+                                <th>Beschreibung</th>
+                                <th>Aktion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for building in page_obj %}
+                            <tr>
+                                <td>{{ building.name }}</td>
+                                <td>{{ building.address }}</td>
+                                <td>{{ building.area_sq_ft }}</td>
+                                <td>{{ building.floor }}</td>
+                                <td>{{ building.available_from }}</td>
+                                <td>{{ building.year }}</td>
+                                <td>{{ building.proposed_purpose}}</td>
+                                <td>{{ building.description }}</td>
+                                <td>
+                                    <button class="btn btn-outline-primary btn-sm express-interest-btn" 
+                                        data-id="{{ building.id }}" 
+                                        data-name="{{ building.name }}" 
+                                        data-toggle="modal" 
+                                        data-target="#expressInterestModal">
+                                        Interesse bekunden
+                                    </button>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="9" class="text-center">Keine Gebäude gefunden.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                <!-- Pagination Controls -->
+                <nav aria-label="Paginierung">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1{% if query %}&search={{ query }}{% endif %}" aria-label="Erste">&laquo;&laquo;</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query %}&search={{ query }}{% endif %}" aria-label="Vorherige">&laquo;</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled"><a class="page-link">&laquo;&laquo;</a></li>
+                        <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+                        {% endif %}
+
+                        <li class="page-item disabled"><span class="page-link">Seite {{ page_obj.number }} von {{ page_obj.paginator.num_pages }}</span></li>
+
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query %}&search={{ query }}{% endif %}" aria-label="Nächste">&raquo;</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if query %}&search={{ query }}{% endif %}" aria-label="Letzte">&raquo;&raquo;</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled"><a class="page-link">&raquo;</a></li>
+                        <li class="page-item disabled"><a class="page-link">&raquo;&raquo;</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                </div>
+            </div>
+        </div>
+    
+        {% include "footer.html" %}
+    </div>
+    
+    <!-- Leaflet and JavaScript for Map -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+<script>
+    // Initialize the map with a default center (Pongau region center)
+    var defaultLat = 47.3333;  // Default latitude for Pongau
+    var defaultLng = 13.2;     // Default longitude for Pongau
+    var mapZoom = 10;          // Default zoom level
+    
+    // Debug: Check what buildings we have
+    console.log("Initializing map...");
+    
+    // Initialize the map
+    var map = L.map('map').setView([defaultLat, defaultLng], mapZoom);
+
+    // Add OpenStreetMap tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Array to store all markers
+    var markers = [];
+    var invalidBuildings = 0;
+    
+    // Add markers for ALL buildings (not just paginated ones)
+    {% for building in all_buildings %}
+        {% if building.latitude and building.longitude %}
+            // Check if coordinates are valid numbers
+            var lat = parseFloat({{ building.latitude }});
+            var lng = parseFloat({{ building.longitude }});
+            
+            if (!isNaN(lat) && !isNaN(lng) && lat !== 0 && lng !== 0) {
+                try {
+                    var marker = L.marker([lat, lng]).addTo(map);
+                    markers.push(marker);
+                    marker.bindPopup(`
+                        <b>{{ building.name|escapejs }}</b><br>
+                        {{ building.address|escapejs }}<br>
+                        <strong>Etage:</strong> {{ building.floor }}<br>
+                        <strong>Fläche:</strong> {{ building.area_sq_ft }} m²<br>
+                        <strong>Zweck:</strong> {{ building.proposed_purpose|default:"Nicht angegeben"|escapejs }}<br>
+                        <strong>Baujahr:</strong> {{ building.year }}<br>
+                        <a href="{% url 'express_interest' building.id %}" style="color: black; font-weight: bold; text-decoration: none; background-color: #C1E0E2; padding: 8px 12px; border-radius: 4px; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#FFA500'" onmouseout="this.style.backgroundColor='#C1E0E2'">Interesse bekunden</a>
+                    `);
+                } catch (e) {
+                    console.error("Error adding marker for building {{ building.id }}: ", e);
+                    invalidBuildings++;
+                }
+            } else {
+                console.warn("Invalid coordinates for building {{ building.id }}: lat=" + lat + ", lng=" + lng);
+                invalidBuildings++;
+            }
+        {% else %}
+            console.warn("Building {{ building.id }} has no coordinates");
+            invalidBuildings++;
+        {% endif %}
+    {% endfor %}
+    
+    // If we have valid markers, fit the map to show all of them
+    if (markers.length > 0) {
+        try {
+            var group = new L.featureGroup(markers);
+            map.fitBounds(group.getBounds().pad(0.1));
+        } catch (e) {
+            console.error("Error fitting bounds: ", e);
+        }
+    }
+    
+    console.log("Map initialized with " + markers.length + " valid markers");
+    console.log("Buildings with invalid/missing coordinates: " + invalidBuildings);
+</script>
+
+<!-- Express Interest Modal -->
+<div id="expressInterestModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Interesse bekunden</h5>
+                <button type="button" class="close-modal btn-close" data-dismiss="modal" aria-label="Schließen">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="modalBuildingInfo">Interessiert an dieser Immobilie? Füllen Sie die unten stehenden Details aus und kontaktieren Sie die Verwaltung.</p>
+                <form method="POST" action="{% url 'express_interest' 0 %}" id="expressInterestForm">
+                    {% csrf_token %}
+                    <input type="hidden" name="building_id" id="modalBuildingId">
+                    <div class="form-group">
+                        <label for="name">Ihr Name</label>
+                        <input type="text" name="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Ihre E-Mail</label>
+                        <input type="email" name="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Nachricht</label>
+                        <textarea name="message" class="form-control" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Interesse senden</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Bootstrap and jQuery Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+
+$(document).ready(function () {
+    $(".express-interest-btn").click(function () {
+        var buildingId = $(this).data("id");
+        var buildingName = $(this).data("name");
+
+        $("#modalBuildingInfo").html(`Interessiert an <b>${buildingName}</b>? Füllen Sie die unten stehenden Details aus und kontaktieren Sie die Verwaltung.`);
+
+        // Pass the ID into the form action dynamically
+        $("#modalBuildingId").val(buildingId);
+        $("#modalBuildingName").text(buildingName);
+        $("#expressInterestForm").attr("action", "/express-interest/" + buildingId + "/");
+
+        // Open the modal
+        $("#expressInterestModal").modal("show");
+    });
+
+    $(".close-modal").click(function () {
+        $("#expressInterestModal").modal("hide");
+    });
+});
+
+</script>
+
+
+<style>
+    /* Style for Close Button */
+    .close-modal {
+        font-size: 24px;
+        font-weight: bold;
+        color: black;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+    }
+
+    .close-modal:hover {
+        color: red;
+    }
+</style>
+
+
+
+
+    </body>
+
+</html>

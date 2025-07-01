@@ -1,0 +1,214 @@
+{% load static %}
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <title>Willkommen zur Circular Bioeconomy Smart Solution - Startseite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Erkunden Sie die Startseite der Circular Bioeconomy Smart Solution. Erfahren Sie mehr über Futural, Sankeys, Best Practices und regionale Fallstudien im Pongau."
+    />
+    <img
+      alt="Logo"
+      src="https://appproject.dhiwise.com/dhiwise-logo.png?c=&v="
+      style="width: 0px; height: 0px; display: none"
+    />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/components.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/FHome.css' %}" />
+  </head>
+  <body>
+    <div class="f-home">
+      <!-- header section -->
+      
+      {% include "navbar.html" %}
+      
+      <div class="newscreenbody">
+        <!-- hero section -->
+        <div class="stackvectorfift">
+          <img src="{% static 'images/img_vector_59.svg' %}" alt="Vector Image" class="image" />
+          <div class="section container-xs">
+            <div class="section__content">
+              <div class="section__top">
+                <img src="{% static 'images/img_image_24.png' %}" alt="Profile Image" class="section__top-image" />
+                <div class="section__top-controls" style="padding-left: 65%; padding-bottom:1%;">
+                  <button class="section__top-controls-item ui button white_a700 size-lg fill circle">
+                    <img src="{% static 'images/img_group_1194.png' %}" />
+                  </button>
+                  <button class="section__top-controls-item--settings ui button white_a700 size-lg fill circle">
+                    <img src="{% static 'images/img_settings.svg' %}" />
+                  </button>
+                </div>
+              </div>
+              <div class="section__main">
+                <div class="section__main-column">
+                  <p class="section__main-column-title ui text size-text4xl">
+                    Willkommen zur<br />Circular Bioeconomy Smart Solution
+                  </p>
+                  <p class="section__main-column-description ui text size-text1xl">
+                    Die Circular Bioeconomy Smart Solution für Pongau fördert Nachhaltigkeit durch die Abbildung von Materialflüssen, die Identifizierung von Wiederverwendungsmöglichkeiten und die Optimierung leerstehender Gebäude für kreislaufwirtschaftliche Praktiken. Mit Hilfe von Sankey-Diagrammen, Multi-Kriterien-Bewertungen und Mind-Mapping hilft sie den Beteiligten, Biomasseaschen, Klärschlamm, Lebensmittelabfälle umzunutzen und auch ungenutzte Räume zu identifizieren, um die nachhaltige Regionalentwicklung im Pongau zu unterstützen.
+                    <div class="section__main-column-actions">
+                      <button onclick="window.location.href='{% url 'about' %}'" class="section__main-column-actions-button ui button teal_50_05 size-sm fill">
+                        Regionalverband Pongau
+                      </button>
+                    <button  onclick="window.location.href='{% url 'scenario_analysis' %}'"  class="section__main-column-actions-button--explore ui button cyan_700_01 size-sm fill">
+                      Sankeys erkunden
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <img src="{% static 'images/img_vector_60.png' %}" alt="Footer Image" class="section__image" />
+            </div>
+          </div>
+        </div>
+
+        <!-- explore section -->
+        <div class="column">
+          <div class="columnline container-xs">
+            <div class="columnline__separator"></div>
+            <div class="columnline__content">
+              <p class="faq-section__title ui text size-text5xl">Erkunden</p>
+              <div class="columnline__list">
+                <div class="user-profile-header">
+                  <a href="{% url 'scenario_analysis' %}">
+                    <p class="faq-section__title ui text size-text2xl">Sankeys</p>
+                  </a>
+                </div>
+                <div class="user-profile-header">
+                  <a href="{% url 'best_practices' %}">
+                    <p class="faq-section__title ui text size-text2xl">Best Practices</p>
+                  </a>
+                </div>
+                <div class="user-profile-header">
+                  <a href="https://futural-project.eu/" target="_blank" rel="noopener noreferrer">
+                    <p class="faq-section__title ui text size-text2xl">Über FUTURAL</p>
+                  </a>
+                </div>
+                <div class="user-profile-header">
+                  <a href="{% url 'about' %}">
+                    <p class="faq-section__title ui text size-text2xl">Über <br />Regionalverband<br />Pongau</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+
+        <!-- faq section -->
+        <div class="column_one">
+          <div class="columnline container-xs">
+            <div class="faq-section__divider"></div>
+            <p class="faq-section__title ui text size-text5xl">Häufig gestellte Fragen</p>
+            <div class="faq-section__list">
+              <details class="case-studies-column" open>
+                <summary class="faq-section__item">
+                  <p class="faq-section__question ui text size-textxl">Was ist die Circular Bioeconomy Smart Solution?</p>
+                </summary>
+                <div class="faq-section__description-container">
+                  <p class="faq-section__description ui text size-textlg">
+                    Die Circular Bioeconomy Smart Solution ist eine interaktive Plattform zur Unterstützung der nachhaltigen Bewirtschaftung natürlicher Ressourcen in der Region Pongau. Sie bietet Entscheidungswerkzeuge wie Sankey-Diagramme, Multi-Kriterien-Bewertungen und Mind-Mapping-Techniken zur Visualisierung und Bewertung verschiedener Wege zur Umwandlung lokaler Abfallströme wie Biomasseaschen, Klärschlamm und Lebensmittelabfälle in wertvolle Ressourcen.
+                  </p>
+                </div>
+              </details>
+              <details class="case-studies-column">
+                <summary class="faq-section__item">
+                  <p class="faq-section__question ui text size-textxl">Wer kann die Circular Bioeconomy-Plattform nutzen?</p>
+                </summary>
+                <div class="faq-section__description-container">
+                  <p class="faq-section__description ui text size-textlg">
+                    Die Plattform richtet sich an ein breites Spektrum von Nutzern, darunter lokale Behörden, politische Entscheidungsträger, Unternehmen und Gemeindemitglieder im Pongau, die an der Förderung kreislaufwirtschaftlicher Praktiken interessiert sind. Besonders profitieren Akteure aus den Bereichen Abfallwirtschaft, Landwirtschaft, Tourismus und Regionalentwicklung von den Erkenntnissen der Plattform.
+                  </p>
+                </div>
+              </details>
+              <details class="case-studies-column">
+                <summary class="faq-section__item">
+                  <p class="faq-section__question ui text size-textxl">Auf welche Arten von Abfallströmen konzentriert sich die Plattform?</p>
+                </summary>
+                <div class="faq-section__description-container">
+                  <p class="faq-section__description ui text size-textlg">
+                    Die Plattform konzentriert sich hauptsächlich auf drei wichtige Abfallströme im Pongau: Biomasseaschen aus Heizanlagen, Klärschlamm aus Kläranlagen und Lebensmittelabfälle aus der Tourismusbranche. Sie hilft bei der Identifizierung und Bewertung von Verwertungswegen zur Umwandlung dieser Abfallströme in Ressourcen, die zur regionalen Nachhaltigkeit beitragen können.
+                  </p>
+                </div>
+              </details>
+              <details class="case-studies-column">
+                <summary class="faq-section__item">
+                  <p class="faq-section__question ui text size-textxl">Wie unterstützt die Circular Bioeconomy SS die Entscheidungsfindung?
+                  </p>
+                </summary>
+                <div class="faq-section__description-container">
+                  <p class="faq-section__description ui text size-textlg">
+                    Die Plattform bietet fortschrittliche Entscheidungsunterstützungswerkzeuge wie Multi-Kriterien-Bewertungen (MCA) und Sankey-Diagramme, um Nutzern bei der Analyse verschiedener Ressourcenfluss-Szenarien zu helfen. Diese Werkzeuge bewerten die ökologische, wirtschaftliche und technische Machbarkeit verschiedener Kreislaufwirtschaftsoptionen und leiten die Nutzer zu den nachhaltigsten Lösungen.
+                  </p>
+                </div>
+              </details>
+              <details class="case-studies-column">
+                <summary class="faq-section__item">
+                  <p class="faq-section__question ui text size-textxl">Wie kann die Plattform helfen, Abfall in der Region zu reduzieren?
+                  </p>
+                </summary>
+                <div class="faq-section__description-container">
+                  <p class="faq-section__description ui text size-textlg">
+                    Durch die umfassende Analyse, wie Abfallströme in wertvolle Ressourcen umgewandelt werden können, fördert die Plattform die Einführung kreislaufwirtschaftlicher Praktiken. Dies reduziert die Abfallproduktion durch Förderung der Wiederverwendung, des Recyclings und der Umwandlung von Abfällen in neue Produkte, was dazu beiträgt, den Kreislauf zu schließen und die Umweltauswirkungen zu verringern.
+                  </p>
+                </div>
+              </details>
+              <details class="case-studies-column">
+                <summary class="faq-section__item">
+                  <p class="faq-section__question ui text size-textxl">Welche Rolle spielen lokale Akteure auf der Plattform?
+                  </p>
+                </summary>
+                <div class="faq-section__description-container">
+                  <p class="faq-section__description ui text size-textlg">
+                    Lokale Akteure, einschließlich regionaler Behörden, Unternehmen und Bürger, spielen eine entscheidende Rolle, indem sie Input, Feedback und Daten zu regionalen Abfallwirtschaftspraktiken liefern. Ihre Beteiligung stellt sicher, dass die entwickelten Lösungen realistisch, machbar und auf die spezifischen Bedürfnisse des Pongaus abgestimmt sind.
+                  </p>
+                </div>
+              </details>
+              <details class="case-studies-column">
+                <summary class="faq-section__item">
+                  <p class="faq-section__question ui text size-textxl">Kann die Circular Bioeconomy SS außerhalb des Pongaus genutzt werden?
+                  </p>
+                </summary>
+                <div class="faq-section__description-container">
+                  <p class="faq-section__description ui text size-textlg">
+                    Ja, obwohl die Plattform speziell für die Region Pongau entwickelt wurde, können ihre Werkzeuge und Methoden für die Nutzung in anderen Regionen angepasst werden. Die Entscheidungsfindungsrahmen wie die Multi-Kriterien-Analyse und Ressourcenflussdiagramme können an lokale Bedingungen und Ressourcenströme in anderen Gebieten angepasst werden.
+                  </p>
+                </div>
+              </details>
+              <details class="case-studies-column">
+                <summary class="faq-section__item">
+                  <p class="faq-section__question ui text size-textxl">Welche Art von Daten wird benötigt, um die Plattform effektiv zu nutzen?
+                  </p>
+                </summary>
+                <div class="faq-section__description-container">
+                  <p class="faq-section__description ui text size-textlg">
+                    Um genaue Analysen zu liefern, stützt sich die Plattform auf Daten über lokale Abfallströme, wie das Volumen von Biomasseaschen, Klärschlamm und Lebensmittelabfällen. Sie nutzt auch wirtschaftliche Daten, technische Spezifikationen und Umweltverträglichkeitsprüfungen, um robuste Entscheidungsunterstützung zu bieten.
+                  </p>
+                </div>
+              </details>
+              <details class="case-studies-column">
+                <summary class="faq-section__item">
+                  <p class="faq-section__question ui text size-textxl">Wie kann ich mich an der Circular Bioeconomy-Initiative im Pongau beteiligen?
+                  </p>
+                </summary>
+                <div class="faq-section__description-container">
+                  <p class="faq-section__description ui text size-textlg">
+                    Wenn Sie Einwohner, Unternehmer oder politischer Entscheidungsträger in der Region Pongau sind, können Sie sich beteiligen, indem Sie an lokalen Stakeholder-Treffen teilnehmen, Feedback zu vorgeschlagenen Lösungen geben oder Daten zur Plattform beitragen. Sie können auch den Regionalverband Pongau für weitere Informationen zur Teilnahme kontaktieren.</p>
+                </div>
+              </details>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% include "footer.html" %}
+
+
+    </div>
+  </body>
+</html>

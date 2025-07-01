@@ -1,0 +1,144 @@
+{% load static %}
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <title>Kontakt Futural - Nehmen Sie Kontakt mit unserem Team auf</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Kontaktieren Sie das Futural-Team für Unterstützung, teilen Sie Ihre Ideen mit oder geben Sie Feedback. Wir sind hier, um Ihnen bei Ihren Fragen zur Kreislauf-Bioökonomie zu helfen."
+    />
+    <img
+      alt="Logo"
+      src="https://appproject.dhiwise.com/dhiwise-logo.png?c=&v="
+      style="width: 0px; height: 0px; display: none"
+    />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/components.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/FContact.css' %}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="f-contact">
+      <!-- header section -->
+      {% include "navbar.html" %}
+      
+      <!-- contact info section -->
+      <div class="row_two">
+        <div class="contact-section container-xs">
+          <div class="contact-section__content">
+            <img src="{% static 'images/img_vector_59_244x168.png' %}" alt="Image Fiftynine" class="contact-section__image" />
+            <div class="contact-section__content-row">
+              <img src="{% static 'images/img_ellipse_53.png' %}" alt="Image Row" class="contact-section__profile-image" />
+              <div class="contact-section__profile-details">
+                <img src="{% static 'images/img_ellipse_52_26x26.png' %}" alt="Image One" class="contact-section__profile-icon" />
+                <div class="contact-section__info">
+                  <img src="{% static 'images/img_ellipse_54.png' %}" alt="Image Two" class="contact-section__info-image" />
+                  <div class="contact-section__info-row">
+                    <div class="contact-section__info-stack">
+                      <img src="{% static 'images/img_ellipse_55.png' %}" alt="Image Three" class="contact-section__info-icon" />
+                      <img src="{% static 'images/img_vector_63.png' %}" alt="Vector Sixtythree" class="contact-section__info-vector" />
+                      <div class="contact-section__form-stack">
+                        <div class="contact-section__form-column">
+                          <a href="#">
+                            <p class="contact-section__form-link ui text size-text5xl">Kontaktieren Sie uns</p>
+                          </a>
+                          <div class="contact-section__social-column">
+                            <div class="contact-section__feedback-column">
+                              <p class="contact-section__feedback-text ui text size-textlg">
+                                Lassen Sie uns wissen, wie wir helfen können, Ihre Ideen und wie wir uns verbessern können
+                              </p>
+                              <form method="POST" action="{% url 'contact' %}">
+                                {% csrf_token %}
+                                <div class="contact-section__input-group">
+                                  <label class="contact-section__input-fullname ui input white_a700 size-xs fill round">
+                                    <input name="full_name" placeholder="Vollständiger Name" type="text" required />
+                                  </label>
+                                  <label class="contact-section__input-fullname ui input white_a700 size-xs fill round">
+                                    <input name="email" placeholder="E-Mail" type="email" required />
+                                  </label>
+                                  <textarea
+                                    class="contact-section__input-message ui textarea white_a700 size-xs taroutlinegray300 round"
+                                    name="message"
+                                    placeholder="Was gibt's?"
+                                    required
+                                  ></textarea>
+                                  <button type="submit" class="contact-section__submit-button ui button yellow_700 size-md fill round">
+                                    <span>Senden</span>
+                                    <img src="{% static 'images/img_save.svg' %}" alt="Save" class="save" />
+                                  </button>
+                                </div>
+                              </form>
+                            </div>
+                            <div class="footer__social-container">
+                              <img src="{% static 'images/img_facebook.svg' %}" alt="Facebook Image" class="footer__social-icon--facebook" />
+                              <img src="{% static 'images/img_link.svg' %}" alt="Link Image" class="footer__social-icon--facebook" />
+                              <img src="{% static 'images/img_vector.svg' %}" alt="Triangle Image" class="footer__social-icon--facebook" />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="contact-section__lock-stack">
+                          <img src="{% static 'images/img_ellipse_54_102x102.png' %}" alt="Image Four" class="contact-section__lock-image" />
+                          <img src="{% static 'images/img_lock.png' %}" alt="Lock Image" class="contact-section__lock-icon" />
+                        </div>
+                      </div>
+                    </div>
+                    <img src="{% static 'images/img_group_1205.png' %}" alt="Cloud Image" class="contact-section__cloud-image" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <img src="{% static 'images/img_vector_62.svg' %}" alt="Vector Sixtytwo" class="contact-section__vector-image" />
+        </div>
+      </div>
+
+      <!-- Bootstrap Modal for Messages -->
+      <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="messageModalLabel">Benachrichtigung</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Schließen">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              {% if messages %}
+                {% for message in messages %}
+                  <div class="alert alert-{% if message.tags == 'success' %}success{% elif message.tags == 'error' %}danger{% else %}info{% endif %}" role="alert">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% include "footer.html" %}
+
+    </div>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript to Auto-Trigger Modal -->
+    <script>
+      $(document).ready(function () {
+        {% if messages %}
+          $('#messageModal').modal('show');
+        {% endif %}
+      });
+    </script>
+
+  </body>
+</html>

@@ -18,29 +18,53 @@ function showSankeyDiagram() {
   const chartContainer = document.querySelector('.chart-container');
   chartContainer.style.display = 'block';
 
+  // Get translated texts
+  const scenarioName = getTranslation(currentScenarioData.name);
+  const scenarioSubtitle = getTranslation(currentScenarioData.subtitle);
+  const shortDescription = getTranslation(currentScenarioData.shortDescription);
+  const description = getTranslation(currentScenarioData.description);
+  
+  // Get language-specific labels
+  const lang = getCurrentLanguage();
+  const labels = {
+    shortDescriptionLabel: lang === 'de' ? 'Kurzbeschreibung:' : 'Short Description:',
+    detailedDescriptionLabel: lang === 'de' ? 'Detaillierte Beschreibung:' : 'Detailed Description:',
+    flowCountLabel: lang === 'de' ? 'Anzahl der Flüsse:' : 'Flow Count:',
+    totalFlowVolumeLabel: lang === 'de' ? 'Gesamtflussvolumen:' : 'Total Flow Volume:',
+    materialFlowsText: lang === 'de' ? 'Materialflüsse' : 'material flows',
+    unitsText: lang === 'de' ? 'Einheiten' : 'units',
+    materialFlowAnalysisText: lang === 'de' ? 'Materialflussanalyse:' : 'Material Flow Analysis:',
+    materialFlowDetailsText: lang === 'de' ? 'Materialfluss-Details' : 'Material Flow Details',
+    fromText: lang === 'de' ? 'Von:' : 'From:',
+    toText: lang === 'de' ? 'Nach:' : 'To:',
+    quantityText: lang === 'de' ? 'Menge:' : 'Quantity:',
+    materialText: lang === 'de' ? 'Material:' : 'Material:',
+    ofTotalFlowText: lang === 'de' ? 'des Gesamtflusses' : 'of total flow'
+  };
+
   // Update the text description with all scenario information
   const textContainer = document.getElementById('sankey-text-container');
   textContainer.innerHTML = `
     <div style="margin-bottom: 20px; padding: 20px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 10px; border-left: 5px solid #70c5c7;">
       <div style="margin-bottom: 15px;">
-        <h3 style="color: #2c3e50; margin-bottom: 8px; font-weight: bold;">${currentScenarioData.name}</h3>
-        <h5 style="color: #495057; margin-bottom: 12px; font-style: italic; font-weight: 500;">${currentScenarioData.subtitle}</h5>
+        <h3 style="color: #2c3e50; margin-bottom: 8px; font-weight: bold;">${scenarioName}</h3>
+        <h5 style="color: #495057; margin-bottom: 12px; font-style: italic; font-weight: 500;">${scenarioSubtitle}</h5>
       </div>
       
       <div style="margin-bottom: 15px;">
-        <h6 style="color: #6c757d; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Short Description:</h6>
-        <p style="margin-bottom: 0; line-height: 1.6; color: #495057; font-size: 0.95rem;">${currentScenarioData.shortDescription}</p>
+        <h6 style="color: #6c757d; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">${labels.shortDescriptionLabel}</h6>
+        <p style="margin-bottom: 0; line-height: 1.6; color: #495057; font-size: 0.95rem;">${shortDescription}</p>
       </div>
       
       <div>
-        <h6 style="color: #6c757d; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Detailed Description:</h6>
-        <p style="margin-bottom: 0; line-height: 1.7; color: #495057; text-align: justify; font-size: 0.9rem;">${currentScenarioData.description}</p>
+        <h6 style="color: #6c757d; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">${labels.detailedDescriptionLabel}</h6>
+        <p style="margin-bottom: 0; line-height: 1.7; color: #495057; text-align: justify; font-size: 0.9rem;">${description}</p>
       </div>
       
       <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #dee2e6;">
         <small style="color: #6c757d; font-style: italic;">
-          <strong>Flow Count:</strong> ${currentScenarioData.flows.length} material flows | 
-          <strong>Total Flow Volume:</strong> ${currentScenarioData.flows.reduce((sum, flow) => sum + flow.flow, 0).toLocaleString()} units
+          <strong>${labels.flowCountLabel}</strong> ${currentScenarioData.flows.length} ${labels.materialFlowsText} | 
+          <strong>${labels.totalFlowVolumeLabel}</strong> ${currentScenarioData.flows.reduce((sum, flow) => sum + flow.flow, 0).toLocaleString()} ${labels.unitsText}
         </small>
       </div>
     </div>
@@ -48,12 +72,12 @@ function showSankeyDiagram() {
 
   // Create the Sankey chart
   setTimeout(() => {
-    createSankeyChart(currentScenarioData);
+    createSankeyChart(currentScenarioData, labels);
   }, 200);
 }
 
-function createSankeyChart(scenarioDataForChart) {
-  console.log('Creating Sankey chart for:', scenarioDataForChart.name);
+function createSankeyChart(scenarioDataForChart, labels) {
+  console.log('Creating Sankey chart for:', getTranslation(scenarioDataForChart.name));
   console.log('Number of flows:', scenarioDataForChart.flows.length);
   
   // Destroy the existing chart instance if it exists
@@ -81,7 +105,7 @@ function createSankeyChart(scenarioDataForChart) {
     data: {
       labels: processedFlows.labels,
       datasets: [{
-        label: 'Material Flow',
+        label: labels.materialText || 'Material Flow',
         data: processedFlows.sankeyFlows,
         colorFrom: function(context) {
           const originalFlow = processedFlows.originalFlowsMap[context.dataIndex];
@@ -108,7 +132,7 @@ function createSankeyChart(scenarioDataForChart) {
       plugins: {
         title: {
           display: true,
-          text: `Material Flow Analysis: ${scenarioDataForChart.name}`,
+          text: `${labels.materialFlowAnalysisText} ${getTranslation(scenarioDataForChart.name)}`,
           font: {
             size: 18,
             weight: 'bold'
@@ -149,7 +173,7 @@ function createSankeyChart(scenarioDataForChart) {
           intersect: false,
           callbacks: {
             title: function(context) {
-              return 'Material Flow Details';
+              return labels.materialFlowDetailsText;
             },
             label: function(context) {
               const originalFlow = processedFlows.originalFlowsMap[context.dataIndex];
@@ -157,17 +181,17 @@ function createSankeyChart(scenarioDataForChart) {
               const originalTarget = scenarioData.nodeLabels[originalFlow.originalTo] || originalFlow.originalTo;
               
               return [
-                `From: ${originalSource}`,
-                `To: ${originalTarget}`,
-                `Quantity: ${originalFlow.flow.toLocaleString()} ${originalFlow.unit || 't TS'}`,
-                `Material: ${originalFlow.label || 'Material'}`
+                `${labels.fromText} ${originalSource}`,
+                `${labels.toText} ${originalTarget}`,
+                `${labels.quantityText} ${originalFlow.flow.toLocaleString()} ${originalFlow.unit || 't TS'}`,
+                `${labels.materialText} ${originalFlow.label || 'Material'}`
               ];
             },
             footer: function(tooltipItems) {
               const originalFlow = processedFlows.originalFlowsMap[tooltipItems[0].dataIndex];
               const totalFlow = scenarioDataForChart.flows.reduce((sum, f) => sum + f.flow, 0);
               const percentage = ((originalFlow.flow / totalFlow) * 100).toFixed(1);
-              return `${percentage}% of total flow`;
+              return `${percentage}% ${labels.ofTotalFlowText}`;
             }
           },
           backgroundColor: 'rgba(0, 0, 0, 0.9)',

@@ -244,8 +244,7 @@ const scenarioData = {
           { from: 'G', to: 'H', flow: 167, unit: 't TS', color: '#2596be', label: getTranslation({en: 'calcium', de: 'Kalzium'}) },
           { from: 'G', to: 'H', flow: 26, unit: 't TS', color: '#2596be', label: getTranslation({en: 'magnesium', de: 'Magnesium'}) },
           { from: 'G', to: 'H', flow: 32, unit: 't TS', color: '#2596be', label: getTranslation({en: 'sulfur', de: 'Schwefel'}) },
-          { from: 'G', to: 'H', flow: 2202, unit: 't TS', color: '#b3caa2', label: getTranslation({en: 'humus', de: 'Humus'}) },
-          { from: 'G', to: 'O', flow: 4483, unit: 'MWh', color: '#FF6347', label: getTranslation({en: 'electricity consumption', de: 'Stromverbrauch'}) }
+          { from: 'G', to: 'H', flow: 2188, unit: 't TS', color: '#b3caa2', label: getTranslation({en: 'humus', de: 'Humus'}) }
         ]
       },
       {

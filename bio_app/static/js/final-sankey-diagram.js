@@ -1,4 +1,9 @@
-/* final-sankey-diagram.js */
+/* final-sankey-diagram.js - ENHANCED SEPARATION VERSION */
+/* Bug fixes implemented:
+ * 1. Smart label abbreviation for small flows
+ * 2. Enhanced flow separation by creating truly unique nodes
+ * 3. Added node positioning hints for better visual layout
+ */
 
 // Global variable to store the Sankey Chart instance
 let sankeyChart;
@@ -91,14 +96,14 @@ function createSankeyChart(scenarioDataForChart, labels) {
     return;
   }
 
-  // SOLUTION: Create unique target nodes for flows with same destination
-  // This will separate flows that go to the same target
-  const processedFlows = preprocessFlowsForSeparation(scenarioDataForChart.flows);
+  // Create unique target nodes for flows with same destination - ENHANCED VERSION
+  const processedFlows = preprocessFlowsForEnhancedSeparation(scenarioDataForChart.flows);
   
   console.log('Original flows:', scenarioDataForChart.flows.length);
   console.log('Processed flows:', processedFlows.sankeyFlows.length);
+  console.log('Unique labels:', processedFlows.labels.length);
 
-  // Create the new Sankey diagram with slightly increased separation
+  // Create the new Sankey diagram with enhanced separation
   const ctx = document.getElementById('sankeyChart').getContext('2d');
   sankeyChart = new Chart(ctx, {
     type: 'sankey',
@@ -118,8 +123,11 @@ function createSankeyChart(scenarioDataForChart, labels) {
           }
           return '#70c5c7';
         },
-        borderWidth: 5, // Increased from 4 to 5 for better separation
-        borderColor: '#000', // Black borders for maximum contrast
+        borderWidth: 8, // Increased significantly for better visual separation
+        borderColor: '#fff', // White borders for cleaner separation
+        nodeWidth: 30, // Wider nodes if supported by the library
+        nodePadding: 20, // More space between nodes if supported
+        alpha: 0.7, // Semi-transparent flows for better visibility when overlapping
       }]
     },
     options: {
@@ -127,7 +135,7 @@ function createSankeyChart(scenarioDataForChart, labels) {
       maintainAspectRatio: false,
       interaction: {
         intersect: false,
-        mode: 'point' // More precise interaction
+        mode: 'point'
       },
       plugins: {
         title: {
@@ -214,65 +222,111 @@ function createSankeyChart(scenarioDataForChart, labels) {
             style: 'italic'
           },
           padding: 15
+        },
+        // Try to add custom plugin for better layout if supported
+        customLayout: {
+          beforeLayout: function(chart) {
+            // Attempt to influence node positioning
+            if (chart.config && chart.config.options) {
+              chart.config.options.nodeAlign = 'justify'; // Spread nodes evenly
+              chart.config.options.iterations = 64; // More iterations for better layout
+            }
+          }
         }
       },
       layout: {
         padding: {
-          top: 45, // Increased from 40 to 45
-          bottom: 65, // Increased from 60 to 65
-          left: 45, // Increased from 40 to 45
-          right: 45 // Increased from 40 to 45
+          top: 60, // Extra padding for labels
+          bottom: 80,
+          left: 60,
+          right: 60
         }
       },
+      // Additional Sankey-specific options if supported by chartjs-chart-sankey
+      nodeAlign: 'justify', // Spread nodes to use full height
+      nodeSort: true, // Sort nodes for better layout
+      nodePadding: 25, // Space between nodes
+      nodeWidth: 35, // Width of node rectangles
+      iterations: 64, // Layout calculation iterations
       animation: {
         duration: 1500,
         easing: 'easeInOutQuart'
       },
-      // More increased separation settings
-      sankey: {
-        node: {
-          width: 32, // Increased from 28 to 32
-          padding: 35, // Increased from 30 to 35
-          borderWidth: 4, // Increased from 3 to 4
-          borderColor: '#000'
-        },
-        link: {
-          minHeight: 12, // Increased from 10 to 12
-          opacity: 0.85,
-          hoverOpacity: 1.0,
-          // More vertical separation
-          curvature: 0.75 // Increased from 0.7 to 0.75
-        }
-      },
-      // Chart area settings for maximum space utilization
-      scales: {
-        x: {
-          display: false
-        },
-        y: {
-          display: false
-        }
+      onHover: function(event, activeElements) {
+        event.native.target.style.cursor = activeElements.length > 0 ? 'pointer' : 'default';
       }
     }
   });
 
-  // Enhanced hover effects
-  ctx.canvas.addEventListener('mousemove', function(event) {
-    const rect = ctx.canvas.getBoundingClientRect();
-    const elements = sankeyChart.getElementsAtEventForMode(event, 'point', { intersect: false }, false);
-    ctx.canvas.style.cursor = elements.length > 0 ? 'pointer' : 'default';
+  // Make sankey chart responsive
+  window.addEventListener('resize', function() {
+    if (sankeyChart) {
+      sankeyChart.resize();
+    }
+  });
+
+  // Add cursor pointer on hover
+  ctx.canvas.addEventListener('mousemove', function(e) {
+    const activePoints = sankeyChart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, false);
+    ctx.canvas.style.cursor = activePoints.length > 0 ? 'pointer' : 'default';
   });
 
   // Store chart instance globally
   window.sankeyChart = sankeyChart;
-  console.log('✅ Slightly improved separation Sankey chart created successfully');
+  console.log('✅ Enhanced Sankey chart with improved separation created successfully');
 }
 
-// NEW FUNCTION: Preprocess flows to create unique targets for better separation
-function preprocessFlowsForSeparation(originalFlows) {
+// Helper function for material abbreviations
+function getMaterialAbbreviation(label) {
+  if (!label) return 'M';
+  
+  const abbreviations = {
+    'nitrogen': 'N',
+    'Stickstoff': 'N',
+    'potassium': 'K',
+    'Kalium': 'K',
+    'phosphorus': 'P',
+    'Phosphor': 'P',
+    'calcium': 'Ca',
+    'Kalzium': 'Ca',
+    'magnesium': 'Mg',
+    'Magnesium': 'Mg',
+    'sulfur': 'S',
+    'Schwefel': 'S',
+    'humus': 'Hum',
+    'Humus': 'Hum',
+    'sewage sludge': 'SS',
+    'Klärschlamm': 'KS',
+    'ash': 'Ash',
+    'Asche': 'Asc',
+    'emissions': 'Em',
+    'Emissionen': 'Em',
+    'wastewater': 'WW',
+    'Abwasser': 'AW',
+    'reused': 'Reu',
+    'wiederverwendet': 'Wdv'
+  };
+  
+  if (abbreviations[label]) {
+    return abbreviations[label];
+  }
+  
+  const words = label.split(' ');
+  if (words.length > 1) {
+    return words.map(w => w[0].toUpperCase()).join('');
+  }
+  
+  return label.substring(0, 3).toUpperCase();
+}
+
+// ENHANCED FUNCTION: Create truly unique nodes for better separation
+function preprocessFlowsForEnhancedSeparation(originalFlows) {
   const sankeyFlows = [];
   const labels = new Set();
   const originalFlowsMap = {};
+  
+  // Calculate total flow for percentage calculations
+  const totalFlow = originalFlows.reduce((sum, flow) => sum + flow.flow, 0);
   
   // Group flows by target to identify conflicts
   const flowsByTarget = {};
@@ -289,21 +343,21 @@ function preprocessFlowsForSeparation(originalFlows) {
   // Process each target group
   Object.keys(flowsByTarget).forEach(targetKey => {
     const targetFlows = flowsByTarget[targetKey];
+    const baseTargetLabel = scenarioData.nodeLabels[targetKey] || targetKey;
     
     if (targetFlows.length === 1) {
-      // Single flow to this target - no separation needed
+      // Single flow to this target - use base label
       const flow = targetFlows[0];
       const sourceLabel = scenarioData.nodeLabels[flow.from] || flow.from;
-      const targetLabel = scenarioData.nodeLabels[flow.to] || flow.to;
       
       sankeyFlows.push({
         from: sourceLabel,
-        to: targetLabel,
+        to: baseTargetLabel,
         flow: flow.flow
       });
       
       labels.add(sourceLabel);
-      labels.add(targetLabel);
+      labels.add(baseTargetLabel);
       
       originalFlowsMap[flowIndex] = {
         ...flow,
@@ -313,27 +367,68 @@ function preprocessFlowsForSeparation(originalFlows) {
       flowIndex++;
       
     } else {
-      // Multiple flows to same target - create unique targets
-      targetFlows.forEach((flow, subIndex) => {
+      // Multiple flows to same target - create completely unique nodes
+      // Sort by flow size for consistent ordering
+      const sortedFlows = targetFlows.sort((a, b) => b.flow - a.flow);
+      
+      sortedFlows.forEach((flow, subIndex) => {
         const sourceLabel = scenarioData.nodeLabels[flow.from] || flow.from;
-        const baseTargetLabel = scenarioData.nodeLabels[flow.to] || flow.to;
+        const flowPercentage = (flow.flow / totalFlow) * 100;
         
-        // Create unique target label by adding material type
-        const uniqueTargetLabel = `${baseTargetLabel}\n(${flow.label})`;
+        // Create unique target label with material identifier
+        let uniqueTargetLabel;
+        
+        // Always create a unique node for each flow to ensure separation
+        if (flowPercentage < 0.3) {
+          // Very tiny flows: just use abbreviation
+          const abbr = getMaterialAbbreviation(flow.label);
+          uniqueTargetLabel = `${baseTargetLabel} • ${abbr}`;
+          
+        } else if (flowPercentage < 1) {
+          // Small flows: abbreviation with brackets
+          const abbr = getMaterialAbbreviation(flow.label);
+          uniqueTargetLabel = `${baseTargetLabel} [${abbr}]`;
+          
+        } else if (flowPercentage < 3) {
+          // Medium-small flows: short label
+          const shortLabel = flow.label ? 
+            (flow.label.length > 10 ? getMaterialAbbreviation(flow.label) : flow.label.split(' ')[0]) : 
+            `Mat${subIndex + 1}`;
+          uniqueTargetLabel = `${baseTargetLabel} (${shortLabel})`;
+          
+        } else if (flowPercentage < 10) {
+          // Medium flows: material name on same line
+          const materialName = flow.label || `Material ${subIndex + 1}`;
+          uniqueTargetLabel = `${baseTargetLabel} - ${materialName}`;
+          
+        } else {
+          // Large flows: full description with line break
+          uniqueTargetLabel = `${baseTargetLabel}\n[${flow.label || 'Primary Material'}]`;
+        }
+        
+        // Make absolutely sure each label is unique by adding index if needed
+        let finalLabel = uniqueTargetLabel;
+        let counter = 1;
+        while (labels.has(finalLabel)) {
+          finalLabel = `${uniqueTargetLabel} ${counter}`;
+          counter++;
+        }
         
         sankeyFlows.push({
           from: sourceLabel,
-          to: uniqueTargetLabel,
+          to: finalLabel,
           flow: flow.flow
         });
         
         labels.add(sourceLabel);
-        labels.add(uniqueTargetLabel);
+        labels.add(finalLabel);
         
         originalFlowsMap[flowIndex] = {
           ...flow,
           originalFrom: flow.from,
-          originalTo: flow.to
+          originalTo: flow.to,
+          flowPercentage: flowPercentage,
+          uniqueLabel: finalLabel
         };
         flowIndex++;
       });
@@ -343,7 +438,8 @@ function preprocessFlowsForSeparation(originalFlows) {
   return {
     sankeyFlows,
     labels: Array.from(labels),
-    originalFlowsMap
+    originalFlowsMap,
+    totalFlow
   };
 }
 

@@ -1,15 +1,16 @@
-/* final-sankey-diagram.js - OPTION B: CLICK DETECTION FOR THIN FLOWS */
+/* final-sankey-diagram.js - FIXED VERSION WITH PROPER FLOW MAPPING */
 /* 
- * Since hover doesn't work on thin flows, this version focuses on:
- * 1. Click detection with visual feedback
- * 2. Info panel that shows clicked flow details
- * 3. Permanent labels for tiny flows
- * 4. Instructions for users
+ * Fixed issues:
+ * 1. Proper mapping between processed and original flows
+ * 2. Error handling for undefined flows
+ * 3. Always show flow selector as fallback
+ * 4. Direct button access for all flows
  */
 
-// Global variable to store the Sankey Chart instance
+// Global variables
 let sankeyChart;
-let processedFlows = {}; // Store globally for access in click handlers
+let globalFlowData = {};
+let processedFlows = {};
 
 // Function to automatically show Sankey diagram when scenario is selected
 function showSankeyDiagram() {
@@ -21,6 +22,9 @@ function showSankeyDiagram() {
     console.error('No scenario selected');
     return;
   }
+
+  // Store flow data globally for manual access
+  globalFlowData = currentScenarioData;
 
   // Display the Sankey chart container
   const chartContainer = document.querySelector('.chart-container');
@@ -50,7 +54,10 @@ function showSankeyDiagram() {
     ofTotalFlowText: lang === 'de' ? 'des Gesamtflusses' : 'of total flow'
   };
 
-  // Update the text description with all scenario information
+  // Store labels globally
+  globalFlowData.labels = labels;
+
+  // Update the text description
   const textContainer = document.getElementById('sankey-text-container');
   textContainer.innerHTML = `
     <div style="margin-bottom: 20px; padding: 20px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 10px; border-left: 5px solid #70c5c7;">
@@ -102,11 +109,17 @@ function createSankeyChart(scenarioDataForChart, labels) {
   // Create unique target nodes for flows with same destination
   processedFlows = preprocessFlowsForEnhancedSeparation(scenarioDataForChart.flows);
   
+  // Store processed flows globally
+  globalFlowData.processedFlows = processedFlows;
+
   console.log('Original flows:', scenarioDataForChart.flows.length);
   console.log('Processed flows:', processedFlows.sankeyFlows.length);
 
-  // ADD CLICK INSTRUCTION PANEL
-  addClickInstructionPanel();
+  // Create manual info panel FIRST
+  createManualInfoPanel();
+
+  // Create ALL flows button panel
+  createAllFlowsButtonPanel();
 
   // Create the Sankey diagram
   const ctx = document.getElementById('sankeyChart').getContext('2d');
@@ -130,23 +143,18 @@ function createSankeyChart(scenarioDataForChart, labels) {
         },
         borderWidth: 8,
         borderColor: '#fff',
-        nodeWidth: 35,
-        nodePadding: 25,
-        alpha: 0.7
+        nodeWidth: 30,
+        nodePadding: 20,
+        alpha: 0.7,
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      
-      // Still try hover but don't rely on it
       interaction: {
-        mode: 'nearest',
         intersect: false,
-        axis: 'xy',
-        distance: 50
+        mode: 'point'
       },
-      
       plugins: {
         title: {
           display: true,
@@ -185,41 +193,40 @@ function createSankeyChart(scenarioDataForChart, labels) {
             }
           }
         },
-        
-        // Basic tooltip (works for large flows)
         tooltip: {
           enabled: true,
-          mode: 'nearest',
+          mode: 'point',
           intersect: false,
           callbacks: {
             title: function(context) {
-              if (!context || context.length === 0) return '';
-              const dataIndex = context[0].dataIndex;
-              const originalFlow = processedFlows.originalFlowsMap[dataIndex];
-              return originalFlow ? `📊 ${originalFlow.label}` : '';
+              return labels.materialFlowDetailsText;
             },
             label: function(context) {
               const originalFlow = processedFlows.originalFlowsMap[context.dataIndex];
-              if (!originalFlow) return [];
+              if (!originalFlow) return ['Flow data not available'];
               
               const originalSource = scenarioData.nodeLabels[originalFlow.originalFrom] || originalFlow.originalFrom;
               const originalTarget = scenarioData.nodeLabels[originalFlow.originalTo] || originalFlow.originalTo;
-              const flowValue = originalFlow.flow.toLocaleString();
-              const unit = originalFlow.unit || 't TS';
-              const totalFlow = scenarioDataForChart.flows.reduce((sum, f) => sum + f.flow, 0);
-              const percentage = (originalFlow.flow / totalFlow * 100).toFixed(3);
               
               return [
                 `${labels.fromText} ${originalSource}`,
                 `${labels.toText} ${originalTarget}`,
-                `${labels.quantityText} ${flowValue} ${unit}`,
-                `📈 ${percentage}%`
+                `${labels.quantityText} ${originalFlow.flow.toLocaleString()} ${originalFlow.unit || 't TS'}`,
+                `${labels.materialText} ${originalFlow.label || 'Material'}`
               ];
+            },
+            footer: function(tooltipItems) {
+              if (!tooltipItems || tooltipItems.length === 0) return '';
+              const originalFlow = processedFlows.originalFlowsMap[tooltipItems[0].dataIndex];
+              if (!originalFlow) return '';
+              
+              const totalFlow = scenarioDataForChart.flows.reduce((sum, f) => sum + f.flow, 0);
+              const percentage = ((originalFlow.flow / totalFlow) * 100).toFixed(1);
+              return `${percentage}% ${labels.ofTotalFlowText}`;
             }
           }
         }
       },
-      
       layout: {
         padding: {
           top: 60,
@@ -227,386 +234,331 @@ function createSankeyChart(scenarioDataForChart, labels) {
           left: 60,
           right: 60
         }
-      },
-      
-      nodeAlign: 'justify',
-      nodeSort: true,
-      nodePadding: 25,
-      nodeWidth: 35,
-      iterations: 64
+      }
     }
   });
 
-  // OPTION B: PRIMARY CLICK DETECTION SYSTEM
-  setupClickDetection(scenarioDataForChart, labels);
-  
-  // Create clickable flow details panel
-  createFlowDetailsPanel(labels);
-  
-  // Create small flows reference table
-  createSmallFlowsReferenceTable(scenarioDataForChart, labels);
+  // Add SIMPLE click handler that ALWAYS shows the flow menu
+  setupSimpleClickHandler();
 
   // Store chart instance globally
   window.sankeyChart = sankeyChart;
-  console.log('✅ Sankey chart created with CLICK DETECTION system');
+  console.log('✅ Sankey chart created with manual flow selection system');
 }
 
-// MAIN FEATURE: Click Detection System
-function setupClickDetection(scenarioDataForChart, labels) {
+// Create info panel
+function createManualInfoPanel() {
+  const lang = getCurrentLanguage();
+  
+  // Remove existing panel
+  const existingPanel = document.getElementById('manualInfoPanel');
+  if (existingPanel) existingPanel.remove();
+  
+  const panel = document.createElement('div');
+  panel.id = 'manualInfoPanel';
+  panel.style.cssText = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    max-width: 90%;
+    background: white;
+    border: 3px solid #70c5c7;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    z-index: 10000;
+    display: none;
+  `;
+  
+  panel.innerHTML = `
+    <div style="background: linear-gradient(135deg, #70c5c7, #5eb3b5); color: white; padding: 15px; border-radius: 8px 8px 0 0; position: relative;">
+      <h3 style="margin: 0; font-size: 18px;">
+        📊 ${lang === 'de' ? 'Flussdetails' : 'Flow Details'}
+      </h3>
+      <button onclick="closeManualPanel()" style="position: absolute; top: 15px; right: 15px; background: white; color: #70c5c7; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-weight: bold;">✕</button>
+    </div>
+    <div id="manualInfoContent" style="padding: 20px; max-height: 400px; overflow-y: auto;">
+      <!-- Content will be inserted here -->
+    </div>
+  `;
+  
+  document.body.appendChild(panel);
+}
+
+// Close panel
+window.closeManualPanel = function() {
+  const panel = document.getElementById('manualInfoPanel');
+  if (panel) panel.style.display = 'none';
+};
+
+// Show flow information
+window.showFlowInfo = function(flowIndex) {
+  const lang = getCurrentLanguage();
+  const labels = globalFlowData.labels;
+  const flow = globalFlowData.flows[flowIndex];
+  
+  if (!flow) {
+    console.error('Flow not found at index:', flowIndex);
+    return;
+  }
+  
+  const totalFlow = globalFlowData.flows.reduce((sum, f) => sum + f.flow, 0);
+  const percentage = (flow.flow / totalFlow * 100).toFixed(3);
+  
+  const fromLabel = scenarioData.nodeLabels[flow.from] || flow.from;
+  const toLabel = scenarioData.nodeLabels[flow.to] || flow.to;
+  
+  // Determine icon
+  let icon = '📊';
+  let sizeCategory = '';
+  if (percentage < 0.5) {
+    icon = '🔬';
+    sizeCategory = lang === 'de' ? 'Mikrofluss' : 'Micro flow';
+  } else if (percentage < 1) {
+    icon = '💧';
+    sizeCategory = lang === 'de' ? 'Sehr kleiner Fluss' : 'Very small flow';
+  } else if (percentage < 5) {
+    icon = '💦';
+    sizeCategory = lang === 'de' ? 'Kleiner Fluss' : 'Small flow';
+  } else if (percentage < 20) {
+    icon = '🌊';
+    sizeCategory = lang === 'de' ? 'Mittlerer Fluss' : 'Medium flow';
+  } else {
+    icon = '⭐';
+    sizeCategory = lang === 'de' ? 'Hauptfluss' : 'Major flow';
+  }
+  
+  const content = `
+    <div style="text-align: center; margin-bottom: 20px;">
+      <span style="font-size: 48px;">${icon}</span>
+      <h4 style="color: #2596be; margin: 10px 0;">${flow.label || 'Material'}</h4>
+    </div>
+    
+    <table style="width: 100%; font-size: 14px;">
+      <tr style="background: #f8f9fa;">
+        <td style="padding: 10px; font-weight: bold; width: 40%;">${labels.fromText}</td>
+        <td style="padding: 10px;">${fromLabel}</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; font-weight: bold;">${labels.toText}</td>
+        <td style="padding: 10px;">${toLabel}</td>
+      </tr>
+      <tr style="background: #f8f9fa;">
+        <td style="padding: 10px; font-weight: bold;">${labels.quantityText}</td>
+        <td style="padding: 10px;">${flow.flow} ${flow.unit || 't TS'}</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; font-weight: bold;">${lang === 'de' ? 'Anteil:' : 'Share:'}</td>
+        <td style="padding: 10px; color: ${percentage < 1 ? '#dc3545' : percentage < 5 ? '#ffc107' : '#28a745'}; font-weight: bold;">
+          ${percentage}%
+        </td>
+      </tr>
+      <tr style="background: #f8f9fa;">
+        <td style="padding: 10px; font-weight: bold;">${lang === 'de' ? 'Kategorie:' : 'Category:'}</td>
+        <td style="padding: 10px;">${sizeCategory}</td>
+      </tr>
+    </table>
+    
+    <div style="margin-top: 20px; padding: 15px; background: #e3f2f3; border-radius: 8px; text-align: center;">
+      <button onclick="closeManualPanel()" style="background: #70c5c7; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold;">
+        ${lang === 'de' ? 'Schließen' : 'Close'}
+      </button>
+    </div>
+  `;
+  
+  document.getElementById('manualInfoContent').innerHTML = content;
+  document.getElementById('manualInfoPanel').style.display = 'block';
+};
+
+// Create button panel for ALL flows
+function createAllFlowsButtonPanel() {
+  const chartContainer = document.querySelector('.chart-container');
+  const lang = getCurrentLanguage();
+  const totalFlow = globalFlowData.flows.reduce((sum, f) => sum + f.flow, 0);
+  
+  // Remove existing panel
+  const existingPanel = document.getElementById('allFlowsPanel');
+  if (existingPanel) existingPanel.remove();
+  
+  // Group flows by size
+  const microFlows = [];
+  const smallFlows = [];
+  const mediumFlows = [];
+  const largeFlows = [];
+  
+  globalFlowData.flows.forEach((flow, index) => {
+    const percentage = (flow.flow / totalFlow * 100);
+    const enrichedFlow = { ...flow, index, percentage };
+    
+    if (percentage < 1) microFlows.push(enrichedFlow);
+    else if (percentage < 5) smallFlows.push(enrichedFlow);
+    else if (percentage < 20) mediumFlows.push(enrichedFlow);
+    else largeFlows.push(enrichedFlow);
+  });
+  
+  const panelHTML = `
+    <div id="allFlowsPanel" style="margin-top: 30px;">
+      <!-- Instruction Banner -->
+      <div style="background: linear-gradient(135deg, #ffd700, #ffed4e); color: #333; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; font-weight: bold; border: 2px solid #ffc107;">
+        🎯 ${lang === 'de' ? 
+          'Klicken Sie auf eine Schaltfläche unten oder klicken Sie auf das Diagramm, um ein Menü mit allen Flüssen zu sehen' : 
+          'Click a button below or click on the diagram to see a menu of all flows'}
+      </div>
+      
+      ${microFlows.length > 0 ? createFlowSection('🔬 💧', lang === 'de' ? 'Sehr kleine Flüsse' : 'Very Small Flows', microFlows, '< 1%') : ''}
+      ${smallFlows.length > 0 ? createFlowSection('💦', lang === 'de' ? 'Kleine Flüsse' : 'Small Flows', smallFlows, '1-5%') : ''}
+      ${mediumFlows.length > 0 ? createFlowSection('🌊', lang === 'de' ? 'Mittlere Flüsse' : 'Medium Flows', mediumFlows, '5-20%') : ''}
+      ${largeFlows.length > 0 ? createFlowSection('⭐', lang === 'de' ? 'Hauptflüsse' : 'Major Flows', largeFlows, '> 20%') : ''}
+    </div>
+  `;
+  
+  const panelDiv = document.createElement('div');
+  panelDiv.innerHTML = panelHTML;
+  chartContainer.appendChild(panelDiv);
+}
+
+// Helper to create flow section
+function createFlowSection(icon, title, flows, range) {
+  const lang = getCurrentLanguage();
+  
+  return `
+    <div style="margin-bottom: 20px; background: white; border: 2px solid #70c5c7; border-radius: 10px; overflow: hidden;">
+      <div style="background: linear-gradient(135deg, #70c5c7, #5eb3b5); color: white; padding: 12px;">
+        <span style="font-size: 20px; margin-right: 10px;">${icon}</span>
+        <strong>${title}</strong>
+        <span style="font-size: 12px; opacity: 0.9; margin-left: 10px;">${range}</span>
+      </div>
+      <div style="padding: 15px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px;">
+          ${flows.map(flow => {
+            const fromLabel = scenarioData.nodeLabels[flow.from] || flow.from;
+            const toLabel = scenarioData.nodeLabels[flow.to] || flow.to;
+            const flowIcon = flow.percentage < 0.5 ? '🔬' : flow.percentage < 1 ? '💧' : flow.percentage < 5 ? '💦' : flow.percentage < 20 ? '🌊' : '⭐';
+            
+            return `
+              <button onclick="showFlowInfo(${flow.index})" 
+                      style="background: white; border: 2px solid ${flow.color || '#70c5c7'}; 
+                             border-radius: 8px; padding: 12px; cursor: pointer; 
+                             transition: all 0.3s; text-align: left;"
+                      onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'; this.style.background='#f0fffe'"
+                      onmouseout="this.style.transform=''; this.style.boxShadow=''; this.style.background='white'">
+                <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                  <span style="font-size: 20px; margin-right: 8px;">${flowIcon}</span>
+                  <strong style="color: ${flow.color || '#2596be'}; font-size: 13px;">
+                    ${flow.label}
+                  </strong>
+                </div>
+                <div style="font-size: 11px; color: #6c757d;">
+                  <div>${fromLabel} → ${toLabel}</div>
+                  <div style="margin-top: 4px;">
+                    <strong>${flow.flow} ${flow.unit || 't TS'}</strong> 
+                    <span style="color: ${flow.percentage < 1 ? '#dc3545' : flow.percentage < 5 ? '#ffc107' : '#28a745'};">
+                      (${flow.percentage.toFixed(2)}%)
+                    </span>
+                  </div>
+                </div>
+              </button>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// SIMPLE click handler - ALWAYS show flow menu
+function setupSimpleClickHandler() {
   const canvas = document.getElementById('sankeyChart');
-  if (!canvas) return;
-  
-  // Change cursor to indicate clickable
-  canvas.style.cursor = 'pointer';
-  
-  // Track clicks
-  let clickCount = 0;
   
   canvas.addEventListener('click', function(e) {
-    if (!window.sankeyChart) return;
-    
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     
-    // Try to get element at click position with large radius
-    const elements = window.sankeyChart.getElementsAtEventForMode(
-      e, 
-      'nearest', 
-      { intersect: false, distance: 100 }, 
-      false
-    );
-    
-    if (elements.length > 0) {
-      // Found a flow!
-      const dataIndex = elements[0].dataIndex;
-      const flow = processedFlows.originalFlowsMap[dataIndex];
-      
-      if (flow) {
-        clickCount++;
-        showFlowDetails(flow, labels);
-        
-        // Visual feedback - flash the canvas border
-        canvas.style.border = '3px solid #70c5c7';
-        setTimeout(() => {
-          canvas.style.border = 'none';
-        }, 300);
-      }
-    } else {
-      // No flow found - show helper
-      showClickHelper(x, y);
-    }
+    // ALWAYS show the flow selector menu
+    showFlowSelectorMenu(x, y);
   });
   
-  // Add hover effect to change cursor
-  canvas.addEventListener('mousemove', function(e) {
-    const elements = window.sankeyChart.getElementsAtEventForMode(
-      e,
-      'nearest',
-      { intersect: false, distance: 50 },
-      false
-    );
-    
-    canvas.style.cursor = elements.length > 0 ? 'pointer' : 'crosshair';
-  });
+  // Visual feedback
+  canvas.style.cursor = 'pointer';
 }
 
-// Show flow details in a panel
-function showFlowDetails(flow, labels) {
-  const panel = document.getElementById('flowDetailsPanel');
-  if (!panel) return;
-  
+// Show flow selector menu
+function showFlowSelectorMenu(x, y) {
   const lang = getCurrentLanguage();
-  const fromLabel = scenarioData.nodeLabels[flow.originalFrom] || flow.originalFrom;
-  const toLabel = scenarioData.nodeLabels[flow.originalTo] || flow.originalTo;
+  const totalFlow = globalFlowData.flows.reduce((sum, f) => sum + f.flow, 0);
   
-  // Determine flow size category
-  let sizeCategory = '';
-  let sizeIcon = '';
-  if (flow.flowPercentage < 0.5) {
-    sizeCategory = lang === 'de' ? 'Mikrofluss' : 'Micro flow';
-    sizeIcon = '🔬';
-  } else if (flow.flowPercentage < 1) {
-    sizeCategory = lang === 'de' ? 'Sehr kleiner Fluss' : 'Very small flow';
-    sizeIcon = '💧';
-  } else if (flow.flowPercentage < 5) {
-    sizeCategory = lang === 'de' ? 'Kleiner Fluss' : 'Small flow';
-    sizeIcon = '💦';
-  } else if (flow.flowPercentage < 20) {
-    sizeCategory = lang === 'de' ? 'Mittlerer Fluss' : 'Medium flow';
-    sizeIcon = '🌊';
-  } else {
-    sizeCategory = lang === 'de' ? 'Hauptfluss' : 'Major flow';
-    sizeIcon = '⭐';
-  }
+  // Remove existing menu
+  const existingMenu = document.getElementById('flowSelectorMenu');
+  if (existingMenu) existingMenu.remove();
   
-  panel.innerHTML = `
-    <div style="padding: 15px; background: linear-gradient(135deg, #ffffff, #f0f8f8); border-radius: 8px; border: 2px solid #70c5c7;">
-      <h4 style="color: #2c3e50; margin: 0 0 10px 0; font-size: 16px;">
-        ${sizeIcon} ${flow.label || 'Material'}
-      </h4>
-      <div style="display: grid; gap: 8px; font-size: 13px;">
-        <div><strong>${labels.fromText}</strong> ${fromLabel}</div>
-        <div><strong>${labels.toText}</strong> ${toLabel}</div>
-        <div><strong>${labels.quantityText}</strong> ${flow.flow.toLocaleString()} ${flow.unit || 't TS'}</div>
-        <div><strong>${lang === 'de' ? 'Anteil:' : 'Share:'}</strong> ${flow.flowPercentage.toFixed(3)}%</div>
-        <div style="color: #6c757d; font-style: italic; margin-top: 5px;">
-          ${sizeCategory}
-        </div>
-      </div>
-    </div>
-  `;
-  
-  // Show the panel
-  panel.style.display = 'block';
-  
-  // Auto-hide after 10 seconds
-  setTimeout(() => {
-    panel.style.opacity = '0.7';
-  }, 10000);
-}
-
-// Create flow details panel
-function createFlowDetailsPanel(labels) {
-  const lang = getCurrentLanguage();
-  const chartContainer = document.querySelector('.chart-container');
-  
-  // Remove existing panel
-  const existingPanel = document.getElementById('flowDetailsPanel');
-  if (existingPanel) existingPanel.remove();
-  
-  const panel = document.createElement('div');
-  panel.id = 'flowDetailsPanel';
-  panel.style.cssText = `
+  const menu = document.createElement('div');
+  menu.id = 'flowSelectorMenu';
+  menu.style.cssText = `
     position: absolute;
-    top: 80px;
-    right: 20px;
-    width: 250px;
+    left: ${Math.min(x, window.innerWidth - 320)}px;
+    top: ${Math.min(y, window.innerHeight - 400)}px;
     background: white;
-    border: 2px solid #dee2e6;
+    border: 2px solid #70c5c7;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
     z-index: 1000;
-    display: none;
-    transition: opacity 0.3s;
+    width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
   `;
   
-  panel.innerHTML = `
-    <div style="padding: 10px; background: #f8f9fa; border-bottom: 1px solid #dee2e6;">
-      <strong>${lang === 'de' ? 'Angeklickter Fluss' : 'Clicked Flow'}</strong>
+  const menuHTML = `
+    <div style="background: linear-gradient(135deg, #70c5c7, #5eb3b5); color: white; padding: 10px; position: sticky; top: 0; z-index: 10;">
+      <strong>${lang === 'de' ? 'Wählen Sie einen Fluss:' : 'Select a Flow:'}</strong>
+      <button onclick="document.getElementById('flowSelectorMenu').remove()" 
+              style="float: right; background: white; color: #70c5c7; border: none; 
+                     border-radius: 50%; width: 24px; height: 24px; cursor: pointer;">✕</button>
     </div>
     <div style="padding: 10px;">
-      ${lang === 'de' ? 'Klicken Sie auf einen Fluss' : 'Click on a flow'}
+      ${globalFlowData.flows.map((flow, index) => {
+        const percentage = (flow.flow / totalFlow * 100);
+        const icon = percentage < 0.5 ? '🔬' : percentage < 1 ? '💧' : percentage < 5 ? '💦' : percentage < 20 ? '🌊' : '⭐';
+        const fromLabel = scenarioData.nodeLabels[flow.from] || flow.from;
+        const toLabel = scenarioData.nodeLabels[flow.to] || flow.to;
+        
+        return `
+          <div onclick="showFlowInfo(${index}); document.getElementById('flowSelectorMenu').remove()" 
+               style="padding: 8px; margin: 4px 0; background: #f8f9fa; border-left: 3px solid ${flow.color || '#70c5c7'}; 
+                      border-radius: 4px; cursor: pointer; transition: all 0.2s;"
+               onmouseover="this.style.background='#e3f2f3'; this.style.transform='translateX(5px)'"
+               onmouseout="this.style.background='#f8f9fa'; this.style.transform=''">
+            <div style="display: flex; align-items: center;">
+              <span style="margin-right: 8px; font-size: 16px;">${icon}</span>
+              <div style="flex-grow: 1;">
+                <strong style="color: ${flow.color || '#2596be'};">${flow.label}</strong>
+                <div style="font-size: 11px; color: #6c757d;">
+                  ${fromLabel} → ${toLabel}
+                </div>
+              </div>
+              <div style="text-align: right;">
+                <div style="font-size: 12px; font-weight: bold;">${flow.flow} ${flow.unit || 't TS'}</div>
+                <div style="font-size: 11px; color: ${percentage < 1 ? '#dc3545' : percentage < 5 ? '#ffc107' : '#28a745'};">
+                  ${percentage.toFixed(2)}%
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('')}
     </div>
   `;
   
-  chartContainer.appendChild(panel);
-}
-
-// Add instruction panel
-function addClickInstructionPanel() {
-  const lang = getCurrentLanguage();
+  menu.innerHTML = menuHTML;
+  
+  // Add menu to chart container
   const chartContainer = document.querySelector('.chart-container');
-  
-  // Remove existing instruction
-  const existingInstruction = document.getElementById('clickInstruction');
-  if (existingInstruction) existingInstruction.remove();
-  
-  const instruction = document.createElement('div');
-  instruction.id = 'clickInstruction';
-  instruction.style.cssText = `
-    background: linear-gradient(135deg, #ffd700, #ffed4e);
-    color: #333;
-    padding: 12px;
-    margin: 15px 0;
-    border-radius: 8px;
-    border: 2px solid #ffc107;
-    font-size: 14px;
-    font-weight: 500;
-    text-align: center;
-    box-shadow: 0 2px 8px rgba(255,193,7,0.3);
-  `;
-  
-  instruction.innerHTML = `
-    👆 ${lang === 'de' ? 
-      'KLICKEN Sie auf das Diagramm, um Details zu kleinen Flüssen zu sehen (Hover funktioniert nicht bei dünnen Linien)' : 
-      'CLICK on the diagram to see details of small flows (hover does not work on thin lines)'}
-  `;
-  
-  // Insert before the canvas
-  const canvas = document.getElementById('sankeyChart');
-  if (canvas && canvas.parentElement) {
-    canvas.parentElement.insertBefore(instruction, canvas);
-  }
+  chartContainer.style.position = 'relative';
+  chartContainer.appendChild(menu);
 }
 
-// Show helper when clicking empty space
-function showClickHelper(x, y) {
-  const lang = getCurrentLanguage();
-  
-  // Create temporary helper tooltip
-  const helper = document.createElement('div');
-  helper.style.cssText = `
-    position: absolute;
-    left: ${x}px;
-    top: ${y}px;
-    background: rgba(0,0,0,0.8);
-    color: white;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 12px;
-    pointer-events: none;
-    z-index: 2000;
-    animation: fadeOut 2s forwards;
-  `;
-  
-  helper.innerHTML = lang === 'de' ? 
-    '↖ Versuchen Sie näher an einer Linie zu klicken' : 
-    '↖ Try clicking closer to a flow line';
-  
-  const chartContainer = document.querySelector('.chart-container');
-  chartContainer.appendChild(helper);
-  
-  // Remove after animation
-  setTimeout(() => helper.remove(), 2000);
-}
-
-// Create reference table for small flows
-function createSmallFlowsReferenceTable(scenarioDataForChart, labels) {
-  const lang = getCurrentLanguage();
-  const totalFlow = scenarioDataForChart.flows.reduce((sum, f) => sum + f.flow, 0);
-  
-  // Find all small flows
-  const smallFlows = scenarioDataForChart.flows
-    .filter(flow => (flow.flow / totalFlow * 100) < 2)
-    .sort((a, b) => a.flow - b.flow)
-    .map(flow => ({
-      ...flow,
-      percentage: (flow.flow / totalFlow * 100).toFixed(3),
-      fromLabel: scenarioData.nodeLabels[flow.from] || flow.from,
-      toLabel: scenarioData.nodeLabels[flow.to] || flow.to
-    }));
-
-  if (smallFlows.length > 0) {
-    const tableHTML = `
-      <div style="margin-top: 30px; padding: 20px; background: white; border-radius: 10px; border: 2px solid #70c5c7; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-        <h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 16px; border-bottom: 2px solid #70c5c7; padding-bottom: 8px;">
-          📋 ${lang === 'de' ? 'Kleine Flüsse Referenztabelle' : 'Small Flows Reference Table'} 
-          <span style="font-size: 12px; color: #6c757d;">(< 2%)</span>
-        </h4>
-        
-        <div style="background: #f8f9fa; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-size: 13px;">
-          💡 ${lang === 'de' ? 
-            'Diese Flüsse sind zu dünn zum Hovern. Klicken Sie auf das Diagramm in ihrer Nähe oder sehen Sie die Details hier:' : 
-            'These flows are too thin to hover over. Click on the diagram near them or see details here:'}
-        </div>
-        
-        <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-          <thead>
-            <tr style="background: #e3f2f3;">
-              <th style="padding: 10px; text-align: left; border-bottom: 2px solid #70c5c7;">
-                ${lang === 'de' ? 'Material' : 'Material'}
-              </th>
-              <th style="padding: 10px; text-align: left; border-bottom: 2px solid #70c5c7;">
-                ${labels.fromText}
-              </th>
-              <th style="padding: 10px; text-align: left; border-bottom: 2px solid #70c5c7;">
-                ${labels.toText}
-              </th>
-              <th style="padding: 10px; text-align: right; border-bottom: 2px solid #70c5c7;">
-                ${labels.quantityText}
-              </th>
-              <th style="padding: 10px; text-align: right; border-bottom: 2px solid #70c5c7;">%</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${smallFlows.map((flow, index) => `
-              <tr style="background: ${index % 2 === 0 ? '#ffffff' : '#f8f9fa'}; transition: background 0.2s;" 
-                  onmouseover="this.style.background='#e3f2f3'" 
-                  onmouseout="this.style.background='${index % 2 === 0 ? '#ffffff' : '#f8f9fa'}'">
-                <td style="padding: 10px; border-bottom: 1px solid #dee2e6; font-weight: bold; color: #2596be;">
-                  ${flow.flowPercentage < 0.5 ? '🔬' : flow.flowPercentage < 1 ? '💧' : '💦'} 
-                  ${flow.label}
-                </td>
-                <td style="padding: 10px; border-bottom: 1px solid #dee2e6;">
-                  ${flow.fromLabel}
-                </td>
-                <td style="padding: 10px; border-bottom: 1px solid #dee2e6;">
-                  ${flow.toLabel}
-                </td>
-                <td style="padding: 10px; text-align: right; border-bottom: 1px solid #dee2e6; font-weight: 500;">
-                  ${flow.flow} ${flow.unit || 't TS'}
-                </td>
-                <td style="padding: 10px; text-align: right; border-bottom: 1px solid #dee2e6; font-weight: 500; color: #6c757d;">
-                  ${flow.percentage}%
-                </td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-        
-        <div style="margin-top: 15px; padding: 10px; background: #e3f2f3; border-radius: 6px; font-size: 11px; color: #495057;">
-          <strong>${lang === 'de' ? 'Hinweis:' : 'Note:'}</strong> 
-          ${lang === 'de' ? 
-            'Die Prozentsätze basieren auf dem Gesamtfluss. Sehr kleine Flüsse (<1%) sind im Diagramm kaum sichtbar.' : 
-            'Percentages are based on total flow. Very small flows (<1%) are barely visible in the diagram.'}
-        </div>
-      </div>
-    `;
-    
-    // Add table to container
-    const chartContainer = document.querySelector('.chart-container');
-    const existingTable = chartContainer.querySelector('[data-small-flows-table]');
-    if (existingTable) existingTable.remove();
-    
-    const tableDiv = document.createElement('div');
-    tableDiv.setAttribute('data-small-flows-table', 'true');
-    tableDiv.innerHTML = tableHTML;
-    chartContainer.appendChild(tableDiv);
-  }
-}
-
-// Add CSS for animations
-function addStyles() {
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes fadeOut {
-      0% { opacity: 1; }
-      70% { opacity: 1; }
-      100% { opacity: 0; }
-    }
-    
-    #sankeyChart {
-      cursor: pointer !important;
-      transition: border 0.3s;
-    }
-    
-    #sankeyChart:active {
-      transform: scale(0.99);
-    }
-    
-    #flowDetailsPanel {
-      animation: slideIn 0.3s ease-out;
-    }
-    
-    @keyframes slideIn {
-      from {
-        transform: translateX(20px);
-        opacity: 0;
-      }
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
-    }
-  `;
-  document.head.appendChild(style);
-}
-
-// Initialize styles
-addStyles();
-
-// Material abbreviation helper
+// Helper functions (same as before)
 function getMaterialAbbreviation(label) {
   if (!label) return 'M';
   
@@ -617,7 +569,6 @@ function getMaterialAbbreviation(label) {
     'calcium': 'Ca', 'Kalzium': 'Ca',
     'magnesium': 'Mg', 'Magnesium': 'Mg',
     'sulfur': 'S', 'Schwefel': 'S',
-    'sulphur': 'S',
     'humus': 'Hum', 'Humus': 'Hum',
     'sewage sludge': 'SS', 'Klärschlamm': 'KS',
     'ash': 'Ash', 'Asche': 'Asc',
@@ -628,7 +579,6 @@ function getMaterialAbbreviation(label) {
   return abbreviations[label] || label.substring(0, 3).toUpperCase();
 }
 
-// Create unique nodes for better separation
 function preprocessFlowsForEnhancedSeparation(originalFlows) {
   const sankeyFlows = [];
   const labels = new Set();
@@ -664,13 +614,10 @@ function preprocessFlowsForEnhancedSeparation(originalFlows) {
       labels.add(sourceLabel);
       labels.add(baseTargetLabel);
       
-      const flowPercentage = (flow.flow / totalFlow) * 100;
-      
       originalFlowsMap[flowIndex] = {
         ...flow,
         originalFrom: flow.from,
-        originalTo: flow.to,
-        flowPercentage: flowPercentage
+        originalTo: flow.to
       };
       flowIndex++;
       
@@ -683,7 +630,7 @@ function preprocessFlowsForEnhancedSeparation(originalFlows) {
         
         let uniqueTargetLabel;
         
-        if (flowPercentage < 0.5) {
+        if (flowPercentage < 0.3) {
           const abbr = getMaterialAbbreviation(flow.label);
           uniqueTargetLabel = `${baseTargetLabel} • ${abbr}`;
         } else if (flowPercentage < 1) {
@@ -737,7 +684,6 @@ function preprocessFlowsForEnhancedSeparation(originalFlows) {
   };
 }
 
-// Color brightness adjustment
 function adjustColorBrightness(hex, amount) {
   const usePound = hex.charAt(0) === '#';
   const col = usePound ? hex.slice(1) : hex;
@@ -754,7 +700,6 @@ function adjustColorBrightness(hex, amount) {
   return (usePound ? '#' : '') + (r << 16 | g << 8 | b).toString(16).padStart(6, '0');
 }
 
-// Hide Sankey chart
 function hideSankeyChart() {
   const chartContainer = document.querySelector('.chart-container');
   if (chartContainer) {
@@ -764,6 +709,13 @@ function hideSankeyChart() {
     sankeyChart.destroy();
     sankeyChart = null;
   }
+  
+  // Clean up manual elements
+  const panel = document.getElementById('manualInfoPanel');
+  if (panel) panel.remove();
+  
+  const menu = document.getElementById('flowSelectorMenu');
+  if (menu) menu.remove();
 }
 
 // Export functions

@@ -1,12 +1,16 @@
-/* final-sankey-diagram.js - ENHANCED SEPARATION VERSION */
-/* Bug fixes implemented:
- * 1. Smart label abbreviation for small flows
- * 2. Enhanced flow separation by creating truly unique nodes
- * 3. Added node positioning hints for better visual layout
+/* final-sankey-diagram.js - SIMPLIFIED MINIMAL VERSION */
+/* 
+ * Clean version with:
+ * - Normal tooltips for large flows
+ * - Click detection for thin flows only
+ * - No extra buttons or panels
+ * - Minimal interface
  */
 
-// Global variable to store the Sankey Chart instance
+// Global variables
 let sankeyChart;
+let globalFlowData = {};
+let processedFlows = {};
 
 // Function to automatically show Sankey diagram when scenario is selected
 function showSankeyDiagram() {
@@ -18,6 +22,9 @@ function showSankeyDiagram() {
     console.error('No scenario selected');
     return;
   }
+
+  // Store flow data globally
+  globalFlowData = currentScenarioData;
 
   // Display the Sankey chart container
   const chartContainer = document.querySelector('.chart-container');
@@ -47,7 +54,10 @@ function showSankeyDiagram() {
     ofTotalFlowText: lang === 'de' ? 'des Gesamtflusses' : 'of total flow'
   };
 
-  // Update the text description with all scenario information
+  // Store labels globally
+  globalFlowData.labels = labels;
+
+  // Update the text description
   const textContainer = document.getElementById('sankey-text-container');
   textContainer.innerHTML = `
     <div style="margin-bottom: 20px; padding: 20px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 10px; border-left: 5px solid #70c5c7;">
@@ -96,14 +106,13 @@ function createSankeyChart(scenarioDataForChart, labels) {
     return;
   }
 
-  // Create unique target nodes for flows with same destination - ENHANCED VERSION
-  const processedFlows = preprocessFlowsForEnhancedSeparation(scenarioDataForChart.flows);
+  // Create unique target nodes for flows with same destination
+  processedFlows = preprocessFlowsForEnhancedSeparation(scenarioDataForChart.flows);
   
   console.log('Original flows:', scenarioDataForChart.flows.length);
   console.log('Processed flows:', processedFlows.sankeyFlows.length);
-  console.log('Unique labels:', processedFlows.labels.length);
 
-  // Create the new Sankey diagram with enhanced separation
+  // Create the Sankey diagram
   const ctx = document.getElementById('sankeyChart').getContext('2d');
   sankeyChart = new Chart(ctx, {
     type: 'sankey',
@@ -123,11 +132,11 @@ function createSankeyChart(scenarioDataForChart, labels) {
           }
           return '#70c5c7';
         },
-        borderWidth: 8, // Increased significantly for better visual separation
-        borderColor: '#fff', // White borders for cleaner separation
-        nodeWidth: 30, // Wider nodes if supported by the library
-        nodePadding: 20, // More space between nodes if supported
-        alpha: 0.7, // Semi-transparent flows for better visibility when overlapping
+        borderWidth: 8,
+        borderColor: '#fff',
+        nodeWidth: 30,
+        nodePadding: 20,
+        alpha: 0.7,
       }]
     },
     options: {
@@ -175,6 +184,7 @@ function createSankeyChart(scenarioDataForChart, labels) {
             }
           }
         },
+        // Standard tooltip - works for large flows
         tooltip: {
           enabled: true,
           mode: 'point',
@@ -185,6 +195,8 @@ function createSankeyChart(scenarioDataForChart, labels) {
             },
             label: function(context) {
               const originalFlow = processedFlows.originalFlowsMap[context.dataIndex];
+              if (!originalFlow) return [];
+              
               const originalSource = scenarioData.nodeLabels[originalFlow.originalFrom] || originalFlow.originalFrom;
               const originalTarget = scenarioData.nodeLabels[originalFlow.originalTo] || originalFlow.originalTo;
               
@@ -196,7 +208,10 @@ function createSankeyChart(scenarioDataForChart, labels) {
               ];
             },
             footer: function(tooltipItems) {
+              if (!tooltipItems || tooltipItems.length === 0) return '';
               const originalFlow = processedFlows.originalFlowsMap[tooltipItems[0].dataIndex];
+              if (!originalFlow) return '';
+              
               const totalFlow = scenarioDataForChart.flows.reduce((sum, f) => sum + f.flow, 0);
               const percentage = ((originalFlow.flow / totalFlow) * 100).toFixed(1);
               return `${percentage}% ${labels.ofTotalFlowText}`;
@@ -222,32 +237,16 @@ function createSankeyChart(scenarioDataForChart, labels) {
             style: 'italic'
           },
           padding: 15
-        },
-        // Try to add custom plugin for better layout if supported
-        customLayout: {
-          beforeLayout: function(chart) {
-            // Attempt to influence node positioning
-            if (chart.config && chart.config.options) {
-              chart.config.options.nodeAlign = 'justify'; // Spread nodes evenly
-              chart.config.options.iterations = 64; // More iterations for better layout
-            }
-          }
         }
       },
       layout: {
         padding: {
-          top: 60, // Extra padding for labels
+          top: 60,
           bottom: 80,
           left: 60,
           right: 60
         }
       },
-      // Additional Sankey-specific options if supported by chartjs-chart-sankey
-      nodeAlign: 'justify', // Spread nodes to use full height
-      nodeSort: true, // Sort nodes for better layout
-      nodePadding: 25, // Space between nodes
-      nodeWidth: 35, // Width of node rectangles
-      iterations: 64, // Layout calculation iterations
       animation: {
         duration: 1500,
         easing: 'easeInOutQuart'
@@ -258,77 +257,216 @@ function createSankeyChart(scenarioDataForChart, labels) {
     }
   });
 
-  // Make sankey chart responsive
-  window.addEventListener('resize', function() {
-    if (sankeyChart) {
-      sankeyChart.resize();
-    }
-  });
-
-  // Add cursor pointer on hover
-  ctx.canvas.addEventListener('mousemove', function(e) {
-    const activePoints = sankeyChart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, false);
-    ctx.canvas.style.cursor = activePoints.length > 0 ? 'pointer' : 'default';
-  });
+  // Add MINIMAL click handler for thin flows only
+  setupMinimalClickHandler();
 
   // Store chart instance globally
   window.sankeyChart = sankeyChart;
-  console.log('✅ Enhanced Sankey chart with improved separation created successfully');
+  console.log('✅ Sankey chart created successfully');
 }
 
-// Helper function for material abbreviations
+// MINIMAL click handler - only shows menu for thin flows
+function setupMinimalClickHandler() {
+  const canvas = document.getElementById('sankeyChart');
+  
+  canvas.addEventListener('click', function(e) {
+    // Try to detect if we clicked on a detectable flow
+    const elements = sankeyChart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, false);
+    
+    if (!elements || elements.length === 0) {
+      // Nothing detected - might be a thin flow
+      // Show ONLY small flows menu
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      showSmallFlowsMenu(x, y);
+    }
+    // If a flow is detected, the normal tooltip handles it
+  });
+}
+
+// Show menu ONLY for small flows
+function showSmallFlowsMenu(x, y) {
+  const lang = getCurrentLanguage();
+  const totalFlow = globalFlowData.flows.reduce((sum, f) => sum + f.flow, 0);
+  
+  // Filter ONLY small flows (< 2%)
+  const smallFlows = globalFlowData.flows
+    .map((flow, index) => ({
+      ...flow,
+      index,
+      percentage: (flow.flow / totalFlow * 100)
+    }))
+    .filter(flow => flow.percentage < 2)
+    .sort((a, b) => a.flow - b.flow);
+  
+  if (smallFlows.length === 0) return;
+  
+  // Remove existing menu
+  const existingMenu = document.getElementById('smallFlowMenu');
+  if (existingMenu) existingMenu.remove();
+  
+  const menu = document.createElement('div');
+  menu.id = 'smallFlowMenu';
+  menu.style.cssText = `
+    position: absolute;
+    left: ${Math.min(x, window.innerWidth - 280)}px;
+    top: ${Math.min(y, window.innerHeight - 300)}px;
+    background: white;
+    border: 2px solid #70c5c7;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 1000;
+    width: 260px;
+    max-height: 300px;
+    overflow-y: auto;
+  `;
+  
+  const menuHTML = `
+    <div style="background: #70c5c7; color: white; padding: 8px; font-size: 13px; display: flex; justify-content: space-between; align-items: center;">
+      <strong>${lang === 'de' ? 'Kleine Flüsse' : 'Small Flows'}</strong>
+      <button onclick="document.getElementById('smallFlowMenu').remove()" 
+              style="background: white; color: #70c5c7; border: none; 
+                     border-radius: 50%; width: 20px; height: 20px; cursor: pointer; font-size: 12px;">✕</button>
+    </div>
+    <div style="padding: 5px;">
+      ${smallFlows.map(flow => {
+        const fromLabel = scenarioData.nodeLabels[flow.from] || flow.from;
+        const toLabel = scenarioData.nodeLabels[flow.to] || flow.to;
+        const icon = flow.percentage < 0.5 ? '🔬' : flow.percentage < 1 ? '💧' : '💦';
+        
+        return `
+          <div onclick="showSimpleFlowInfo(${flow.index}); document.getElementById('smallFlowMenu').remove()" 
+               style="padding: 6px; margin: 2px 0; background: #f8f9fa; 
+                      border-radius: 4px; cursor: pointer; font-size: 11px;"
+               onmouseover="this.style.background='#e3f2f3'"
+               onmouseout="this.style.background='#f8f9fa'">
+            <div style="display: flex; align-items: center;">
+              <span style="margin-right: 6px;">${icon}</span>
+              <div style="flex-grow: 1;">
+                <strong style="color: ${flow.color || '#2596be'};">${flow.label}</strong>
+                <div style="font-size: 10px; color: #6c757d;">
+                  ${fromLabel} → ${toLabel}
+                </div>
+              </div>
+              <div style="text-align: right;">
+                <div style="font-weight: bold;">${flow.flow}</div>
+                <div style="font-size: 10px; color: #6c757d;">${flow.percentage.toFixed(2)}%</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+  
+  menu.innerHTML = menuHTML;
+  
+  // Add menu to chart container
+  const chartContainer = document.querySelector('.chart-container');
+  chartContainer.style.position = 'relative';
+  chartContainer.appendChild(menu);
+}
+
+// Simple flow info popup
+window.showSimpleFlowInfo = function(flowIndex) {
+  const flow = globalFlowData.flows[flowIndex];
+  if (!flow) return;
+  
+  const lang = getCurrentLanguage();
+  const labels = globalFlowData.labels;
+  const totalFlow = globalFlowData.flows.reduce((sum, f) => sum + f.flow, 0);
+  const percentage = (flow.flow / totalFlow * 100).toFixed(3);
+  
+  const fromLabel = scenarioData.nodeLabels[flow.from] || flow.from;
+  const toLabel = scenarioData.nodeLabels[flow.to] || flow.to;
+  
+  // Remove existing popup
+  const existingPopup = document.getElementById('flowPopup');
+  if (existingPopup) existingPopup.remove();
+  
+  const popup = document.createElement('div');
+  popup.id = 'flowPopup';
+  popup.style.cssText = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 2px solid #70c5c7;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    z-index: 10000;
+    padding: 20px;
+    max-width: 350px;
+  `;
+  
+  popup.innerHTML = `
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+      <h4 style="margin: 0; color: #2596be;">${flow.label}</h4>
+      <button onclick="document.getElementById('flowPopup').remove()" 
+              style="background: #70c5c7; color: white; border: none; 
+                     border-radius: 50%; width: 25px; height: 25px; cursor: pointer;">✕</button>
+    </div>
+    
+    <table style="width: 100%; font-size: 13px;">
+      <tr>
+        <td style="padding: 5px; color: #6c757d;">${labels.fromText}</td>
+        <td style="padding: 5px; font-weight: bold;">${fromLabel}</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px; color: #6c757d;">${labels.toText}</td>
+        <td style="padding: 5px; font-weight: bold;">${toLabel}</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px; color: #6c757d;">${labels.quantityText}</td>
+        <td style="padding: 5px; font-weight: bold;">${flow.flow} ${flow.unit || 't TS'}</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px; color: #6c757d;">${lang === 'de' ? 'Anteil:' : 'Share:'}</td>
+        <td style="padding: 5px; font-weight: bold; color: ${percentage < 1 ? '#dc3545' : '#28a745'};">${percentage}%</td>
+      </tr>
+    </table>
+  `;
+  
+  document.body.appendChild(popup);
+  
+  // Auto-close after 5 seconds
+  setTimeout(() => {
+    if (document.getElementById('flowPopup')) {
+      document.getElementById('flowPopup').remove();
+    }
+  }, 5000);
+};
+
+// Helper functions (same as before but keeping them)
 function getMaterialAbbreviation(label) {
   if (!label) return 'M';
   
   const abbreviations = {
-    'nitrogen': 'N',
-    'Stickstoff': 'N',
-    'potassium': 'K',
-    'Kalium': 'K',
-    'phosphorus': 'P',
-    'Phosphor': 'P',
-    'calcium': 'Ca',
-    'Kalzium': 'Ca',
-    'magnesium': 'Mg',
-    'Magnesium': 'Mg',
-    'sulfur': 'S',
-    'Schwefel': 'S',
-    'humus': 'Hum',
-    'Humus': 'Hum',
-    'sewage sludge': 'SS',
-    'Klärschlamm': 'KS',
-    'ash': 'Ash',
-    'Asche': 'Asc',
-    'emissions': 'Em',
-    'Emissionen': 'Em',
-    'wastewater': 'WW',
-    'Abwasser': 'AW',
-    'reused': 'Reu',
-    'wiederverwendet': 'Wdv'
+    'nitrogen': 'N', 'Stickstoff': 'N',
+    'potassium': 'K', 'Kalium': 'K',
+    'phosphorus': 'P', 'Phosphor': 'P',
+    'calcium': 'Ca', 'Kalzium': 'Ca',
+    'magnesium': 'Mg', 'Magnesium': 'Mg',
+    'sulfur': 'S', 'Schwefel': 'S',
+    'humus': 'Hum', 'Humus': 'Hum',
+    'sewage sludge': 'SS', 'Klärschlamm': 'KS',
+    'ash': 'Ash', 'Asche': 'Asc',
+    'emissions': 'Em', 'Emissionen': 'Em',
+    'wastewater': 'WW', 'Abwasser': 'AW'
   };
   
-  if (abbreviations[label]) {
-    return abbreviations[label];
-  }
-  
-  const words = label.split(' ');
-  if (words.length > 1) {
-    return words.map(w => w[0].toUpperCase()).join('');
-  }
-  
-  return label.substring(0, 3).toUpperCase();
+  return abbreviations[label] || label.substring(0, 3).toUpperCase();
 }
 
-// ENHANCED FUNCTION: Create truly unique nodes for better separation
 function preprocessFlowsForEnhancedSeparation(originalFlows) {
   const sankeyFlows = [];
   const labels = new Set();
   const originalFlowsMap = {};
   
-  // Calculate total flow for percentage calculations
   const totalFlow = originalFlows.reduce((sum, flow) => sum + flow.flow, 0);
   
-  // Group flows by target to identify conflicts
   const flowsByTarget = {};
   originalFlows.forEach((flow, index) => {
     const targetKey = flow.to;
@@ -340,13 +478,11 @@ function preprocessFlowsForEnhancedSeparation(originalFlows) {
   
   let flowIndex = 0;
   
-  // Process each target group
   Object.keys(flowsByTarget).forEach(targetKey => {
     const targetFlows = flowsByTarget[targetKey];
     const baseTargetLabel = scenarioData.nodeLabels[targetKey] || targetKey;
     
     if (targetFlows.length === 1) {
-      // Single flow to this target - use base label
       const flow = targetFlows[0];
       const sourceLabel = scenarioData.nodeLabels[flow.from] || flow.from;
       
@@ -367,46 +503,32 @@ function preprocessFlowsForEnhancedSeparation(originalFlows) {
       flowIndex++;
       
     } else {
-      // Multiple flows to same target - create completely unique nodes
-      // Sort by flow size for consistent ordering
       const sortedFlows = targetFlows.sort((a, b) => b.flow - a.flow);
       
       sortedFlows.forEach((flow, subIndex) => {
         const sourceLabel = scenarioData.nodeLabels[flow.from] || flow.from;
         const flowPercentage = (flow.flow / totalFlow) * 100;
         
-        // Create unique target label with material identifier
         let uniqueTargetLabel;
         
-        // Always create a unique node for each flow to ensure separation
         if (flowPercentage < 0.3) {
-          // Very tiny flows: just use abbreviation
           const abbr = getMaterialAbbreviation(flow.label);
           uniqueTargetLabel = `${baseTargetLabel} • ${abbr}`;
-          
         } else if (flowPercentage < 1) {
-          // Small flows: abbreviation with brackets
           const abbr = getMaterialAbbreviation(flow.label);
           uniqueTargetLabel = `${baseTargetLabel} [${abbr}]`;
-          
         } else if (flowPercentage < 3) {
-          // Medium-small flows: short label
           const shortLabel = flow.label ? 
             (flow.label.length > 10 ? getMaterialAbbreviation(flow.label) : flow.label.split(' ')[0]) : 
             `Mat${subIndex + 1}`;
           uniqueTargetLabel = `${baseTargetLabel} (${shortLabel})`;
-          
         } else if (flowPercentage < 10) {
-          // Medium flows: material name on same line
           const materialName = flow.label || `Material ${subIndex + 1}`;
           uniqueTargetLabel = `${baseTargetLabel} - ${materialName}`;
-          
         } else {
-          // Large flows: full description with line break
           uniqueTargetLabel = `${baseTargetLabel}\n[${flow.label || 'Primary Material'}]`;
         }
         
-        // Make absolutely sure each label is unique by adding index if needed
         let finalLabel = uniqueTargetLabel;
         let counter = 1;
         while (labels.has(finalLabel)) {
@@ -443,7 +565,6 @@ function preprocessFlowsForEnhancedSeparation(originalFlows) {
   };
 }
 
-// Utility function to adjust color brightness
 function adjustColorBrightness(hex, amount) {
   const usePound = hex.charAt(0) === '#';
   const col = usePound ? hex.slice(1) : hex;
@@ -460,7 +581,6 @@ function adjustColorBrightness(hex, amount) {
   return (usePound ? '#' : '') + (r << 16 | g << 8 | b).toString(16).padStart(6, '0');
 }
 
-// Function to hide the Sankey chart
 function hideSankeyChart() {
   const chartContainer = document.querySelector('.chart-container');
   if (chartContainer) {
@@ -470,8 +590,15 @@ function hideSankeyChart() {
     sankeyChart.destroy();
     sankeyChart = null;
   }
+  
+  // Clean up any menus or popups
+  const menu = document.getElementById('smallFlowMenu');
+  if (menu) menu.remove();
+  
+  const popup = document.getElementById('flowPopup');
+  if (popup) popup.remove();
 }
 
-// Auto-show Sankey when scenario changes (called from controller)
+// Export functions
 window.showSankeyDiagram = showSankeyDiagram;
 window.hideSankeyChart = hideSankeyChart;

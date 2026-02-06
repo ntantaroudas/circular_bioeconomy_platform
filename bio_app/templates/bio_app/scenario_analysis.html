@@ -22,117 +22,15 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/FScenarioAnalysisselected.css' %}" />
      <!-- Add Bootstrap CSS via CDN -->
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Chart.js Sankey Plugin -->
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-sankey"></script>
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 <style>
-/* CSS for Sankey chart with proper spacing */
-.chart-container {
-  position: relative;
-  height: 600px; /* Increased height */
-  width: 100%;
-  padding: 0 40px;
-  box-sizing: border-box;
-  display: none;
-  margin-bottom: 150px; /* Large margin to prevent footer overlap */
-}
-
-#sankeyChart {
-  height: 100% !important;
-  width: 100% !important;
-}
-
-/* Scenario buttons in a single row with overflow scroll */
-.scenario-buttons {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto; /* Horizontal scroll for many buttons */
-  overflow-y: visible;
-  padding: 10px 0;
-  margin: 20px 0;
-  min-height: 60px; /* Fixed height to prevent layout jumps */
-  align-items: center;
-  scrollbar-width: thin;
-  scrollbar-color: #70c5c7 #f1f1f1;
-}
-
-/* Custom scrollbar for webkit browsers */
-.scenario-buttons::-webkit-scrollbar {
-  height: 6px;
-}
-
-.scenario-buttons::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 3px;
-}
-
-.scenario-buttons::-webkit-scrollbar-thumb {
-  background: #70c5c7;
-  border-radius: 3px;
-}
-
-.scenario-buttons::-webkit-scrollbar-thumb:hover {
-  background: #5a9fa1;
-}
-
-.scenario-btn {
-  background: #ffffff;
-  border: 2px solid #70c5c7;
-  color: #2c3e50;
-  padding: 10px 20px;
-  border-radius: 25px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  font-size: 0.9rem;
-  min-width: 200px; /* Fixed minimum width */
-  max-width: 280px; /* Maximum width */
-  text-align: center;
-  white-space: nowrap; /* Prevent text wrapping */
-  overflow: hidden;
-  text-overflow: ellipsis; /* Show ... for long text */
-  flex-shrink: 0; /* Prevent shrinking */
-  height: 45px; /* Fixed height */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.scenario-btn:hover {
-  background: #70c5c7;
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.scenario-btn.active {
-  background: #70c5c7;
-  color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  transform: translateY(-1px);
-}
-
-/* Text description with proper spacing */
-.text-description {
-  background: #f8f9fa;
-  padding: 25px;
-  border-radius: 10px;
-  border-left: 4px solid #70c5c7;
-  margin: 30px 0; /* Space above and below */
-  font-size: 1rem;
-  line-height: 1.6;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
 /* Ensure adequate spacing from footer */
 .columnvectorfif-1 {
-  margin-bottom: 200px; /* Large bottom margin */
+  margin-bottom: 200px;
   padding-bottom: 50px;
 }
 
@@ -148,46 +46,9 @@ footer {
   margin-bottom: 40px;
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
-  .scenario-buttons {
-    justify-content: flex-start; /* Left-align on mobile */
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-
-  .scenario-btn {
-    min-width: 180px;
-    font-size: 0.85rem;
-    padding: 8px 16px;
-  }
-
-  .chart-container {
-    height: 500px;
-    margin-bottom: 100px;
-    padding: 0 20px;
-  }
-
-  .text-description {
-    padding: 20px;
-    margin: 20px 0;
-  }
-
   .columnvectorfif-1 {
     margin-bottom: 150px;
-  }
-}
-
-@media (max-width: 480px) {
-  .scenario-btn {
-    min-width: 160px;
-    font-size: 0.8rem;
-    padding: 8px 12px;
-  }
-
-  .chart-container {
-    height: 400px;
-    padding: 0 10px;
   }
 }
 
@@ -203,27 +64,183 @@ html, body {
   min-height: 100vh;
 }
 
-/* Scroll hint for buttons */
-.scenario-buttons::after {
-  position: absolute;
-  bottom: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.75rem;
+/* ===== Analysis Tool Buttons ===== */
+.analysis-tool-buttons {
+  display: flex;
+  gap: 20px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.analysis-tool-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 2px solid #70c5c7;
+  color: #2c3e50;
+  padding: 18px 36px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 220px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.analysis-tool-btn:hover {
+  background: rgba(112, 197, 199, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(112, 197, 199, 0.3);
+}
+
+.analysis-tool-btn.active {
+  background: #70c5c7;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(112, 197, 199, 0.4);
+  transform: translateY(-1px);
+}
+
+.analysis-tool-btn.active .analysis-tool-btn__subtitle {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.analysis-tool-btn__title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.analysis-tool-btn__subtitle {
+  font-size: 0.8rem;
   color: #6c757d;
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity 0.3s;
+  margin-top: 4px;
+  font-weight: 400;
 }
 
-.scenario-buttons:hover::after {
-  opacity: 1;
+@media (max-width: 480px) {
+  .analysis-tool-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .analysis-tool-btn {
+    min-width: 180px;
+    padding: 14px 24px;
+  }
+
+  .analysis-tool-btn__title {
+    font-size: 1.1rem;
+  }
 }
 
-/* Hide scroll hint on mobile */
+/* ===== Tab Navigation Styles ===== */
+.scenario-tabs-wrapper {
+  padding: 0 40px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.scenario-tabs {
+  border-bottom: 2px solid #70c5c7;
+  justify-content: center;
+  display: none;
+}
+
+.scenario-tabs .nav-link {
+  color: #2c3e50;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 12px 24px;
+  border: 2px solid transparent;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.scenario-tabs .nav-link:hover {
+  color: #70c5c7;
+  background: rgba(112, 197, 199, 0.08);
+  border-color: #e0e0e0;
+  border-bottom: none;
+}
+
+.scenario-tabs .nav-link.active {
+  color: #ffffff;
+  background-color: #70c5c7;
+  border-color: #70c5c7;
+  border-bottom-color: transparent;
+  font-weight: 600;
+}
+
+.scenario-tab-content {
+  padding-top: 10px;
+}
+
+.iframe-tab-container {
+  width: 100%;
+  padding: 10px 0;
+}
+
+.iframe-tab-container iframe {
+  border: none;
+  width: 100%;
+  min-width: 320px;
+  display: block;
+}
+
+.iframe-mfa {
+  height: 750px;
+}
+
+.iframe-mcdma {
+  height: 1100px;
+}
+
 @media (max-width: 768px) {
-  .scenario-buttons::after {
-    display: none;
+  .scenario-tabs-wrapper {
+    padding: 0 20px;
+    margin-top: 20px;
+  }
+
+  .scenario-tabs .nav-link {
+    font-size: 0.85rem;
+    padding: 10px 16px;
+  }
+
+  .iframe-mfa {
+    height: 600px;
+  }
+
+  .iframe-mcdma {
+    height: 900px;
+  }
+}
+
+@media (max-width: 480px) {
+  .scenario-tabs-wrapper {
+    padding: 0 10px;
+  }
+
+  .scenario-tabs .nav-link {
+    font-size: 0.8rem;
+    padding: 8px 12px;
+  }
+
+  .scenario-tabs .nav-item {
+    flex: 1;
+    text-align: center;
+  }
+
+  .iframe-mfa {
+    height: 500px;
+  }
+
+  .iframe-mcdma {
+    height: 750px;
   }
 }
 </style>
@@ -280,23 +297,18 @@ html, body {
                       class="scenario-analysis__icon--ellipse"
                     />
                     <div class="scenario-analysis__selection-column">
-                      <p class="scenario-analysis__text ui text size-textxl">Please select a city and scenario</p>
+                      <p class="scenario-analysis__text ui text size-textxl">Please select an analysis tool</p>
 
-                      <!-- City Selection Dropdown -->
-                      <select
-                        id="cityDropdown"
-                        class="scenario-analysis__dropdown ui selectbox white_a700 size-sm fill"
-                        name="City Select"
-                        style="margin-bottom: 25px;"
-                      >
-                        <option value="">Select a city</option>
-                        <option value="salzburg">Salzburg</option>
-                        <option value="pongau">Pongau</option>
-                      </select>
-
-                      <!-- Scenario Selection Buttons (in a horizontal row) -->
-                      <div class="scenario-buttons" id="scenarioButtons">
-                        <p style="text-align: center; color: #6c757d; margin: 20px 0; width: 100%;">Please select a city to view available scenarios.</p>
+                      <!-- Analysis Tool Selection Buttons -->
+                      <div class="analysis-tool-buttons">
+                        <button class="analysis-tool-btn active" data-target="mfa-tab" id="hero-mfa-btn">
+                          <span class="analysis-tool-btn__title">MFA</span>
+                          <span class="analysis-tool-btn__subtitle">Material Flow Analysis</span>
+                        </button>
+                        <button class="analysis-tool-btn" data-target="mcdma-tab" id="hero-mcdma-btn">
+                          <span class="analysis-tool-btn__title">MCDMA</span>
+                          <span class="analysis-tool-btn__subtitle">Multi-Criteria Decision Making Analysis</span>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -318,12 +330,44 @@ html, body {
           </div>
         </div>
 
-        <!-- Sankey Chart Container -->
-        <div class="chart-container">
-          <div id="sankey-text-container" class="text-description">
-            Select a city and scenario to view the Sankey diagram visualization.
+        <!-- Tab Navigation -->
+        <div class="scenario-tabs-wrapper">
+          <ul class="nav nav-tabs scenario-tabs" id="scenarioAnalysisTabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="mfa-tab" data-toggle="tab" href="#mfa-pane" role="tab" aria-controls="mfa-pane" aria-selected="true">MFA</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="mcdma-tab" data-toggle="tab" href="#mcdma-pane" role="tab" aria-controls="mcdma-pane" aria-selected="false">MCDMA</a>
+            </li>
+          </ul>
+
+          <div class="tab-content scenario-tab-content" id="scenarioAnalysisTabContent">
+            <!-- Tab 1: MFA -->
+            <div class="tab-pane fade show active" id="mfa-pane" role="tabpanel" aria-labelledby="mfa-tab">
+              <div class="iframe-tab-container">
+                <iframe
+                  src="https://tools-alchemia-nova.eu/mfa/futural-2025/"
+                  class="iframe-mfa"
+                  loading="lazy"
+                  allow="clipboard-write"
+                  title="Material Flow Analysis Tool"
+                ></iframe>
+              </div>
+            </div>
+
+            <!-- Tab 2: MCDMA -->
+            <div class="tab-pane fade" id="mcdma-pane" role="tabpanel" aria-labelledby="mcdma-tab">
+              <div class="iframe-tab-container">
+                <iframe
+                  src="https://tools-alchemia-nova.eu/mcdma/futural-2025/"
+                  class="iframe-mcdma"
+                  loading="lazy"
+                  allow="clipboard-write"
+                  title="Multi-Criteria Decision Making Analysis Tool"
+                ></iframe>
+              </div>
+            </div>
           </div>
-          <canvas id="sankeyChart"></canvas>
         </div>
 
       </div>
@@ -331,10 +375,23 @@ html, body {
       {% include "footer.html" %}
     </div>
 
-    <!-- Reference the JavaScript files -->
-    <script src="{% static 'js/scenario-data.js' %}"></script>
-    <script src="{% static 'js/dropdown-scenario-controller.js' %}"></script>
-    <script src="{% static 'js/final-sankey-diagram.js' %}"></script>
+    <script>
+      // Link hero buttons to tabs
+      document.querySelectorAll('.analysis-tool-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var targetTab = document.getElementById(btn.dataset.target);
+          if (targetTab) targetTab.click();
+          document.querySelectorAll('.analysis-tool-btn').forEach(function(b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+        });
+      });
+      // Keep hero buttons in sync when tabs are clicked directly
+      $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+        document.querySelectorAll('.analysis-tool-btn').forEach(function(b) { b.classList.remove('active'); });
+        var heroBtn = document.querySelector('.analysis-tool-btn[data-target="' + e.target.id + '"]');
+        if (heroBtn) heroBtn.classList.add('active');
+      });
+    </script>
 
   </body>
 </html>

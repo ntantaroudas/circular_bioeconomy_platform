@@ -1,0 +1,145 @@
+[
+{
+  "model": "bio_app.bestpractice",
+  "pk": 1,
+  "fields": {
+    "title": "Cambium - vertECO",
+    "description": "Closing water and nutrient cycles. Cambium in Fehring (Styria, Austria) transforms a former barracks into a sustainable living place for over 70 people, using the vertECO system for wastewater treatment and reuse.",
+    "link": "https://www.cambium.at/",
+    "factsheet_pdf": "factsheets/best_practices/Cambium_vertECO_DE.pdf",
+    "created_at": "2025-07-01T12:04:32.804Z"
+  }
+},
+{
+  "model": "bio_app.vacantbuilding",
+  "pk": 1,
+  "fields": {
+    "name": "test",
+    "address": "farmakidou 46",
+    "area_sq_ft": "55.00",
+    "available_from": "2025-07-01",
+    "year": 2023,
+    "floor": 6,
+    "proposed_purpose": "Retail",
+    "description": "sell vegetables",
+    "type_of_use": null,
+    "previous_use": null,
+    "facility_size": null,
+    "reachability": null,
+    "governance": null,
+    "previous_state": null,
+    "factsheet_pdf_en": "",
+    "factsheet_pdf_de": ""
+  }
+},
+{
+  "model": "bio_app.vacantbuilding",
+  "pk": 2,
+  "fields": {
+    "name": "Altes Milchhaus",
+    "address": "",
+    "area_sq_ft": "0.00",
+    "available_from": "2026-02-16",
+    "year": 2024,
+    "floor": 0,
+    "proposed_purpose": null,
+    "description": null,
+    "type_of_use": "permanent",
+    "previous_use": "small_retail",
+    "facility_size": "100_200",
+    "reachability": "very_central",
+    "governance": "private",
+    "previous_state": "poor",
+    "factsheet_pdf_en": "factsheets/vacant_buildings/en/Altes_Milchhaus_EN.pdf",
+    "factsheet_pdf_de": "factsheets/vacant_buildings/de/Altes_Milchhaus_DE.pdf"
+  }
+},
+{
+  "model": "bio_app.vacantbuilding",
+  "pk": 3,
+  "fields": {
+    "name": "Arbeit im Dorf",
+    "address": "",
+    "area_sq_ft": "0.00",
+    "available_from": "2026-02-16",
+    "year": 2024,
+    "floor": 0,
+    "proposed_purpose": null,
+    "description": null,
+    "type_of_use": "long_term",
+    "previous_use": "residential",
+    "facility_size": "40_100",
+    "reachability": "very_central",
+    "governance": "civil_society",
+    "previous_state": "moderate",
+    "factsheet_pdf_en": "factsheets/vacant_buildings/en/Arbeit_im_Dorf_EN.pdf",
+    "factsheet_pdf_de": "factsheets/vacant_buildings/de/Arbeit_im_Dorf_DE.pdf"
+  }
+},
+{
+  "model": "bio_app.vacantbuilding",
+  "pk": 4,
+  "fields": {
+    "name": "Die Giesserei",
+    "address": "",
+    "area_sq_ft": "0.00",
+    "available_from": "2026-02-16",
+    "year": 2024,
+    "floor": 0,
+    "proposed_purpose": null,
+    "description": null,
+    "type_of_use": "permanent",
+    "previous_use": "industry",
+    "facility_size": "over_200",
+    "reachability": "very_central",
+    "governance": "civil_society",
+    "previous_state": "poor",
+    "factsheet_pdf_en": "factsheets/vacant_buildings/en/Die_Giesserei_EN.pdf",
+    "factsheet_pdf_de": "factsheets/vacant_buildings/de/Die_Giesserei_DE.pdf"
+  }
+},
+{
+  "model": "bio_app.vacantbuilding",
+  "pk": 5,
+  "fields": {
+    "name": "Leutkircher Bürgerbahnhof",
+    "address": "",
+    "area_sq_ft": "0.00",
+    "available_from": "2026-02-16",
+    "year": 2024,
+    "floor": 0,
+    "proposed_purpose": null,
+    "description": null,
+    "type_of_use": "permanent",
+    "previous_use": "industry",
+    "facility_size": "over_200",
+    "reachability": "very_central",
+    "governance": "civil_society",
+    "previous_state": "poor",
+    "factsheet_pdf_en": "factsheets/vacant_buildings/en/Leutkircher_Buergerbahnhof_EN.pdf",
+    "factsheet_pdf_de": "factsheets/vacant_buildings/de/Leutkircher_Buergerbahnhof_DE.pdf"
+  }
+},
+{
+  "model": "bio_app.vacantbuilding",
+  "pk": 6,
+  "fields": {
+    "name": "Dorfplatz St.Andrä-Wördern",
+    "address": "",
+    "area_sq_ft": "0.00",
+    "available_from": "2026-02-16",
+    "year": 2024,
+    "floor": 0,
+    "proposed_purpose": null,
+    "description": null,
+    "type_of_use": "long_term",
+    "previous_use": "residential",
+    "facility_size": "over_200",
+    "reachability": "very_central",
+    "governance": "mixed",
+    "previous_state": "moderate",
+    "factsheet_pdf_en": "factsheets/vacant_buildings/en/Dorfplatz_St_Andrae_Woerdern_EN.pdf",
+    "factsheet_pdf_de": "factsheets/vacant_buildings/de/Dorfplatz_St_Andrae_Woerdern_DE.pdf"
+  }
+}
+]

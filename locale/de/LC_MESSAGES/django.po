@@ -1,0 +1,49 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-18 09:59+0000\n"
+"PO-Revision-Date: 2026-02-18 10:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: bio_app/templates/navbar.html:167 bio_app/templates/navbar.html:182
+msgid "Home"
+msgstr "Startseite"
+
+#: bio_app/templates/navbar.html:168 bio_app/templates/navbar.html:188
+msgid "About"
+msgstr "Über uns"
+
+#: bio_app/templates/navbar.html:169 bio_app/templates/navbar.html:193
+msgid "Scenarios Analysis"
+msgstr "Szenarioanalyse"
+
+#: bio_app/templates/navbar.html:170 bio_app/templates/navbar.html:198
+msgid "Vacant Buildings"
+msgstr "Leerstehende Gebäude"
+
+#: bio_app/templates/navbar.html:171 bio_app/templates/navbar.html:203
+msgid "Best Practices"
+msgstr "Best Practices"
+
+#: bio_app/templates/navbar.html:172 bio_app/templates/navbar.html:208
+msgid "Partners"
+msgstr "Partner"
+
+#: circular_bioeconomy_platform/settings.py:133
+msgid "English"
+msgstr "Englisch"
+
+#: circular_bioeconomy_platform/settings.py:134
+msgid "German"
+msgstr "Deutsch"

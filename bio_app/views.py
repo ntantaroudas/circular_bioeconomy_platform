@@ -1,14 +1,10 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import BestPractice, VacantBuilding, Interest
-from django.db.models import Q  # Import Q for complex queries
+from django.shortcuts import render, redirect
+from .models import BestPractice, VacantBuilding
+from django.db.models import Q
 from django.core.mail import EmailMessage
-from django.contrib import messages  # For showing success messages
+from django.contrib import messages
 from django.core.paginator import Paginator
-from .forms import InterestForm
 from django.utils import translation
-from django.conf import settings
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 
 
 def get_template_name(base_template_name):
@@ -43,32 +39,43 @@ def scenario_analysis(request):
 # Vacant Buildings Page
 def vacant_buildings(request):
     query = request.GET.get('search', '')
+    vacant_buildings_list = VacantBuilding.objects.all()
+
     if query:
-        vacant_buildings_list = VacantBuilding.objects.filter(
+        vacant_buildings_list = vacant_buildings_list.filter(
             Q(name__icontains=query) |
             Q(address__icontains=query) |
             Q(proposed_purpose__icontains=query) |
             Q(description__icontains=query) |
             Q(year__icontains=query)
         )
-    else:
-        vacant_buildings_list = VacantBuilding.objects.all()
 
-    # Debug: print the count
-    print(f"Found {vacant_buildings_list.count()} buildings")
-    
-    # Add pagination (set to 10 items per page)
-    paginator = Paginator(vacant_buildings_list, 10)  # Adjust the number if needed
+    # Category filters
+    filter_fields = ['type_of_use', 'previous_use', 'facility_size', 'reachability', 'governance', 'previous_state']
+    active_filters = {}
+    for field in filter_fields:
+        value = request.GET.get(field, '')
+        if value:
+            active_filters[field] = value
+            vacant_buildings_list = vacant_buildings_list.filter(**{field: value})
+
+    # Pagination
+    paginator = Paginator(vacant_buildings_list, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    
-    # Get all buildings for the map (not just the paginated ones)
-    all_buildings = VacantBuilding.objects.all()
 
     context = {
-        'page_obj': page_obj, 
+        'page_obj': page_obj,
         'query': query,
-        'all_buildings': all_buildings  # Add all buildings for map markers
+        'active_filters': active_filters,
+        'filter_choices': {
+            'type_of_use': VacantBuilding.TYPE_OF_USE_CHOICES,
+            'previous_use': VacantBuilding.PREVIOUS_USE_CHOICES,
+            'facility_size': VacantBuilding.FACILITY_SIZE_CHOICES,
+            'reachability': VacantBuilding.REACHABILITY_CHOICES,
+            'governance': VacantBuilding.GOVERNANCE_CHOICES,
+            'previous_state': VacantBuilding.PREVIOUS_STATE_CHOICES,
+        },
     }
     template_name = get_template_name('bio_app/vacant_buildings.html')
     return render(request, template_name, context)
@@ -76,25 +83,22 @@ def vacant_buildings(request):
 
 # Best Practices Page with search and pagination functionality
 def best_practices(request):
-    query = request.GET.get('q')  # Get the search query from the request
+    query = request.GET.get('q', '').strip()
+
     if query:
-        # If there's a search query, filter the BestPractice model based on title or description
         best_practices_list = BestPractice.objects.filter(
             Q(title__icontains=query) | Q(description__icontains=query)
         )
     else:
-        # If no search query, return all BestPractice objects
         best_practices_list = BestPractice.objects.all()
 
-    # Pagination settings: Show 8 best practices per page
-    paginator = Paginator(best_practices_list, 8)  # Show 8 best practices per page
-
-    page_number = request.GET.get('page')  # Get the current page number
-    best_practices = paginator.get_page(page_number)  # Get the best practices for the current page
+    paginator = Paginator(best_practices_list, 8)
+    page_number = request.GET.get('page')
+    best_practices = paginator.get_page(page_number)
 
     context = {
-        'best_practices': best_practices,  # Paginated best practices
-        'query': query
+        'best_practices': best_practices,
+        'query': query,
     }
 
     template_name = get_template_name('bio_app/best_practices.html')
@@ -133,21 +137,3 @@ def contact(request):
     return render(request, template_name)
 
 
-#Express Interest View
-def express_interest(request, building_id):
-    building = get_object_or_404(VacantBuilding, id=building_id)
-    if request.method == 'POST':
-        form = InterestForm(request.POST)
-        if form.is_valid():
-            Interest.objects.create(
-                building=building,
-                name=form.cleaned_data['name'],
-                email=form.cleaned_data['email'],
-                message=form.cleaned_data['message']
-            )
-            return redirect('vacant_buildings')
-    else:
-        form = InterestForm()
-    
-    template_name = get_template_name('bio_app/express_interest.html')
-    return render(request, template_name, {'form': form, 'building': building})

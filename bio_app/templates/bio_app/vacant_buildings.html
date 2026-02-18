@@ -5,270 +5,716 @@
     <meta charset="utf-8" />
     <title>Vacant Buildings - Circular Bioeconomy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
-    <link rel="stylesheet" href="{% static 'css/font.css' %}">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="{% static 'css/components.css' %}">
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Explore vacant buildings in Pongau and beyond. Use filters to find reuse opportunities and download factsheets for inspiring examples of circular building repurposing." />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/components.css' %}" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
-
-    <style>
-        /* Adjust font sizes for table */
-        .table-container table {
-            font-size: 0.7rem; /* Decrease overall table font size */
-        }
-    
-        /* Decrease header font size slightly */
-        .table-container th {
-            font-size: 0.75rem;
-        }
-    
-        /* Map and table layout adjustments */
-        .content-wrapper {
-            display: flex;
-            flex-direction: row;
-            gap: 20px;
-        }
-        #map {
-            height: 600px;
-            width: 30%;
-            min-width: 250px;
-        }
-    
-        /* Enable horizontal scroll when needed */
-        .table-container {
-            width: 70%;
-            padding: 5px;
-            overflow-x: auto; /* Show horizontal scroll only when needed */
-        }
-    
-        /* Responsive adjustments for smaller screens */
-        @media (max-width: 768px) {
-            .content-wrapper {
-                flex-direction: column;
-            }
-            #map, .table-container {
-                width: 100%;
-            }
-        }
-    </style>
-    
-    
-</head>
-<body>
-    <div class="f-home">
-        {% include "navbar.html" %}
-        
-        <div class="container mt-5">
-            <h1 class="mb-4">Vacant Buildings</h1>
-            <p class="lead text-muted">
-                Find the perfect space for your business in Pongau! Our platform makes it easy for companies and entrepreneurs to explore available properties, from offices and retail spaces to warehouses and industrial facilities. Discover opportunities that match your needs and connect directly with our administration to express interest and learn more about leasing options.</p>
-            <div class="content-wrapper">
-                <!-- Map Section -->
-                <div id="map"></div>
-                
-                <!-- Table Section -->
-                <div class="table-container">
-                    <form method="get" action="{% url 'vacant_buildings' %}" class="form-inline mb-4">
-                        <input type="text" name="search" class="form-control mr-2" placeholder="Search buildings..." value="{{ query }}">
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </form>
-    
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Address</th>
-                                <th>Area (sq ft)</th>
-                                <th>Floor</th>
-                                <th>Available From</th>
-                                <th>Construction Year</th>
-                                <th>Proposed Purpose</th>
-                                <th>Description</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for building in page_obj %}
-                            <tr>
-                                <td>{{ building.name }}</td>
-                                <td>{{ building.address }}</td>
-                                <td>{{ building.area_sq_ft }}</td>
-                                <td>{{ building.floor }}</td>
-                                <td>{{ building.available_from }}</td>
-                                <td>{{ building.year }}</td>
-                                <td>{{ building.proposed_purpose}}</td>
-                                <td>{{ building.description }}</td>
-                                <td>
-                                    <button class="btn btn-outline-primary btn-sm express-interest-btn" 
-                                        data-id="{{ building.id }}" 
-                                        data-name="{{ building.name }}" 
-                                        data-toggle="modal" 
-                                        data-target="#expressInterestModal">
-                                        Express Interest
-                                    </button>
-                                </td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="6" class="text-center">No buildings found.</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                <!-- Pagination Controls -->
-                <nav aria-label="Pagination">
-                    <ul class="pagination justify-content-center">
-                        {% if page_obj.has_previous %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page=1{% if query %}&search={{ query }}{% endif %}" aria-label="First">&laquo;&laquo;</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query %}&search={{ query }}{% endif %}" aria-label="Previous">&laquo;</a>
-                        </li>
-                        {% else %}
-                        <li class="page-item disabled"><a class="page-link">&laquo;&laquo;</a></li>
-                        <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
-                        {% endif %}
-
-                        <li class="page-item disabled"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
-
-                        {% if page_obj.has_next %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query %}&search={{ query }}{% endif %}" aria-label="Next">&raquo;</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if query %}&search={{ query }}{% endif %}" aria-label="Last">&raquo;&raquo;</a>
-                        </li>
-                        {% else %}
-                        <li class="page-item disabled"><a class="page-link">&raquo;</a></li>
-                        <li class="page-item disabled"><a class="page-link">&raquo;&raquo;</a></li>
-                        {% endif %}
-                    </ul>
-                </nav>
-                </div>
-            </div>
-        </div>
-    
-        {% include "footer.html" %}
-    </div>
-    
-    <!-- Leaflet and JavaScript for Map -->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-
-<script>
-    // Initialize the map
-    var map = L.map('map').setView([{{ page_obj.0.latitude|default:"0" }}, {{ page_obj.0.longitude|default:"0" }}], 15);
-
-    // Add OpenStreetMap tile layer
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-    // Add markers for each building
-    {% for building in page_obj %}
-        var marker = L.marker([{{ building.latitude }}, {{ building.longitude }}]).addTo(map);
-        marker.bindPopup(`
-            <b>{{ building.name }}</b><br>
-            {{ building.address }}<br>
-            <strong>Floor:</strong> {{ building.floor }}<br>
-            <strong>Area:</strong> {{ building.area_sq_ft }}<br>
-            <strong>Purpose:</strong> {{ building.proposed_purpose }}<br>
-            <strong>Year of Construction:</strong> {{ building.year }}<br>
-            <a href="{% url 'express_interest' building.id %}" style="color: black; font-weight: bold; text-decoration: none; background-color: #C1E0E2; padding: 8px 12px; border-radius: 4px; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#FFA500'" onmouseout="this.style.backgroundColor='#C1E0E2'">Express Interest</a>
-        `);
-    {% endfor %}
-</script>
-
-<!-- Express Interest Modal -->
-<!-- Express Interest Modal -->
-<div id="expressInterestModal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Express Interest</h5>
-                <button type="button" class="close-modal btn-close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p id="modalBuildingInfo">Interested in this property? Fill in the details below and contact the administration.</p>
-                <form method="POST" action="{% url 'express_interest' 0 %}" id="expressInterestForm">
-                    {% csrf_token %}
-                    <input type="hidden" name="building_id" id="modalBuildingId">
-                    <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" name="name" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Your Email</label>
-                        <input type="email" name="email" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea name="message" class="form-control" rows="4" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Submit Interest</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- Bootstrap and jQuery Scripts -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-<script>
-
-$(document).ready(function () {
-    $(".express-interest-btn").click(function () {
-        var buildingId = $(this).data("id");
-        var buildingName = $(this).data("name");
-
-        $("#modalBuildingInfo").html(`Interested in <b>${buildingName}</b>? Fill in the details below and contact the administration.`);
-
-        // Pass the ID into the form action dynamically
-        $("#modalBuildingId").val(buildingId);
-        $("#modalBuildingName").text(buildingName);
-        $("#expressInterestForm").attr("action", "/express-interest/" + buildingId + "/");
-
-        // Open the modal
-        $("#expressInterestModal").modal("show");
-    });
-
-    $(".close-modal").click(function () {
-        $("#expressInterestModal").modal("hide");
-    });
-});
-
-</script>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <style>
-    /* Style for Close Button */
-    .close-modal {
-        font-size: 24px;
-        font-weight: bold;
-        color: black;
-        cursor: pointer;
-        border: none;
-        background: transparent;
-    }
+/* Page layout */
+.columnheader_logo-one {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
-    .close-modal:hover {
-        color: red;
-    }
+/* Hero section */
+.vb-hero {
+  background: linear-gradient(135deg, #01a9aa 0%, #70c5c7 100%);
+  padding: 60px 0 50px;
+  color: #fff;
+  text-align: center;
+}
+
+.vb-hero h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.vb-hero p {
+  font-size: 1.1rem;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.7;
+  opacity: 0.95;
+}
+
+/* Filter section */
+.vb-filters {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+  margin-top: -30px;
+  position: relative;
+  z-index: 10;
+}
+
+.vb-filters .form-control {
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 10px 15px;
+  height: auto;
+  font-size: 0.9rem;
+  transition: border-color 0.3s ease;
+}
+
+.vb-filters select.form-control {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: ellipsis;
+}
+
+.vb-filters .form-control:focus {
+  border-color: #70c5c7;
+  box-shadow: 0 0 0 0.2rem rgba(112, 197, 199, 0.25);
+}
+
+.vb-filters label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #2c3e50;
+  margin-bottom: 5px;
+}
+
+.btn-filter {
+  background: #70c5c7;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-filter:hover {
+  background: #01a9aa;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.btn-clear {
+  background: transparent;
+  color: #6c757d;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  padding: 10px 30px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-clear:hover {
+  background: #f8f9fa;
+  color: #2c3e50;
+  text-decoration: none;
+}
+
+/* Result cards */
+.vb-card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.vb-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.vb-card .card-body {
+  padding: 22px;
+}
+
+.vb-card .card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 6px;
+}
+
+.vb-card .card-address {
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+}
+
+.vb-card .card-description {
+  color: #555;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin-bottom: 14px;
+}
+
+.vb-badge {
+  display: inline-block;
+  background: rgba(112, 197, 199, 0.15);
+  color: #01a9aa;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin: 2px 3px 2px 0;
+}
+
+.vb-details {
+  font-size: 0.82rem;
+  color: #6c757d;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 12px;
+  margin-top: 10px;
+}
+
+.vb-details span {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.vb-card .card-footer {
+  background: #f8f9fa;
+  border-top: 1px solid #f0f0f0;
+  padding: 12px 22px;
+}
+
+.btn-pdf {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  margin-right: 6px;
+}
+
+.btn-pdf-en {
+  background: #70c5c7;
+  color: #fff;
+  border: none;
+}
+
+.btn-pdf-en:hover {
+  background: #01a9aa;
+  color: #fff;
+  text-decoration: none;
+}
+
+.btn-pdf-de {
+  background: transparent;
+  color: #70c5c7;
+  border: 2px solid #70c5c7;
+}
+
+.btn-pdf-de:hover {
+  background: #70c5c7;
+  color: #fff;
+  text-decoration: none;
+}
+
+.no-pdf {
+  color: #adb5bd;
+  font-size: 0.82rem;
+  font-style: italic;
+}
+
+/* Results header */
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.results-count {
+  color: #6c757d;
+  font-size: 0.95rem;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #adb5bd;
+}
+
+.empty-state h4 {
+  color: #6c757d;
+  margin-bottom: 10px;
+}
+
+/* Section styling */
+.vb-section {
+  padding: 50px 0;
+}
+
+.vb-section-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.vb-section-subtitle {
+  color: #6c757d;
+  line-height: 1.7;
+  margin-bottom: 30px;
+}
+
+/* Repurpose Guide */
+.repurpose-guide .card {
+  border: none;
+  border-bottom: 1px solid #e9ecef;
+  border-radius: 0;
+}
+
+.repurpose-guide .card-header {
+  background: #fff;
+  border: none;
+  padding: 15px 0;
+}
+
+.repurpose-guide .btn-link {
+  color: #2c3e50;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 0;
+}
+
+.repurpose-guide .btn-link:hover {
+  color: #70c5c7;
+  text-decoration: none;
+}
+
+.repurpose-guide .card-body {
+  color: #555;
+  padding: 0 0 15px 0;
+  line-height: 1.6;
+}
+
+/* Prime examples */
+.prime-card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.prime-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.prime-card .card-footer {
+  background: #f8f9fa;
+  border-top: 1px solid #f0f0f0;
+  border-radius: 0 0 12px 12px;
+}
+
+/* Pagination */
+.pagination .page-link {
+  color: #70c5c7;
+  border-color: #dee2e6;
+  border-radius: 8px;
+  margin: 0 3px;
+  padding: 8px 14px;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #70c5c7;
+  border-color: #70c5c7;
+  color: #fff;
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #adb5bd;
+}
+
+/* Spacing from footer */
+.columnvectorfif-1 {
+  margin-bottom: 100px;
+  padding-bottom: 50px;
+}
+
+footer {
+  margin-top: auto;
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .vb-hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .vb-hero p {
+    font-size: 0.95rem;
+  }
+
+  .vb-hero {
+    padding: 40px 0 40px;
+  }
+
+  .vb-filters {
+    padding: 20px;
+    margin-top: -20px;
+  }
+
+  .columnvectorfif-1 {
+    margin-bottom: 80px;
+  }
+
+  .results-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+}
 </style>
+</head>
+<body>
+    <div class="columnheader_logo-one">
+      {% include "navbar.html" %}
 
+      <div class="columnvectorfif-1">
+        <!-- Hero Section -->
+        <div class="vb-hero">
+          <div class="container">
+            <h1>Vacant Buildings</h1>
+            <p>
+              Across many towns and villages, vacant buildings are a growing challenge, but also a significant opportunity.
+              Former shops, farms, industrial buildings or community facilities often stand unused, while at the same time
+              there is a strong demand for places to work, meet, create and live. This platform promotes the reuse of vacant
+              buildings in the region of Pongau, and beyond, aligning with circular economy principles.
+              To achieve this, we have reviewed good practices for repurposing buildings in rural areas, focusing on showcasing proven strategies and enabling conditions for successful building reuse, and identifying key factors that support or hinder repurposing initiatives.
+            </p>
+          </div>
+        </div>
 
+        <!-- Filter Section -->
+        <div class="container">
+          <div class="vb-filters">
+            <form method="get" action="{% url 'vacant_buildings' %}">
+              <div class="row">
+                <div class="col-12 mb-3">
+                  <label for="search">Search</label>
+                  <input type="text" id="search" name="search" class="form-control" placeholder="Search by name, address, purpose..." value="{{ query }}">
+                </div>
+                <div class="col-md-4 col-sm-6 mb-3">
+                  <label for="type_of_use">Type of Use</label>
+                  <select id="type_of_use" name="type_of_use" class="form-control">
+                    <option value="">All Types</option>
+                    {% for val, label in filter_choices.type_of_use %}
+                    <option value="{{ val }}" {% if active_filters.type_of_use == val %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-3">
+                  <label for="previous_use">Previous Use</label>
+                  <select id="previous_use" name="previous_use" class="form-control">
+                    <option value="">All Previous Uses</option>
+                    {% for val, label in filter_choices.previous_use %}
+                    <option value="{{ val }}" {% if active_filters.previous_use == val %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-3">
+                  <label for="facility_size">Facility Size</label>
+                  <select id="facility_size" name="facility_size" class="form-control">
+                    <option value="">All Sizes</option>
+                    {% for val, label in filter_choices.facility_size %}
+                    <option value="{{ val }}" {% if active_filters.facility_size == val %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-3">
+                  <label for="reachability">Reachability</label>
+                  <select id="reachability" name="reachability" class="form-control">
+                    <option value="">All Locations</option>
+                    {% for val, label in filter_choices.reachability %}
+                    <option value="{{ val }}" {% if active_filters.reachability == val %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-3">
+                  <label for="governance">Governance</label>
+                  <select id="governance" name="governance" class="form-control">
+                    <option value="">All Models</option>
+                    {% for val, label in filter_choices.governance %}
+                    <option value="{{ val }}" {% if active_filters.governance == val %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-3">
+                  <label for="previous_state">Previous State</label>
+                  <select id="previous_state" name="previous_state" class="form-control">
+                    <option value="">All Conditions</option>
+                    {% for val, label in filter_choices.previous_state %}
+                    <option value="{{ val }}" {% if active_filters.previous_state == val %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="d-flex mt-2" style="gap: 10px;">
+                <button type="submit" class="btn btn-filter">Search</button>
+                <a href="{% url 'vacant_buildings' %}" class="btn btn-clear">Clear Filters</a>
+              </div>
+            </form>
+          </div>
+        </div>
 
+        <!-- Results Section -->
+        <div class="container vb-section">
+          <div class="results-header">
+            <h3 class="vb-section-title" style="margin-bottom: 0;">Results</h3>
+            <span class="results-count">{{ page_obj.paginator.count }} building{{ page_obj.paginator.count|pluralize }} found</span>
+          </div>
 
-    </body>
+          <div class="row">
+            {% for building in page_obj %}
+            <div class="col-md-4 col-sm-6 mb-4">
+              <div class="card vb-card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">{{ building.name }}</h5>
+                  <p class="card-address">{{ building.address }}</p>
+                  {% if building.description %}
+                  <p class="card-description">{{ building.description|truncatewords:30 }}</p>
+                  {% endif %}
+                  <div class="mb-2">
+                    {% if building.type_of_use %}<span class="vb-badge">{{ building.get_type_of_use_display }}</span>{% endif %}
+                    {% if building.previous_use %}<span class="vb-badge">{{ building.get_previous_use_display }}</span>{% endif %}
+                    {% if building.facility_size %}<span class="vb-badge">{{ building.get_facility_size_display }}</span>{% endif %}
+                    {% if building.reachability %}<span class="vb-badge">{{ building.get_reachability_display }}</span>{% endif %}
+                    {% if building.governance %}<span class="vb-badge">{{ building.get_governance_display }}</span>{% endif %}
+                    {% if building.previous_state %}<span class="vb-badge">{{ building.get_previous_state_display }}</span>{% endif %}
+                  </div>
+                  <div class="vb-details">
+                    {% if building.area_sq_ft %}<span>Area: {{ building.area_sq_ft }} m&sup2;</span>{% endif %}
+                    {% if building.floor %}<span>Floor: {{ building.floor }}</span>{% endif %}
+                    {% if building.year %}<span>Built: {{ building.year }}</span>{% endif %}
+                    {% if building.available_from %}<span>Available: {{ building.available_from }}</span>{% endif %}
+                    {% if building.proposed_purpose %}<br><span>Purpose: {{ building.proposed_purpose }}</span>{% endif %}
+                  </div>
+                </div>
+                <div class="card-footer">
+                  {% if building.factsheet_pdf_en or building.factsheet_pdf_de %}
+                    {% if building.factsheet_pdf_en %}
+                    <a href="{{ building.factsheet_pdf_en.url }}" class="btn-pdf btn-pdf-en" target="_blank">EN Fact Sheet</a>
+                    {% endif %}
+                    {% if building.factsheet_pdf_de %}
+                    <a href="{{ building.factsheet_pdf_de.url }}" class="btn-pdf btn-pdf-de" target="_blank">DE Fact Sheet</a>
+                    {% endif %}
+                  {% else %}
+                    <span class="no-pdf">No fact sheets available</span>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+              <div class="empty-state">
+                <h4>No buildings found</h4>
+                <p>Try adjusting your search or filter criteria.</p>
+                <a href="{% url 'vacant_buildings' %}" class="btn btn-filter mt-3">Clear All Filters</a>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
 
+          <!-- Pagination -->
+          {% if page_obj.paginator.num_pages > 1 %}
+          <nav aria-label="Pagination" class="mt-4">
+            <ul class="pagination justify-content-center">
+              {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page=1{% if query %}&search={{ query }}{% endif %}{% for key, val in active_filters.items %}&{{ key }}={{ val }}{% endfor %}">&laquo;&laquo;</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query %}&search={{ query }}{% endif %}{% for key, val in active_filters.items %}&{{ key }}={{ val }}{% endfor %}">&laquo;</a>
+              </li>
+              {% else %}
+              <li class="page-item disabled"><span class="page-link">&laquo;&laquo;</span></li>
+              <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+              {% endif %}
+
+              <li class="page-item active"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
+
+              {% if page_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query %}&search={{ query }}{% endif %}{% for key, val in active_filters.items %}&{{ key }}={{ val }}{% endfor %}">&raquo;</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if query %}&search={{ query }}{% endif %}{% for key, val in active_filters.items %}&{{ key }}={{ val }}{% endfor %}">&raquo;&raquo;</a>
+              </li>
+              {% else %}
+              <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+              <li class="page-item disabled"><span class="page-link">&raquo;&raquo;</span></li>
+              {% endif %}
+            </ul>
+          </nav>
+          {% endif %}
+        </div>
+
+        <!-- Prime Examples Section -->
+        <div class="container vb-section" style="border-top: 2px solid #f0f0f0;">
+          <h2 class="vb-section-title">Prime Examples</h2>
+          <p class="vb-section-subtitle">
+            This collection of Prime Example Fact Sheets presents inspiring examples of how vacant buildings can be
+            successfully reused and transformed into vibrant places that contribute to local life. Each Fact Sheet
+            provides a concise overview of the project's background, objectives, reuse strategy, financing, operation,
+            challenges and key learnings.
+          </p>
+          <div class="row">
+            <div class="col-md-4 mb-4">
+              <div class="card prime-card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Dorfplatz St. Andr&auml;-W&ouml;rdern</h5>
+                  <p class="card-text"><small class="text-muted">St. Andr&auml;-W&ouml;rdern, Austria</small></p>
+                  <p class="card-text">Multifunctional building: co-working, workshops, gastronomy. A &ldquo;third place&rdquo; created without ownership through participatory planning.</p>
+                  <p class="card-text"><small class="text-muted">Ownership: FlexCo. &amp; Association | Investment: ~440,000 &euro; | Area: ~2,500 m&sup2;</small></p>
+                </div>
+                <div class="card-footer">
+                  <a href="{% static 'documents/factsheets/vacant_buildings/en/Dorfplatz_St_Andrae_Woerdern_EN.pdf' %}" class="btn-pdf btn-pdf-en" target="_blank">EN Fact Sheet</a>
+                  <a href="{% static 'documents/factsheets/vacant_buildings/de/Dorfplatz_St_Andrae_Woerdern_DE.pdf' %}" class="btn-pdf btn-pdf-de" target="_blank">DE Fact Sheet</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-4">
+              <div class="card prime-card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Leutkircher B&uuml;rgerbahnhof</h5>
+                  <p class="card-text"><small class="text-muted">Leutkirch im Allg&auml;u, Germany</small></p>
+                  <p class="card-text">Former railway station transformed into gastronomy with in-house brewery, offices, and a multifunctional event hall via a citizens&rsquo; cooperative.</p>
+                  <p class="card-text"><small class="text-muted">Ownership: Citizens&rsquo; Cooperative | Investment: ~3.4&ndash;4 Mio. &euro; | Area: ~1,650 m&sup2;</small></p>
+                </div>
+                <div class="card-footer">
+                  <a href="{% static 'documents/factsheets/vacant_buildings/en/Leutkircher_Buergerbahnhof_EN.pdf' %}" class="btn-pdf btn-pdf-en" target="_blank">EN Fact Sheet</a>
+                  <a href="{% static 'documents/factsheets/vacant_buildings/de/Leutkircher_Buergerbahnhof_DE.pdf' %}" class="btn-pdf btn-pdf-de" target="_blank">DE Fact Sheet</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-4">
+              <div class="card prime-card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Altes Milchhaus</h5>
+                  <p class="card-text"><small class="text-muted">Austria</small></p>
+                  <p class="card-text">A former small retail space permanently repurposed through private governance, demonstrating how even buildings in poor condition can be reactivated.</p>
+                  <p class="card-text"><small class="text-muted">Ownership: Private | Facility: 100&ndash;200 m&sup2; | Previous state: Poor</small></p>
+                </div>
+                <div class="card-footer">
+                  <a href="{% static 'documents/factsheets/vacant_buildings/de/Altes_Milchhaus_DE.pdf' %}" class="btn-pdf btn-pdf-de" target="_blank">DE Fact Sheet</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Repurpose Guide Section -->
+        <div class="container vb-section" style="border-top: 2px solid #f0f0f0;">
+          <h3 class="vb-section-title">Guidelines for Circular Repurposing</h3>
+          <p class="vb-section-subtitle">
+            This step-by-step repurpose guide follows a typical development process of a reuse project
+            and provides relevant tips and information.
+          </p>
+          <div class="repurpose-guide">
+            <div id="repurposeGuide" class="accordion">
+              <div class="card">
+                <div class="card-header" id="guideStep1">
+                  <h5 class="mb-0"><button class="btn btn-link" data-toggle="collapse" data-target="#collapse1" aria-expanded="true">1. Why reuse a vacant building?</button></h5>
+                </div>
+                <div id="collapse1" class="collapse show" data-parent="#repurposeGuide">
+                  <div class="card-body">Understand the local value and impact of reactivating a vacant building.</div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="guideStep2">
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse2">2. From idea to vision</button></h5>
+                </div>
+                <div id="collapse2" class="collapse" data-parent="#repurposeGuide">
+                  <div class="card-body">Identify the needs, defining goals and shape a realistic project concept.</div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="guideStep3">
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse3">3. Find and understand the building</button></h5>
+                </div>
+                <div id="collapse3" class="collapse" data-parent="#repurposeGuide">
+                  <div class="card-body">Select a suitable property, analyse building conditions and clarify ownership and risks.</div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="guideStep4">
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse4">4. Build the team and governance structure</button></h5>
+                </div>
+                <div id="collapse4" class="collapse" data-parent="#repurposeGuide">
+                  <div class="card-body">Create a strong project team and choose an appropriate organisational model.</div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="guideStep5">
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse5">5. Develop the use concept</button></h5>
+                </div>
+                <div id="collapse5" class="collapse" data-parent="#repurposeGuide">
+                  <div class="card-body">Design sustainable uses, define target groups and plan flexible spatial solutions.</div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="guideStep6">
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse6">6. Financing and economic planning</button></h5>
+                </div>
+                <div id="collapse6" class="collapse" data-parent="#repurposeGuide">
+                  <div class="card-body">Estimate costs, explore funding opportunities and develop viable financial models.</div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="guideStep7">
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse7">7. Legal and administrative framework</button></h5>
+                </div>
+                <div id="collapse7" class="collapse" data-parent="#repurposeGuide">
+                  <div class="card-body">Understand permits, contracts, regulations and insurance requirements.</div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="guideStep8">
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse8">8. Planning, renovation and implementation</button></h5>
+                </div>
+                <div id="collapse8" class="collapse" data-parent="#repurposeGuide">
+                  <div class="card-body">Organise renovation processes, manage construction phases and coordinate stakeholders.</div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="guideStep9">
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse9">9. Starting operation and activation</button></h5>
+                </div>
+                <div id="collapse9" class="collapse" data-parent="#repurposeGuide">
+                  <div class="card-body">Launch the project, attract users and build community engagement.</div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="guideStep10">
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse10">10. Long-term operation and sustainability</button></h5>
+                </div>
+                <div id="collapse10" class="collapse" data-parent="#repurposeGuide">
+                  <div class="card-body">Ensure financial stability, manage volunteer structures and adapt to future needs.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {% include "footer.html" %}
+    </div>
+</body>
 </html>

@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <footer class="footer" style="padding-top: 20%;">
   <div class="footer__column">
     <div>
@@ -14,27 +15,27 @@
               </li> -->
               <li>
                 <a href="{% url 'about' %}" target="_blank" rel="noreferrer">
-                  <p class="ui text size-textmd">About</p>
+                  <p class="ui text size-textmd">{% trans "About" %}</p>
                 </a>
               </li>
               <li>
                 <a href="{% url 'scenario_analysis' %}">
-                  <p class="ui text size-textmd">Scenarios Analysis</p>
+                  <p class="ui text size-textmd">{% trans "Scenarios Analysis" %}</p>
                 </a>
               </li>
               <li>
                 <a href="{% url 'vacant_buildings' %}">
-                  <p class="ui text size-textmd">Vacant Buildings</p>
+                  <p class="ui text size-textmd">{% trans "Vacant Buildings" %}</p>
                 </a>
               </li>
               <li>
                 <a href="{% url 'best_practices' %}">
-                  <p class="ui text size-textmd">Resources & Management</p>
+                  <p class="ui text size-textmd">{% trans "Best Practices" %}</p>
                 </a>
               </li>
               <li>
-                <a href="{% url 'contact' %}" target="_blank" rel="noreferrer">
-                  <p class="ui text size-textmd">Support</p>
+                <a href="{% url 'contact' %}">
+                  <p class="ui text size-textmd">{% trans "Partners" %}</p>
                 </a>
               </li>
             </ul>
@@ -60,6 +61,16 @@
         </div>
       </div>
     </div>
+    <!-- EU funding acknowledgment -->
+    <div style="background-color: #11170f; padding: 18px 0; display: flex; justify-content: center;">
+      <div style="max-width: 900px; margin: 0 auto; padding: 0 40px; display: flex; align-items: center; gap: 20px;">
+        <img src="{% static 'images/eu_co_funded_en.png' %}" alt="Co-funded by the European Union" style="height: 40px; width: auto; flex-shrink: 0;" />
+        <p style="color: #8a9099; font-size: 0.7rem; line-height: 1.5; margin: 0; font-family: Jost, sans-serif;">
+          Funded by the European Union. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or Research Executive Agency. Neither the European Union nor the granting authority can be held responsible for them.
+        </p>
+      </div>
+    </div>
+
     <div>
       <div class="footer__bottom-row">
         <div class="footer__info-container container-xs">
@@ -75,7 +86,6 @@
             <img src="https://i.postimg.cc/tCzM4vyp/mandant.png" alt="Pongau" class="footer__qr-code"/>
             <img src="{% static 'images/img_group_1194.png' %}" alt="Alchemia" class="footer__qr-code"/>
             <img src="{% static 'images/img_qrcode.png' %}" alt="Qr Code" class="footer__qr-code"/>
-            <img src="{% static 'images/eu_co_funded_en.jpg' %}" alt="Eu Logo" class="footer__eu-logo"/>
           </div>
         </div>
       </div>

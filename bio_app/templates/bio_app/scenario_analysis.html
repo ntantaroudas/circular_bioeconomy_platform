@@ -301,7 +301,7 @@ html, body {
 
                       <!-- Analysis Tool Selection Buttons -->
                       <div class="analysis-tool-buttons">
-                        <button class="analysis-tool-btn active" data-target="mfa-tab" id="hero-mfa-btn">
+                        <button class="analysis-tool-btn" data-target="mfa-tab" id="hero-mfa-btn">
                           <span class="analysis-tool-btn__title">MFA</span>
                           <span class="analysis-tool-btn__subtitle">Material Flow Analysis</span>
                         </button>
@@ -334,16 +334,30 @@ html, body {
         <div class="scenario-tabs-wrapper">
           <ul class="nav nav-tabs scenario-tabs" id="scenarioAnalysisTabs" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active" id="mfa-tab" data-toggle="tab" href="#mfa-pane" role="tab" aria-controls="mfa-pane" aria-selected="true">MFA</a>
+              <a class="nav-link" id="mfa-tab" data-toggle="tab" href="#mfa-pane" role="tab" aria-controls="mfa-pane" aria-selected="false">MFA</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" id="mcdma-tab" data-toggle="tab" href="#mcdma-pane" role="tab" aria-controls="mcdma-pane" aria-selected="false">MCDMA</a>
             </li>
           </ul>
 
+          <!-- Default intro text, shown when no tab is active -->
+          <div id="intro-default" style="padding: 20px 0; color: #2c3e50; line-height: 1.7;">
+            <p class="ui text size-textxl">
+              In our analysis we combined several analytical and participatory techniques: (i) Mind-Mapping Resource Flows &ndash; Identifying local residue streams and mapping potential conversion routes, (ii) Material Flow Analysis (MFA) &ndash; Quantifying inputs, outputs, and resource balances for selected pathways, (iii) Scenario Visualization with Sankey Diagrams &ndash; Creating clear, graphical representations of resource flows and efficiencies, and (iv) Multi-Criteria Decision Making Analysis (MCDMA) &ndash; Comparing pathways based on economic, ecological and social parameters. These methods were applied in co-creation workshops with regional actors to ensure solutions reflect local realities. The focus in Pongau was on sewage sludge valorization. Further examples, with other resource flows, are showcased in the section &ldquo;Best Practices&rdquo;, demonstrating the broader potential of circular bioeconomy strategies.
+            </p>
+            <div style="text-align: center; margin-top: 25px;">
+              <img src="{% static 'images/scenario_analysis_methodology.png' %}" alt="Circular Bioeconomy Methodology: from mapping residual streams to assessing scenarios and impacts" style="max-width: 700px; width: 100%; height: auto; border-radius: 8px;" />
+            </div>
+          </div>
+
           <div class="tab-content scenario-tab-content" id="scenarioAnalysisTabContent">
             <!-- Tab 1: MFA -->
-            <div class="tab-pane fade show active" id="mfa-pane" role="tabpanel" aria-labelledby="mfa-tab">
+            <div class="tab-pane fade" id="mfa-pane" role="tabpanel" aria-labelledby="mfa-tab">
+              <h4 style="margin: 20px 0 10px; color: #2c3e50;">Material Flow Analysis (MFA)</h4>
+              <p class="ui text size-textlg" style="margin-bottom: 15px; color: #555; line-height: 1.6;">
+                In this first step, following a series of co-creation and capacity-building workshops, we examined three major residue streams&mdash;ashes from biomass heating plants, sewage sludge from wastewater treatment, and food waste from tourism&mdash;to identify alternative valorization opportunities. From these, we selected sewage sludge as the focal stream. The process began with mind-mapping resource flows to explore potential conversion routes, followed by a material flow analysis to quantify the identified streams. We then developed and visualized several circular bioeconomy scenarios using Sankey diagrams, which made the different resource pathways transparent and easy to compare.
+              </p>
               <div class="iframe-tab-container">
                 <iframe
                   src="https://tools-alchemia-nova.eu/mfa/futural-2025/"
@@ -357,6 +371,10 @@ html, body {
 
             <!-- Tab 2: MCDMA -->
             <div class="tab-pane fade" id="mcdma-pane" role="tabpanel" aria-labelledby="mcdma-tab">
+              <h4 style="margin: 20px 0 10px; color: #2c3e50;">Multi-Criteria Decision Making Analysis (MCDMA)</h4>
+              <p class="ui text size-textlg" style="margin-bottom: 15px; color: #555; line-height: 1.6;">
+                In the next stage, a multi-criteria decision-making analysis (MCDMA) was applied to assess the selected scenarios based on key environmental, social and economic criteria. These criteria were identified together with regional experts to ensure relevance to local conditions and decision needs. The evaluation combined qualitative expert judgement with quantitative inputs from literature and project data. By going beyond a simple cost-benefit perspective, the MCDMA captures the broader real-world impacts of all scenarios and supports more robust and transparent decision-making.
+              </p>
               <div class="iframe-tab-container">
                 <iframe
                   src="https://tools-alchemia-nova.eu/mcdma/futural-2025/"
@@ -383,6 +401,13 @@ html, body {
           if (targetTab) targetTab.click();
           document.querySelectorAll('.analysis-tool-btn').forEach(function(b) { b.classList.remove('active'); });
           btn.classList.add('active');
+          // Hide the intro text when a tab is selected
+          var introDefault = document.getElementById('intro-default');
+          if (introDefault) introDefault.style.display = 'none';
+          // Scroll to the tab content area
+          setTimeout(function() {
+            document.querySelector('.scenario-tabs-wrapper').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 150);
         });
       });
       // Keep hero buttons in sync when tabs are clicked directly
@@ -390,6 +415,9 @@ html, body {
         document.querySelectorAll('.analysis-tool-btn').forEach(function(b) { b.classList.remove('active'); });
         var heroBtn = document.querySelector('.analysis-tool-btn[data-target="' + e.target.id + '"]');
         if (heroBtn) heroBtn.classList.add('active');
+        // Hide intro text when tab is shown
+        var introDefault = document.getElementById('intro-default');
+        if (introDefault) introDefault.style.display = 'none';
       });
     </script>
 

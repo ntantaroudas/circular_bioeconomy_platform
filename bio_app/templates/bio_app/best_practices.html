@@ -120,9 +120,13 @@
           </div>
         </div>
 
-        <!-- featured articles section -->
+        <!-- intro text and results section -->
         <div class="section__column--nested-duodenary">
-          <div class="section__aside container-xs">
+          <div class="section__aside container-xs" style="padding-left: 40px; padding-right: 40px;">
+            <p class="ui text size-textlg" style="margin-bottom: 25px; color: #2c3e50; line-height: 1.7;">
+              In this section we highlight further best practices from other regions and along different material flows, showcasing how circular bioeconomy solutions are implemented in real-world contexts. The presented initiatives demonstrate how biological resources, by-products and organic waste streams can be transformed into valuable products, services and business models through innovative, circular approaches. Each fact sheet provides insights into applied methods, technologies and resource cycles, offering transferable knowledge and practical inspiration for stakeholders from industry, research and civil society.
+            </p>
+
             <div class="section__aside__grid">
               {% for practice in best_practices %}
               <div class="best-practice-info">
@@ -137,77 +141,65 @@
                         {{ practice.description }}
                       </p>
                     </div>
-                    <a href="{{ practice.link }}" target="_blank" class="learn-more-link-link">
-                      <p class="best-practice-info__link ui text size-textmd">Learn more</p>
-                    </a>
+                    <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                      {% if practice.factsheet_pdf %}
+                      <a href="{{ practice.factsheet_pdf.url }}" target="_blank" class="learn-more-link-link">
+                        <p class="best-practice-info__link ui text size-textmd" style="margin: 0;">Learn more</p>
+                      </a>
+                      {% else %}
+                      <a href="{{ practice.link }}" target="_blank" class="learn-more-link-link">
+                        <p class="best-practice-info__link ui text size-textmd" style="margin: 0;">Learn more</p>
+                      </a>
+                      {% endif %}
+                    </div>
                   </div>
                 </div>
               </div>
+              {% empty %}
+              <div style="text-align: center; padding: 40px 20px; color: #6c757d; width: 100%;">
+                <h4 style="margin-bottom: 10px;">No results found</h4>
+                <p>No best practices match your search for &ldquo;{{ query }}&rdquo;. Try different keywords.</p>
+              </div>
               {% endfor %}
             </div>
+
+            <!-- Pagination -->
+            {% if best_practices.paginator.num_pages > 1 %}
+            <nav aria-label="Best Practices Pagination" style="margin-top: 20px;">
+              <ul class="pagination justify-content-center">
+                {% if best_practices.has_previous %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page=1{% if query %}&q={{ query }}{% endif %}" aria-label="First">&laquo;&laquo;</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ best_practices.previous_page_number }}{% if query %}&q={{ query }}{% endif %}" aria-label="Previous">&laquo;</a>
+                  </li>
+                {% else %}
+                  <li class="page-item disabled"><span class="page-link">&laquo;&laquo;</span></li>
+                  <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                {% endif %}
+
+                <li class="page-item disabled">
+                  <span class="page-link">Page {{ best_practices.number }} of {{ best_practices.paginator.num_pages }}</span>
+                </li>
+
+                {% if best_practices.has_next %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ best_practices.next_page_number }}{% if query %}&q={{ query }}{% endif %}" aria-label="Next">&raquo;</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ best_practices.paginator.num_pages }}{% if query %}&q={{ query }}{% endif %}" aria-label="Last">&raquo;&raquo;</a>
+                  </li>
+                {% else %}
+                  <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                  <li class="page-item disabled"><span class="page-link">&raquo;&raquo;</span></li>
+                {% endif %}
+              </ul>
+            </nav>
+            {% endif %}
+
           </div>
         </div>
-
-        <nav aria-label="Best Practices Pagination">
-          <ul class="pagination justify-content-center">
-            <!-- First and Previous buttons -->
-            {% if best_practices.has_previous %}
-              <li class="page-item">
-                <a class="page-link" href="?page=1{% if query %}&q={{ query }}{% endif %}" aria-label="First">
-                  <span aria-hidden="true">&laquo;&laquo;</span>
-                </a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="?page={{ best_practices.previous_page_number }}{% if query %}&q={{ query }}{% endif %}" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-            {% else %}
-              <li class="page-item disabled">
-                <a class="page-link" aria-disabled="true" aria-label="First">
-                  <span aria-hidden="true">&laquo;&laquo;</span>
-                </a>
-              </li>
-              <li class="page-item disabled">
-                <a class="page-link" aria-disabled="true" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-            {% endif %}
-        
-            <!-- Current page display -->
-            <li class="page-item disabled">
-              <span class="page-link">
-                Page {{ best_practices.number }} of {{ best_practices.paginator.num_pages }}
-              </span>
-            </li>
-        
-            <!-- Next and Last buttons -->
-            {% if best_practices.has_next %}
-              <li class="page-item">
-                <a class="page-link" href="?page={{ best_practices.next_page_number }}{% if query %}&q={{ query }}{% endif %}" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="?page={{ best_practices.paginator.num_pages }}{% if query %}&q={{ query }}{% endif %}" aria-label="Last">
-                  <span aria-hidden="true">&raquo;&raquo;</span>
-                </a>
-              </li>
-            {% else %}
-              <li class="page-item disabled">
-                <a class="page-link" aria-disabled="true" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-              <li class="page-item disabled">
-                <a class="page-link" aria-disabled="true" aria-label="Last">
-                  <span aria-hidden="true">&raquo;&raquo;</span>
-                </a>
-              </li>
-            {% endif %}
-          </ul>
-        </nav>
         
 
       </div>

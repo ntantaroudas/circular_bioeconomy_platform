@@ -301,7 +301,7 @@ html, body {
 
                       <!-- Analysis Tool Selection Buttons -->
                       <div class="analysis-tool-buttons">
-                        <button class="analysis-tool-btn active" data-target="mfa-tab" id="hero-mfa-btn">
+                        <button class="analysis-tool-btn" data-target="mfa-tab" id="hero-mfa-btn">
                           <span class="analysis-tool-btn__title">MFA</span>
                           <span class="analysis-tool-btn__subtitle">Materialflussanalyse</span>
                         </button>
@@ -334,16 +334,30 @@ html, body {
         <div class="scenario-tabs-wrapper">
           <ul class="nav nav-tabs scenario-tabs" id="scenarioAnalysisTabs" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active" id="mfa-tab" data-toggle="tab" href="#mfa-pane" role="tab" aria-controls="mfa-pane" aria-selected="true">MFA</a>
+              <a class="nav-link" id="mfa-tab" data-toggle="tab" href="#mfa-pane" role="tab" aria-controls="mfa-pane" aria-selected="false">MFA</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" id="mcdma-tab" data-toggle="tab" href="#mcdma-pane" role="tab" aria-controls="mcdma-pane" aria-selected="false">MCDMA</a>
             </li>
           </ul>
 
+          <!-- Default intro text, shown when no tab is active -->
+          <div id="intro-default" style="padding: 20px 0; color: #2c3e50; line-height: 1.7;">
+            <p class="ui text size-textxl">
+              In unserer Analyse haben wir mehrere analytische und partizipative Methoden kombiniert: (i) Mind-Mapping von Ressourcenflüssen &ndash; Identifizierung lokaler Reststoffströme und Kartierung potenzieller Umwandlungsrouten, (ii) Materialflussanalyse (MFA) &ndash; Quantifizierung von Inputs, Outputs und Ressourcenbilanzen für ausgewählte Pfade, (iii) Szenariovisualisierung mit Sankey-Diagrammen &ndash; Erstellung klarer, grafischer Darstellungen von Ressourcenflüssen und -effizienzen, und (iv) Multikriterielle Entscheidungsanalyse (MCDMA) &ndash; Vergleich von Pfaden anhand wirtschaftlicher, ökologischer und sozialer Parameter.
+            </p>
+            <div style="text-align: center; margin-top: 25px;">
+              <img src="{% static 'images/scenario_analysis_methodology.png' %}" alt="Methodik der zirkulären Bioökonomie: von der Kartierung der Reststoffströme bis zur Bewertung von Szenarien und Auswirkungen" style="max-width: 700px; width: 100%; height: auto; border-radius: 8px;" />
+            </div>
+          </div>
+
           <div class="tab-content scenario-tab-content" id="scenarioAnalysisTabContent">
             <!-- Tab 1: MFA -->
-            <div class="tab-pane fade show active" id="mfa-pane" role="tabpanel" aria-labelledby="mfa-tab">
+            <div class="tab-pane fade" id="mfa-pane" role="tabpanel" aria-labelledby="mfa-tab">
+              <h4 style="margin: 20px 0 10px; color: #2c3e50;">Materialflussanalyse (MFA)</h4>
+              <p class="ui text size-textlg" style="margin-bottom: 15px; color: #555; line-height: 1.6;">
+                In diesem ersten Schritt haben wir nach einer Reihe von Co-Creation- und Capacity-Building-Workshops drei zentrale Reststoffströme untersucht &ndash; Aschen aus Biomasseheizwerken, Klärschlamm aus der Abwasserbehandlung und Lebensmittelabfälle aus dem Tourismus &ndash; um alternative Verwertungsmöglichkeiten zu identifizieren. Daraus haben wir Klärschlamm als Schwerpunktstrom ausgewählt.
+              </p>
               <div class="iframe-tab-container">
                 <iframe
                   src="https://tools-alchemia-nova.eu/mfa/futural-2025/"
@@ -357,6 +371,10 @@ html, body {
 
             <!-- Tab 2: MCDMA -->
             <div class="tab-pane fade" id="mcdma-pane" role="tabpanel" aria-labelledby="mcdma-tab">
+              <h4 style="margin: 20px 0 10px; color: #2c3e50;">Multikriterielle Entscheidungsanalyse (MCDMA)</h4>
+              <p class="ui text size-textlg" style="margin-bottom: 15px; color: #555; line-height: 1.6;">
+                In der nächsten Phase wurde eine multikriterielle Entscheidungsanalyse (MCDMA) angewendet, um die ausgewählten Szenarien anhand zentraler ökologischer, sozialer und wirtschaftlicher Kriterien zu bewerten. Diese Kriterien wurden gemeinsam mit regionalen Experten identifiziert, um die Relevanz für lokale Bedingungen sicherzustellen.
+              </p>
               <div class="iframe-tab-container">
                 <iframe
                   src="https://tools-alchemia-nova.eu/mcdma/futural-2025/"
@@ -383,6 +401,13 @@ html, body {
           if (targetTab) targetTab.click();
           document.querySelectorAll('.analysis-tool-btn').forEach(function(b) { b.classList.remove('active'); });
           btn.classList.add('active');
+          // Hide the intro text when a tab is selected
+          var introDefault = document.getElementById('intro-default');
+          if (introDefault) introDefault.style.display = 'none';
+          // Scroll to the tab content area
+          setTimeout(function() {
+            document.querySelector('.scenario-tabs-wrapper').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 150);
         });
       });
       // Keep hero buttons in sync when tabs are clicked directly
@@ -390,6 +415,9 @@ html, body {
         document.querySelectorAll('.analysis-tool-btn').forEach(function(b) { b.classList.remove('active'); });
         var heroBtn = document.querySelector('.analysis-tool-btn[data-target="' + e.target.id + '"]');
         if (heroBtn) heroBtn.classList.add('active');
+        // Hide intro text when tab is shown
+        var introDefault = document.getElementById('intro-default');
+        if (introDefault) introDefault.style.display = 'none';
       });
     </script>
 

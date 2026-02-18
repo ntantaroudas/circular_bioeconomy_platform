@@ -169,7 +169,7 @@
     <a href="{% url 'scenario_analysis' %}">{% trans "Scenarios Analysis" %}</a>
     <a href="{% url 'vacant_buildings' %}">{% trans "Vacant Buildings" %}</a>
     <a href="{% url 'best_practices' %}">{% trans "Best Practices" %}</a>
-    <a href="{% url 'contact' %}">{% trans "Contact" %}</a>
+    <a href="{% url 'contact' %}">{% trans "Partners" %}</a>
   </div>
 
 <header class="header">
@@ -205,7 +205,7 @@
             </li>
             <li>
               <a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
-                <p class="ui text size-textmd">{% trans "Contact" %}</p>
+                <p class="ui text size-textmd">{% trans "Partners" %}</p>
             </a>
             </li>
         </ul>
@@ -224,7 +224,7 @@
             </button>
             <div class="language-options">
                 {% for language in languages %}
-                    <form action="{% url 'set_language' %}" method="post" style="margin: 0;">
+                    <form action="{% url 'set_language' %}" method="post" style="margin: 0;" onsubmit="this.querySelector('input[name=next]').value = switchLangUrl('{{ language.code }}');">
                         {% csrf_token %}
                         <input name="next" type="hidden" value="{{ request.get_full_path }}">
                         <input name="language" type="hidden" value="{{ language.code }}">
@@ -252,6 +252,15 @@
   
         function closeNav() {
           document.getElementById("mySidebar").style.width = "0";
+        }
+
+        // Swap the language prefix in the current URL for language switching
+        function switchLangUrl(targetLang) {
+            var path = window.location.pathname;
+            var search = window.location.search;
+            // Replace /en/ or /de/ prefix with target language
+            var newPath = path.replace(/^\/(en|de)(\/|$)/, '/' + targetLang + '$2');
+            return newPath + search;
         }
 
         function toggleLanguageDropdown() {

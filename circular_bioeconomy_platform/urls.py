@@ -33,3 +33,6 @@ urlpatterns += i18n_patterns(
 
 # Static files
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# Media files (uploaded documents, fact sheets)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

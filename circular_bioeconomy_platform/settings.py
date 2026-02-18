@@ -148,6 +148,10 @@ STATICFILES_DIRS = [BASE_DIR / "bio_app/static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"    # Add this line
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
+# Media files (uploaded documents, fact sheets, etc.)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 
 # Default primary key field type

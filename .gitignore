@@ -4,5 +4,6 @@ db.sqlite3
 venv/
 .env
 requirements-gitignore/
-media/
+media/*
+!media/factsheets/
 tickets/

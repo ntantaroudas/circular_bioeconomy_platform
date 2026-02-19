@@ -394,11 +394,128 @@ footer {
             <p>
               In vielen St&auml;dten und D&ouml;rfern sind leerstehende Geb&auml;ude eine wachsende Herausforderung, aber auch eine bedeutende Chance.
               Ehemalige Gesch&auml;fte, Bauernh&ouml;fe, Industriegeb&auml;ude oder Gemeinschaftseinrichtungen stehen oft leer, w&auml;hrend gleichzeitig
-              ein starker Bedarf an Orten zum Arbeiten, Treffen, Schaffen und Leben besteht. Diese Plattform f&ouml;rdert die Wiederverwendung
+              ein starker Bedarf an Orten zum Arbeiten, Treffen, Schaffen und Leben besteht. Daher ist eine weitere Funktion der Plattform die F&ouml;rderung der Wiederverwendung
               leerstehender Geb&auml;ude in der Region Pongau und dar&uuml;ber hinaus, im Einklang mit den Prinzipien der Kreislaufwirtschaft.
               Zu diesem Zweck haben wir bew&auml;hrte Verfahren f&uuml;r die Umnutzung von Geb&auml;uden in l&auml;ndlichen Gebieten untersucht, mit dem Schwerpunkt auf erprobten Strategien und f&ouml;rderlichen Rahmenbedingungen f&uuml;r eine erfolgreiche Geb&auml;udewiederverwendung sowie auf der Identifizierung wesentlicher Faktoren, die Umnutzungsinitiativen unterst&uuml;tzen oder behindern.
             </p>
+            <p style="margin-top: 10px;">
+              Zu diesem Zweck haben wir einen schrittweisen Leitfaden zur Umnutzung mit umsetzbaren Empfehlungen und Werkzeugen entwickelt und eine Reihe von Factsheets relevanter Praxisbeispiele mit realen F&auml;llen f&uuml;r Gemeinden und Eigent&uuml;mer erstellt.
+            </p>
+
+            <!-- Section Selection Buttons -->
+            <div style="display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap; justify-content: center;">
+              <button class="vb-section-btn active" data-target="guidelines-section" id="btn-guidelines" onclick="switchVBSection('guidelines-section')">
+                Leitfaden zur kreislaufwirtschaftlichen Umnutzung
+              </button>
+              <button class="vb-section-btn" data-target="prime-examples-section" id="btn-prime-examples" onclick="switchVBSection('prime-examples-section')">
+                Praxisbeispiele
+              </button>
+            </div>
           </div>
+        </div>
+
+        <!-- Guidelines Section -->
+        <div id="guidelines-section" class="vb-tab-content">
+        <div class="container vb-section">
+          <h3 class="vb-section-title">Leitfaden zur kreislaufwirtschaftlichen Umnutzung</h3>
+          <p class="vb-section-subtitle">
+            Dieser schrittweise Leitfaden folgt einem typischen Entwicklungsprozess eines Wiederverwendungsprojekts
+            und bietet relevante Tipps und Informationen, thematisch gegliedert in aufeinanderfolgende Schritte.
+          </p>
+          <div class="repurpose-guide">
+            <div id="repurposeGuide" class="accordion">
+              <div class="card">
+                <div class="card-header" id="guideStep1">
+                  <h5 class="mb-0"><button class="btn btn-link" data-toggle="collapse" data-target="#collapse1" aria-expanded="true">1. Warum ein leerstehendes Geb&auml;ude wiederverwenden?</button></h5>
+                </div>
+                <div id="collapse1" class="">
+                  <div class="card-body">Den lokalen Wert und die Auswirkungen der Reaktivierung verstehen.</div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="guideStep2">
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse2">2. Von der Idee zur Vision</button></h5>
+                </div>
+                <div id="collapse2" class="">
+                  <div class="card-body">Bed&uuml;rfnisse identifizieren, Ziele definieren und ein realistisches Projektkonzept gestalten.</div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="guideStep3">
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse3">3. Das Geb&auml;ude finden und verstehen</button></h5>
+                </div>
+                <div id="collapse3" class="">
+                  <div class="card-body">Geeignetes Objekt ausw&auml;hlen, Geb&auml;udezustand analysieren und Eigentumsverh&auml;ltnisse kl&auml;ren.</div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="guideStep4">
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse4">4. Team und Governance-Struktur aufbauen</button></h5>
+                </div>
+                <div id="collapse4" class="">
+                  <div class="card-body">Ein starkes Projektteam aufbauen und ein geeignetes Organisationsmodell w&auml;hlen.</div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="guideStep5">
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse5">5. Nutzungskonzept entwickeln</button></h5>
+                </div>
+                <div id="collapse5" class="">
+                  <div class="card-body">Nachhaltige Nutzungen gestalten, Zielgruppen definieren und flexible Rauml&ouml;sungen planen.</div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="guideStep6">
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse6">6. Finanzierung und Wirtschaftsplanung</button></h5>
+                </div>
+                <div id="collapse6" class="">
+                  <div class="card-body">Kosten sch&auml;tzen, F&ouml;rderm&ouml;glichkeiten erkunden und tragf&auml;hige Finanzmodelle entwickeln.</div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="guideStep7">
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse7">7. Rechtlicher und administrativer Rahmen</button></h5>
+                </div>
+                <div id="collapse7" class="">
+                  <div class="card-body">Genehmigungen, Vertr&auml;ge, Vorschriften und Versicherungsanforderungen verstehen.</div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="guideStep8">
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse8">8. Planung, Renovierung und Umsetzung</button></h5>
+                </div>
+                <div id="collapse8" class="">
+                  <div class="card-body">Renovierungsprozesse organisieren, Bauphasen verwalten und Akteure koordinieren.</div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="guideStep9">
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse9">9. Betriebsstart und Aktivierung</button></h5>
+                </div>
+                <div id="collapse9" class="">
+                  <div class="card-body">Das Projekt starten, Nutzer gewinnen und Gemeinschaftsengagement aufbauen.</div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="guideStep10">
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse10">10. Langfristiger Betrieb und Nachhaltigkeit</button></h5>
+                </div>
+                <div id="collapse10" class="">
+                  <div class="card-body">Finanzielle Stabilit&auml;t sichern, Ehrenamtsstrukturen verwalten und an zuk&uuml;nftige Bed&uuml;rfnisse anpassen.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+
+        <!-- Prime Examples Section -->
+        <div id="prime-examples-section" class="vb-tab-content" style="display: none;">
+
+        <div class="container vb-section">
+          <p class="vb-section-subtitle" style="text-align: left;">
+            Diese Sammlung von Praxisbeispiel-Factsheets zeigt inspirierende Beispiele, wie leerstehende Geb&auml;ude erfolgreich wiederverwendet und in lebendige Orte verwandelt werden k&ouml;nnen, die zum lokalen Leben beitragen. Die vorgestellten Projekte zeigen eine breite Palette von Ans&auml;tzen, von kleinen, privat initiierten Initiativen bis hin zu gro&szlig;en, gemeinschaftsgetragenen Entwicklungen, und veranschaulichen verschiedene Organisationsmodelle, Finanzierungsstrategien und Betriebskonzepte. Jedes Factsheet bietet einen kompakten &Uuml;berblick &uuml;ber den Projekthintergrund, die Ziele, die Wiederverwendungsstrategie, die Finanzierung, den Betrieb, Herausforderungen und wichtige Erkenntnisse. Der Schwerpunkt liegt auf praktischer Erfahrung und &Uuml;bertragbarkeit. Ziel dieser Sammlung ist es, Gemeinden, Initiativen, Immobilieneigent&uuml;mer und Praktiker dabei zu unterst&uuml;tzen, neue Perspektiven f&uuml;r leerstehende Geb&auml;ude zu erkunden und die Wiederverwendung als nachhaltige, sozial sinnvolle und lokal verwurzelte Alternative zu Abriss oder Neubau zu f&ouml;rdern.
+          </p>
         </div>
 
         <!-- Filter Section -->
@@ -411,7 +528,9 @@ footer {
                   <input type="text" id="search" name="search" class="form-control" placeholder="Nach Name, Adresse, Zweck suchen..." value="{{ query }}">
                 </div>
                 <div class="col-md-4 col-sm-6 mb-3">
-                  <label for="type_of_use">Nutzungsart</label>
+                  <label for="type_of_use" style="display:flex;align-items:center;gap:6px;">Nutzungsart
+                    <span class="vb-info-icon" data-toggle="tooltip" data-html="true" data-placement="top" title="<b>Tempor&auml;r:</b> Kurzfristige Nutzung, Pop-ups, Zwischennutzung. 2-Jahres-Mietvertrag<br><b>Langfristig:</b> Mehrj&auml;hrige, aber nicht dauerhafte Nutzung. Bis zu 20 Jahre Mietvertrag<br><b>Dauerhaft:</b> Langfristige Nachnutzung mit stabilen Mietern. 20+ Jahre oder Eigent&uuml;mer">&#9432;</span>
+                  </label>
                   <select id="type_of_use" name="type_of_use" class="form-control">
                     <option value="">Alle Arten</option>
                     {% for val, label in filter_choices.type_of_use %}
@@ -420,7 +539,9 @@ footer {
                   </select>
                 </div>
                 <div class="col-md-4 col-sm-6 mb-3">
-                  <label for="previous_use">Vorherige Nutzung</label>
+                  <label for="previous_use" style="display:flex;align-items:center;gap:6px;">Vorherige Nutzung
+                    <span class="vb-info-icon" data-toggle="tooltip" data-html="true" data-placement="top" title="<b>Wohnen:</b> Geb&auml;ude, die fr&uuml;her als Wohnraum genutzt wurden<br><b>Industrie:</b> Ehemalige Fabriken, Lagerh&auml;user oder Produktionsst&auml;tten<br><b>Gastronomie:</b> Ehemalige Restaurants, Bars oder Caf&eacute;s<br><b>Kleiner Einzelhandel:</b> Kleine L&auml;den unter ca. 200 m&sup2;<br><b>Gro&szlig;er Einzelhandel:</b> Gr&ouml;&szlig;ere Gewerbefl&auml;chen, ehemalige Einkaufszentren">&#9432;</span>
+                  </label>
                   <select id="previous_use" name="previous_use" class="form-control">
                     <option value="">Alle Nutzungen</option>
                     {% for val, label in filter_choices.previous_use %}
@@ -429,7 +550,9 @@ footer {
                   </select>
                 </div>
                 <div class="col-md-4 col-sm-6 mb-3">
-                  <label for="facility_size">Geb&auml;udegr&ouml;&szlig;e</label>
+                  <label for="facility_size" style="display:flex;align-items:center;gap:6px;">Geb&auml;udegr&ouml;&szlig;e
+                    <span class="vb-info-icon" data-toggle="tooltip" data-html="true" data-placement="top" title="<b>15&ndash;40 m&sup2;:</b> Sehr kleine Einheiten f&uuml;r Kioske, Mikro-Einzelhandel oder Werkst&auml;tten<br><b>40&ndash;100 m&sup2;:</b> Kleine Einheiten f&uuml;r B&uuml;ros, Studios oder kleine Gesch&auml;fte<br><b>100&ndash;200 m&sup2;:</b> Mittelgro&szlig;e R&auml;ume f&uuml;r multifunktionale Nutzung<br><b>&gt;200 m&sup2;:</b> Gro&szlig;e R&auml;ume f&uuml;r Veranstaltungen, Co-Working, Produktion">&#9432;</span>
+                  </label>
                   <select id="facility_size" name="facility_size" class="form-control">
                     <option value="">Alle Gr&ouml;&szlig;en</option>
                     {% for val, label in filter_choices.facility_size %}
@@ -438,7 +561,9 @@ footer {
                   </select>
                 </div>
                 <div class="col-md-4 col-sm-6 mb-3">
-                  <label for="reachability">Erreichbarkeit</label>
+                  <label for="reachability" style="display:flex;align-items:center;gap:6px;">Erreichbarkeit
+                    <span class="vb-info-icon" data-toggle="tooltip" data-html="true" data-placement="top" title="<b>Sehr zentral:</b> Beste Lage, hervorragende Frequenz &amp; Anbindung (&lt;500m zum Zentrum)<br><b>Zentral:</b> Gut angebunden mit konstanter Aktivit&auml;t (500&ndash;1000m)<br><b>Etwas zentral:</b> M&auml;&szlig;ig zentral, gute Erreichbarkeit (1000&ndash;2000m)<br><b>Nicht zentral:</b> Peripher oder abgelegene Lage (&gt;2000m)">&#9432;</span>
+                  </label>
                   <select id="reachability" name="reachability" class="form-control">
                     <option value="">Alle Standorte</option>
                     {% for val, label in filter_choices.reachability %}
@@ -447,7 +572,9 @@ footer {
                   </select>
                 </div>
                 <div class="col-md-4 col-sm-6 mb-3">
-                  <label for="governance">Tr&auml;germodell</label>
+                  <label for="governance" style="display:flex;align-items:center;gap:6px;">Tr&auml;germodell
+                    <span class="vb-info-icon" data-toggle="tooltip" data-html="true" data-placement="top" title="<b>Zivilgesellschaft:</b> Verein, Non-Profit, Genossenschaft<br><b>&Ouml;ffentlich:</b> Gemeinde, Kommunalverwaltungen<br><b>Privat:</b> GmbH, Einzeleigent&uuml;mer (gewinnorientiert)<br><b>Gemischt:</b> Kombinierte oder andere Tr&auml;germodelle">&#9432;</span>
+                  </label>
                   <select id="governance" name="governance" class="form-control">
                     <option value="">Alle Modelle</option>
                     {% for val, label in filter_choices.governance %}
@@ -456,7 +583,9 @@ footer {
                   </select>
                 </div>
                 <div class="col-md-4 col-sm-6 mb-3">
-                  <label for="previous_state">Vorheriger Zustand</label>
+                  <label for="previous_state" style="display:flex;align-items:center;gap:6px;">Vorheriger Zustand
+                    <span class="vb-info-icon" data-toggle="tooltip" data-html="true" data-placement="top" title="<b>Schlecht:</b> Umfangreiche Renovierungen n&ouml;tig &ndash; Wartung seit 5&ndash;10 Jahren vernachl&auml;ssigt<br><b>M&auml;&szlig;ig:</b> Renovierungen vor der Reaktivierung erforderlich<br><b>Ausgezeichnet:</b> Keine Renovierungen vor der Reaktivierung n&ouml;tig">&#9432;</span>
+                  </label>
                   <select id="previous_state" name="previous_state" class="form-control">
                     <option value="">Alle Zust&auml;nde</option>
                     {% for val, label in filter_choices.previous_state %}
@@ -466,8 +595,7 @@ footer {
                 </div>
               </div>
               <div class="d-flex mt-2" style="gap: 10px;">
-                <button type="submit" class="btn btn-filter">Suchen</button>
-                <a href="{% url 'vacant_buildings' %}" class="btn btn-clear">Filter zur&uuml;cksetzen</a>
+                <button type="button" class="btn btn-clear" onclick="clearAllFilters()">Filter zur&uuml;cksetzen</button>
               </div>
             </form>
           </div>
@@ -480,7 +608,7 @@ footer {
             <span class="results-count">{{ page_obj.paginator.count }} Geb&auml;ude gefunden</span>
           </div>
 
-          <div class="row">
+          <div class="row" id="results-row">
             {% for building in page_obj %}
             <div class="col-md-4 col-sm-6 mb-4">
               <div class="card vb-card h-100">
@@ -525,37 +653,26 @@ footer {
               <div class="empty-state">
                 <h4>Keine Geb&auml;ude gefunden</h4>
                 <p>Versuchen Sie, Ihre Such- oder Filterkriterien anzupassen.</p>
-                <a href="{% url 'vacant_buildings' %}" class="btn btn-filter mt-3">Alle Filter zur&uuml;cksetzen</a>
               </div>
             </div>
             {% endfor %}
           </div>
 
-          <!-- Pagination -->
+          <div id="pagination-container">
           {% if page_obj.paginator.num_pages > 1 %}
-          <nav aria-label="Paginierung" class="mt-4">
+          <nav class="mt-4">
             <ul class="pagination justify-content-center">
               {% if page_obj.has_previous %}
-              <li class="page-item">
-                <a class="page-link" href="?page=1{% if query %}&search={{ query }}{% endif %}{% for key, val in active_filters.items %}&{{ key }}={{ val }}{% endfor %}">&laquo;&laquo;</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query %}&search={{ query }}{% endif %}{% for key, val in active_filters.items %}&{{ key }}={{ val }}{% endfor %}">&laquo;</a>
-              </li>
+              <li class="page-item"><a class="page-link" href="#" onclick="fetchResults(1);return false;">&laquo;&laquo;</a></li>
+              <li class="page-item"><a class="page-link" href="#" onclick="fetchResults({{ page_obj.previous_page_number }});return false;">&laquo;</a></li>
               {% else %}
               <li class="page-item disabled"><span class="page-link">&laquo;&laquo;</span></li>
               <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
               {% endif %}
-
               <li class="page-item active"><span class="page-link">Seite {{ page_obj.number }} von {{ page_obj.paginator.num_pages }}</span></li>
-
               {% if page_obj.has_next %}
-              <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query %}&search={{ query }}{% endif %}{% for key, val in active_filters.items %}&{{ key }}={{ val }}{% endfor %}">&raquo;</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if query %}&search={{ query }}{% endif %}{% for key, val in active_filters.items %}&{{ key }}={{ val }}{% endfor %}">&raquo;&raquo;</a>
-              </li>
+              <li class="page-item"><a class="page-link" href="#" onclick="fetchResults({{ page_obj.next_page_number }});return false;">&raquo;</a></li>
+              <li class="page-item"><a class="page-link" href="#" onclick="fetchResults({{ page_obj.paginator.num_pages }});return false;">&raquo;&raquo;</a></li>
               {% else %}
               <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
               <li class="page-item disabled"><span class="page-link">&raquo;&raquo;</span></li>
@@ -563,158 +680,158 @@ footer {
             </ul>
           </nav>
           {% endif %}
-        </div>
-
-        <!-- Prime Examples Section -->
-        <div class="container vb-section" style="border-top: 2px solid #f0f0f0;">
-          <h2 class="vb-section-title">Praxisbeispiele</h2>
-          <p class="vb-section-subtitle">
-            Diese Sammlung von Praxisbeispiel-Factsheets zeigt inspirierende Beispiele, wie leerstehende Geb&auml;ude erfolgreich
-            wiederverwendet und in lebendige Orte verwandelt werden k&ouml;nnen, die zum lokalen Leben beitragen. Jedes Factsheet
-            bietet einen kompakten &Uuml;berblick &uuml;ber den Projekthintergrund, die Ziele, die Wiederverwendungsstrategie,
-            die Finanzierung, den Betrieb, Herausforderungen und wichtige Erkenntnisse.
-          </p>
-          <div class="row">
-            <div class="col-md-4 mb-4">
-              <div class="card prime-card h-100">
-                <div class="card-body">
-                  <h5 class="card-title">Dorfplatz St. Andr&auml;-W&ouml;rdern</h5>
-                  <p class="card-text"><small class="text-muted">St. Andr&auml;-W&ouml;rdern, &Ouml;sterreich</small></p>
-                  <p class="card-text">Multifunktionales Geb&auml;ude: Co-Working, Workshops, Gastronomie. Ein &bdquo;dritter Ort&ldquo;, der ohne Eigentum durch partizipative Planung geschaffen wurde.</p>
-                  <p class="card-text"><small class="text-muted">Eigentum: FlexCo. &amp; Verein | Investition: ~440.000 &euro; | Fl&auml;che: ~2.500 m&sup2;</small></p>
-                </div>
-                <div class="card-footer">
-                  <a href="{% static 'documents/factsheets/vacant_buildings/en/Dorfplatz_St_Andrae_Woerdern_EN.pdf' %}" class="btn-pdf btn-pdf-en" target="_blank">EN Factsheet</a>
-                  <a href="{% static 'documents/factsheets/vacant_buildings/de/Dorfplatz_St_Andrae_Woerdern_DE.pdf' %}" class="btn-pdf btn-pdf-de" target="_blank">DE Factsheet</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4 mb-4">
-              <div class="card prime-card h-100">
-                <div class="card-body">
-                  <h5 class="card-title">Leutkircher B&uuml;rgerbahnhof</h5>
-                  <p class="card-text"><small class="text-muted">Leutkirch im Allg&auml;u, Deutschland</small></p>
-                  <p class="card-text">Ehemaliger Bahnhof, umgewandelt in Gastronomie mit hauseigener Brauerei, B&uuml;ros und einem multifunktionalen Veranstaltungssaal durch eine B&uuml;rgergenossenschaft.</p>
-                  <p class="card-text"><small class="text-muted">Eigentum: B&uuml;rgergenossenschaft | Investition: ~3,4&ndash;4 Mio. &euro; | Fl&auml;che: ~1.650 m&sup2;</small></p>
-                </div>
-                <div class="card-footer">
-                  <a href="{% static 'documents/factsheets/vacant_buildings/en/Leutkircher_Buergerbahnhof_EN.pdf' %}" class="btn-pdf btn-pdf-en" target="_blank">EN Factsheet</a>
-                  <a href="{% static 'documents/factsheets/vacant_buildings/de/Leutkircher_Buergerbahnhof_DE.pdf' %}" class="btn-pdf btn-pdf-de" target="_blank">DE Factsheet</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4 mb-4">
-              <div class="card prime-card h-100">
-                <div class="card-body">
-                  <h5 class="card-title">Altes Milchhaus</h5>
-                  <p class="card-text"><small class="text-muted">&Ouml;sterreich</small></p>
-                  <p class="card-text">Ein ehemaliges kleines Einzelhandelsgesch&auml;ft, dauerhaft durch private Tr&auml;gerschaft umgenutzt, das zeigt, wie auch Geb&auml;ude in schlechtem Zustand reaktiviert werden k&ouml;nnen.</p>
-                  <p class="card-text"><small class="text-muted">Eigentum: Privat | Fl&auml;che: 100&ndash;200 m&sup2; | Vorheriger Zustand: Schlecht</small></p>
-                </div>
-                <div class="card-footer">
-                  <a href="{% static 'documents/factsheets/vacant_buildings/de/Altes_Milchhaus_DE.pdf' %}" class="btn-pdf btn-pdf-de" target="_blank">DE Factsheet</a>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
-
-        <!-- Repurpose Guide Section -->
-        <div class="container vb-section" style="border-top: 2px solid #f0f0f0;">
-          <h3 class="vb-section-title">Leitfaden zur kreislaufwirtschaftlichen Umnutzung</h3>
-          <p class="vb-section-subtitle">
-            Dieser schrittweise Leitfaden folgt einem typischen Entwicklungsprozess eines Wiederverwendungsprojekts
-            und bietet relevante Tipps und Informationen.
-          </p>
-          <div class="repurpose-guide">
-            <div id="repurposeGuide" class="accordion">
-              <div class="card">
-                <div class="card-header" id="guideStep1">
-                  <h5 class="mb-0"><button class="btn btn-link" data-toggle="collapse" data-target="#collapse1" aria-expanded="true">1. Warum ein leerstehendes Geb&auml;ude wiederverwenden?</button></h5>
-                </div>
-                <div id="collapse1" class="collapse show" data-parent="#repurposeGuide">
-                  <div class="card-body">Den lokalen Wert und die Auswirkungen der Reaktivierung verstehen.</div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header" id="guideStep2">
-                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse2">2. Von der Idee zur Vision</button></h5>
-                </div>
-                <div id="collapse2" class="collapse" data-parent="#repurposeGuide">
-                  <div class="card-body">Bed&uuml;rfnisse identifizieren, Ziele definieren und ein realistisches Projektkonzept gestalten.</div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header" id="guideStep3">
-                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse3">3. Das Geb&auml;ude finden und verstehen</button></h5>
-                </div>
-                <div id="collapse3" class="collapse" data-parent="#repurposeGuide">
-                  <div class="card-body">Geeignetes Objekt ausw&auml;hlen, Geb&auml;udezustand analysieren und Eigentumsverh&auml;ltnisse kl&auml;ren.</div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header" id="guideStep4">
-                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse4">4. Team und Governance-Struktur aufbauen</button></h5>
-                </div>
-                <div id="collapse4" class="collapse" data-parent="#repurposeGuide">
-                  <div class="card-body">Ein starkes Projektteam aufbauen und ein geeignetes Organisationsmodell w&auml;hlen.</div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header" id="guideStep5">
-                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse5">5. Nutzungskonzept entwickeln</button></h5>
-                </div>
-                <div id="collapse5" class="collapse" data-parent="#repurposeGuide">
-                  <div class="card-body">Nachhaltige Nutzungen gestalten, Zielgruppen definieren und flexible Rauml&ouml;sungen planen.</div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header" id="guideStep6">
-                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse6">6. Finanzierung und Wirtschaftsplanung</button></h5>
-                </div>
-                <div id="collapse6" class="collapse" data-parent="#repurposeGuide">
-                  <div class="card-body">Kosten sch&auml;tzen, F&ouml;rderm&ouml;glichkeiten erkunden und tragf&auml;hige Finanzmodelle entwickeln.</div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header" id="guideStep7">
-                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse7">7. Rechtlicher und administrativer Rahmen</button></h5>
-                </div>
-                <div id="collapse7" class="collapse" data-parent="#repurposeGuide">
-                  <div class="card-body">Genehmigungen, Vertr&auml;ge, Vorschriften und Versicherungsanforderungen verstehen.</div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header" id="guideStep8">
-                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse8">8. Planung, Renovierung und Umsetzung</button></h5>
-                </div>
-                <div id="collapse8" class="collapse" data-parent="#repurposeGuide">
-                  <div class="card-body">Renovierungsprozesse organisieren, Bauphasen verwalten und Akteure koordinieren.</div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header" id="guideStep9">
-                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse9">9. Betriebsstart und Aktivierung</button></h5>
-                </div>
-                <div id="collapse9" class="collapse" data-parent="#repurposeGuide">
-                  <div class="card-body">Das Projekt starten, Nutzer gewinnen und Gemeinschaftsengagement aufbauen.</div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header" id="guideStep10">
-                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse10">10. Langfristiger Betrieb und Nachhaltigkeit</button></h5>
-                </div>
-                <div id="collapse10" class="collapse" data-parent="#repurposeGuide">
-                  <div class="card-body">Finanzielle Stabilit&auml;t sichern, Ehrenamtsstrukturen verwalten und an zuk&uuml;nftige Bed&uuml;rfnisse anpassen.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        </div><!-- end prime-examples-section -->
 
       </div>
 
       {% include "footer.html" %}
     </div>
+<style>
+.vb-info-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: #70c5c7; color: #fff;
+  font-size: 0.65rem; font-weight: 700; cursor: help; flex-shrink: 0;
+}
+.tooltip-inner { text-align: left; max-width: 320px; font-size: 0.78rem; line-height: 1.5; padding: 10px 12px; }
+.vb-section-btn {
+  background: rgba(255,255,255,0.15); color: #fff; border: 2px solid rgba(255,255,255,0.5);
+  padding: 12px 28px; border-radius: 10px; font-size: 1rem; font-weight: 600;
+  cursor: pointer; transition: all 0.3s ease;
+}
+.vb-section-btn:hover { background: rgba(255,255,255,0.3); border-color: #fff; }
+.vb-section-btn.active { background: #fff; color: #01a9aa; border-color: #fff; }
+</style>
+<script>
+$(function(){ $('[data-toggle="tooltip"]').tooltip(); });
+
+function switchVBSection(targetId) {
+  document.querySelectorAll('.vb-tab-content').forEach(function(el) { el.style.display = 'none'; });
+  document.getElementById(targetId).style.display = 'block';
+  document.querySelectorAll('.vb-section-btn').forEach(function(btn) { btn.classList.remove('active'); });
+  document.querySelector('[data-target="' + targetId + '"]').classList.add('active');
+}
+
+function escapeHtml(text) {
+  var d = document.createElement('div'); d.textContent = text; return d.innerHTML;
+}
+function truncateWords(text, n) {
+  if (!text) return '';
+  var w = text.split(/\s+/);
+  return w.length <= n ? text : w.slice(0, n).join(' ') + ' \u2026';
+}
+
+function fetchResults(page) {
+  var form = document.querySelector('.vb-filters form');
+  var params = new URLSearchParams(new FormData(form));
+  params.set('page', page || 1);
+  fetch(form.action + '?' + params.toString(), {
+    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) { renderResults(data); });
+}
+
+function renderResults(data) {
+  var row = document.getElementById('results-row');
+  var countEl = document.querySelector('.results-count');
+  var pagEl = document.getElementById('pagination-container');
+
+  countEl.textContent = data.total_count + ' Geb\u00e4ude gefunden';
+
+  var html = '';
+  if (data.buildings.length === 0) {
+    html = '<div class="col-12"><div class="empty-state"><h4>Keine Geb\u00e4ude gefunden</h4><p>Versuchen Sie, Ihre Such- oder Filterkriterien anzupassen.</p></div></div>';
+  } else {
+    data.buildings.forEach(function(b) {
+      html += '<div class="col-md-4 col-sm-6 mb-4"><div class="card vb-card h-100"><div class="card-body">';
+      html += '<h5 class="card-title">' + escapeHtml(b.name) + '</h5>';
+      html += '<p class="card-address">' + escapeHtml(b.address) + '</p>';
+      if (b.description) html += '<p class="card-description">' + escapeHtml(truncateWords(b.description, 30)) + '</p>';
+      html += '<div class="mb-2">';
+      ['type_of_use','previous_use','facility_size','reachability','governance','previous_state'].forEach(function(k) {
+        if (b[k]) html += '<span class="vb-badge">' + escapeHtml(b[k]) + '</span>';
+      });
+      html += '</div><div class="vb-details">';
+      if (b.area_sq_ft) html += '<span>Fl\u00e4che: ' + escapeHtml(b.area_sq_ft) + ' m\u00B2</span>';
+      if (b.floor) html += '<span>Etage: ' + b.floor + '</span>';
+      if (b.year) html += '<span>Baujahr: ' + b.year + '</span>';
+      if (b.available_from) html += '<span>Verf\u00fcgbar ab: ' + escapeHtml(b.available_from) + '</span>';
+      if (b.proposed_purpose) html += '<br><span>Zweck: ' + escapeHtml(b.proposed_purpose) + '</span>';
+      html += '</div></div><div class="card-footer">';
+      if (b.factsheet_pdf_en || b.factsheet_pdf_de) {
+        if (b.factsheet_pdf_en) html += '<a href="' + escapeHtml(b.factsheet_pdf_en) + '" class="btn-pdf btn-pdf-en" target="_blank">EN Factsheet</a>';
+        if (b.factsheet_pdf_de) html += '<a href="' + escapeHtml(b.factsheet_pdf_de) + '" class="btn-pdf btn-pdf-de" target="_blank">DE Factsheet</a>';
+      } else {
+        html += '<span class="no-pdf">Keine Factsheets verf\u00fcgbar</span>';
+      }
+      html += '</div></div></div>';
+    });
+  }
+  row.innerHTML = html;
+
+  // Pagination
+  var ph = '';
+  if (data.num_pages > 1) {
+    ph += '<nav class="mt-4"><ul class="pagination justify-content-center">';
+    if (data.has_previous) {
+      ph += '<li class="page-item"><a class="page-link" href="#" onclick="fetchResults(1);return false;">&laquo;&laquo;</a></li>';
+      ph += '<li class="page-item"><a class="page-link" href="#" onclick="fetchResults(' + data.previous_page + ');return false;">&laquo;</a></li>';
+    } else {
+      ph += '<li class="page-item disabled"><span class="page-link">&laquo;&laquo;</span></li>';
+      ph += '<li class="page-item disabled"><span class="page-link">&laquo;</span></li>';
+    }
+    ph += '<li class="page-item active"><span class="page-link">Seite ' + data.current_page + ' von ' + data.num_pages + '</span></li>';
+    if (data.has_next) {
+      ph += '<li class="page-item"><a class="page-link" href="#" onclick="fetchResults(' + data.next_page + ');return false;">&raquo;</a></li>';
+      ph += '<li class="page-item"><a class="page-link" href="#" onclick="fetchResults(' + data.num_pages + ');return false;">&raquo;&raquo;</a></li>';
+    } else {
+      ph += '<li class="page-item disabled"><span class="page-link">&raquo;</span></li>';
+      ph += '<li class="page-item disabled"><span class="page-link">&raquo;&raquo;</span></li>';
+    }
+    ph += '</ul></nav>';
+  }
+  pagEl.innerHTML = ph;
+}
+
+function clearAllFilters() {
+  document.querySelector('.vb-filters form').reset();
+  fetchResults();
+}
+
+// Live filter: dropdowns
+document.querySelectorAll('.vb-filters select').forEach(function(sel) {
+  sel.addEventListener('change', function() { fetchResults(); });
+});
+// Live filter: text search (500ms debounce)
+var searchTimer;
+var searchInput = document.querySelector('.vb-filters input[name="search"]');
+if (searchInput) {
+  searchInput.addEventListener('input', function() {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(function() { fetchResults(); }, 500);
+  });
+}
+// Prevent full-page form submit (e.g. Enter key)
+document.querySelector('.vb-filters form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  fetchResults();
+});
+
+// Auto-show Prime Examples when search/filter params are present on initial load
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var hasFilters = params.get('search') || params.get('type_of_use') || params.get('previous_use') ||
+    params.get('facility_size') || params.get('reachability') || params.get('governance') || params.get('previous_state') || params.get('page');
+  if (hasFilters) {
+    switchVBSection('prime-examples-section');
+    setTimeout(function() {
+      document.querySelector('.vb-filters').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+})();
+</script>
 </body>
 </html>

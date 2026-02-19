@@ -166,7 +166,7 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
     <a href="{% url 'home' %}">{% trans "Home" %}</a>
     <a href="{% url 'about' %}">{% trans "About" %}</a>
-    <a href="{% url 'scenario_analysis' %}">{% trans "Scenarios Analysis" %}</a>
+    <a href="{% url 'scenario_analysis' %}">{% trans "Resource Flow Analysis" %}</a>
     <a href="{% url 'vacant_buildings' %}">{% trans "Vacant Buildings" %}</a>
     <a href="{% url 'best_practices' %}">{% trans "Best Practices" %}</a>
     <a href="{% url 'contact' %}">{% trans "Partners" %}</a>
@@ -190,7 +190,7 @@
             </li>
             <li>
               <a href="{% url 'scenario_analysis' %}" class="{% if request.resolver_match.url_name == 'scenario_analysis' %}active{% endif %}">
-                <p class="ui text size-textmd">{% trans "Scenarios Analysis" %}</p>
+                <p class="ui text size-textmd">{% trans "Resource Flow Analysis" %}</p>
             </a>
             </li>
             <li>

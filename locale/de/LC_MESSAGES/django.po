@@ -25,8 +25,8 @@ msgid "About"
 msgstr "Über uns"
 
 #: bio_app/templates/navbar.html:169 bio_app/templates/navbar.html:193
-msgid "Scenarios Analysis"
-msgstr "Szenarioanalyse"
+msgid "Resource Flow Analysis"
+msgstr "Ressourcenflussanalyse"
 
 #: bio_app/templates/navbar.html:170 bio_app/templates/navbar.html:198
 msgid "Vacant Buildings"

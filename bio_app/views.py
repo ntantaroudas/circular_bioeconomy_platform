@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from .models import BestPractice, VacantBuilding
 from django.db.models import Q
 from django.core.mail import EmailMessage
@@ -63,6 +64,39 @@ def vacant_buildings(request):
     paginator = Paginator(vacant_buildings_list, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+
+    # AJAX: return JSON for live filtering
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        buildings_data = []
+        for b in page_obj:
+            buildings_data.append({
+                'name': b.name,
+                'address': b.address,
+                'description': b.description or '',
+                'type_of_use': b.get_type_of_use_display() if b.type_of_use else '',
+                'previous_use': b.get_previous_use_display() if b.previous_use else '',
+                'facility_size': b.get_facility_size_display() if b.facility_size else '',
+                'reachability': b.get_reachability_display() if b.reachability else '',
+                'governance': b.get_governance_display() if b.governance else '',
+                'previous_state': b.get_previous_state_display() if b.previous_state else '',
+                'area_sq_ft': str(b.area_sq_ft) if b.area_sq_ft else '',
+                'floor': b.floor if b.floor else '',
+                'year': b.year if b.year else '',
+                'available_from': str(b.available_from) if b.available_from else '',
+                'proposed_purpose': b.proposed_purpose or '',
+                'factsheet_pdf_en': b.factsheet_pdf_en.url if b.factsheet_pdf_en else '',
+                'factsheet_pdf_de': b.factsheet_pdf_de.url if b.factsheet_pdf_de else '',
+            })
+        return JsonResponse({
+            'buildings': buildings_data,
+            'total_count': page_obj.paginator.count,
+            'num_pages': page_obj.paginator.num_pages,
+            'current_page': page_obj.number,
+            'has_previous': page_obj.has_previous(),
+            'has_next': page_obj.has_next(),
+            'previous_page': page_obj.previous_page_number() if page_obj.has_previous() else None,
+            'next_page': page_obj.next_page_number() if page_obj.has_next() else None,
+        })
 
     context = {
         'page_obj': page_obj,

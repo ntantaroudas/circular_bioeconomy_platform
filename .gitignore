@@ -7,3 +7,4 @@ requirements-gitignore/
 media/*
 !media/factsheets/
 tickets/
+.claude/

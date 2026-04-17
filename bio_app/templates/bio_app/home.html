@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Welcome to Circular Bioeconomy Smart Solution - Home</title>
+    <title>Welcome to the FUTURAL Circular Bioeconomy Smart Solution - Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -28,7 +28,7 @@
       
       {% include "navbar.html" %}
       
-      <div class="newscreenbody">
+      <div class="newscreenbody" style="margin-bottom: 0; padding-bottom: 0;">
         <!-- hero section -->
         <div class="stackvectorfift">
           <img src="{% static 'images/img_vector_59.svg' %}" alt="Vector Image" class="image" />
@@ -48,19 +48,11 @@
               <div class="section__main">
                 <div class="section__main-column">
                   <p class="section__main-column-title ui text size-text4xl">
-                    Welcome to<br />Circular Bioeconomy Smart Solution
+                    Welcome to the FUTURAL<br />Circular Bioeconomy Smart Solution
                   </p>
                   <p class="section__main-column-description ui text size-text1xl">
-                    The platform aims to advance the transition to a circular bioeconomy in the Pongau region (Austria) by providing an integrated decision-support tool that illustrates the benefits of alternative resource-valorization pathways. The goal is to help the community make informed choices that enhance resource efficiency, reduce waste, and generate economic, environmental, and social value. Moreover, it provides a guide for the repurposing of underutilized spaces, in line with circular economy principles, thus supporting a more holistic sustainable model of regional development.
+                    The platform aims to advance the transition to a circular bioeconomy in the Pongau region (Austria) by providing an integrated platform for exploring, illustrating, and assessing circular bioeconomy knowledge, and opportunities for resource valorisation. The goal is to help the community make informed decisions and identify pathways that enhance resource efficiency, reduce waste, and generate social, environmental, and economic value. Moreover, it provides a guide for the repurposing of underutilized spaces, in line with circular economy principles, thus supporting a more holistic sustainable model of regional development.
                   </p>
-                  <div class="section__main-column-actions">
-                    <button onclick="window.location.href='{% url 'about' %}'" class="section__main-column-actions-button ui button teal_50_05 size-sm fill">
-                      Regionalverband Pongau
-                    </button>
-                    <button onclick="window.location.href='{% url 'scenario_analysis' %}'" class="section__main-column-actions-button--explore ui button cyan_700_01 size-sm fill">
-                      Scenario Analysis
-                    </button>
-                  </div>
                 </div>
               </div>
               <img src="{% static 'images/img_vector_60.png' %}" alt="Footer Image" class="section__image" />
@@ -68,42 +60,6 @@
           </div>
         </div>
 
-        <!-- explore section -->
-        <div class="column">
-          <div class="columnline container-xs">
-            <div class="columnline__separator"></div>
-            <div class="columnline__content">
-              <p class="faq-section__title ui text size-text5xl">Explore</p>
-              <div class="columnline__list">
-                <div class="user-profile-header">
-                  <a href="{% url 'scenario_analysis' %}">
-                    <p class="faq-section__title ui text size-text2xl">Scenario Analysis</p>
-                  </a>
-                </div>
-                <div class="user-profile-header">
-                  <a href="{% url 'vacant_buildings' %}">
-                    <p class="faq-section__title ui text size-text2xl">Vacant Buildings</p>
-                  </a>
-                </div>
-                <div class="user-profile-header">
-                  <a href="{% url 'best_practices' %}">
-                    <p class="faq-section__title ui text size-text2xl">Best Practices</p>
-                  </a>
-                </div>
-                <div class="user-profile-header">
-                  <a href="https://futural-project.eu/" target="_blank" rel="noopener noreferrer">
-                    <p class="faq-section__title ui text size-text2xl">About FUTURAL</p>
-                  </a>
-                </div>
-                <div class="user-profile-header">
-                  <a href="{% url 'about' %}">
-                    <p class="faq-section__title ui text size-text2xl">About <br />Regionalverband<br />Pongau</p>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       {% include "footer.html" %}

@@ -4,7 +4,7 @@
 <html lang="de">
   <head>
     <meta charset="utf-8" />
-    <title>Willkommen zur Circular Bioeconomy Smart Solution - Startseite</title>
+    <title>Willkommen zur FUTURAL Circular Bioeconomy Smart Solution - Startseite</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -28,7 +28,7 @@
       
       {% include "navbar.html" %}
       
-      <div class="newscreenbody">
+      <div class="newscreenbody" style="margin-bottom: 0; padding-bottom: 0;">
         <!-- hero section -->
         <div class="stackvectorfift">
           <img src="{% static 'images/img_vector_59.svg' %}" alt="Vector Image" class="image" />
@@ -48,19 +48,11 @@
               <div class="section__main">
                 <div class="section__main-column">
                   <p class="section__main-column-title ui text size-text4xl">
-                    Willkommen zur<br />Circular Bioeconomy Smart Solution
+                    Willkommen zur FUTURAL<br />Circular Bioeconomy Smart Solution
                   </p>
                   <p class="section__main-column-description ui text size-text1xl">
-                    Die Plattform zielt darauf ab, den Übergang zu einer zirkulären Bioökonomie in der Region Pongau (Österreich) voranzutreiben, indem sie ein integriertes Entscheidungsunterstützungsinstrument bereitstellt, das die Vorteile alternativer Ressourcenverwertungswege aufzeigt. Ziel ist es, der Gemeinschaft zu helfen, fundierte Entscheidungen zu treffen, die die Ressourceneffizienz steigern, Abfälle reduzieren und wirtschaftlichen, ökologischen und sozialen Mehrwert schaffen. Darüber hinaus bietet sie einen Leitfaden für die Umnutzung untergenutzer Räume im Einklang mit den Prinzipien der Kreislaufwirtschaft und unterstützt so ein ganzheitlicheres nachhaltiges Modell der regionalen Entwicklung.
+                    Die Plattform f&ouml;rdert den &Uuml;bergang zu einer zirkul&auml;ren Bio&ouml;konomie in der Region Pongau (&Ouml;sterreich), indem sie eine integrierte Umgebung zur Erkundung, Visualisierung und Bewertung von Wissen zur zirkul&auml;ren Bio&ouml;konomie sowie von M&ouml;glichkeiten der Ressourcenverwertung bereitstellt. Das Ziel ist es, die Region dabei zu unterst&uuml;tzen, fundierte Entscheidungen zu treffen und geeignete Wege zu identifizieren, um die Ressourceneffizienz zu steigern, Abf&auml;lle zu reduzieren und sozialen, &ouml;kologischen sowie wirtschaftlichen Mehrwert zu schaffen. Dar&uuml;ber hinaus stellt die Plattform einen Leitfaden f&uuml;r die Umnutzung ungenutzter R&auml;umlichkeiten im Einklang mit den Prinzipien der Kreislaufwirtschaft bereit und unterst&uuml;tzt so ein ganzheitlich nachhaltiges Modell der regionalen Entwicklung.
                   </p>
-                  <div class="section__main-column-actions">
-                    <button onclick="window.location.href='{% url 'about' %}'" class="section__main-column-actions-button ui button teal_50_05 size-sm fill">
-                      Regionalverband Pongau
-                    </button>
-                    <button onclick="window.location.href='{% url 'scenario_analysis' %}'" class="section__main-column-actions-button--explore ui button cyan_700_01 size-sm fill">
-                      Szenarioanalyse
-                    </button>
-                  </div>
                 </div>
               </div>
               <img src="{% static 'images/img_vector_60.png' %}" alt="Footer Image" class="section__image" />
@@ -68,42 +60,6 @@
           </div>
         </div>
 
-        <!-- explore section -->
-        <div class="column">
-          <div class="columnline container-xs">
-            <div class="columnline__separator"></div>
-            <div class="columnline__content">
-              <p class="faq-section__title ui text size-text5xl">Erkunden</p>
-              <div class="columnline__list">
-                <div class="user-profile-header">
-                  <a href="{% url 'scenario_analysis' %}">
-                    <p class="faq-section__title ui text size-text2xl">Szenarioanalyse</p>
-                  </a>
-                </div>
-                <div class="user-profile-header">
-                  <a href="{% url 'best_practices' %}">
-                    <p class="faq-section__title ui text size-text2xl">Best Practices</p>
-                  </a>
-                </div>
-                <div class="user-profile-header">
-                  <a href="{% url 'vacant_buildings' %}">
-                    <p class="faq-section__title ui text size-text2xl">Leerstehende Gebäude</p>
-                  </a>
-                </div>
-                <div class="user-profile-header">
-                  <a href="https://futural-project.eu/" target="_blank" rel="noopener noreferrer">
-                    <p class="faq-section__title ui text size-text2xl">Über FUTURAL</p>
-                  </a>
-                </div>
-                <div class="user-profile-header">
-                  <a href="{% url 'about' %}">
-                    <p class="faq-section__title ui text size-text2xl">Über <br />Regionalverband<br />Pongau</p>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       {% include "footer.html" %}

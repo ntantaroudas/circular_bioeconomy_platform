@@ -22,7 +22,7 @@ msgstr "Startseite"
 
 #: bio_app/templates/navbar.html:168 bio_app/templates/navbar.html:188
 msgid "About"
-msgstr "Über uns"
+msgstr "Über das Projekt"
 
 #: bio_app/templates/navbar.html:169 bio_app/templates/navbar.html:193
 msgid "Resource Flow Analysis"
@@ -30,7 +30,7 @@ msgstr "Ressourcenflussanalyse"
 
 #: bio_app/templates/navbar.html:170 bio_app/templates/navbar.html:198
 msgid "Vacant Buildings"
-msgstr "Leerstehende Gebäude"
+msgstr "Leerstand"
 
 #: bio_app/templates/navbar.html:171 bio_app/templates/navbar.html:203
 msgid "Best Practices"

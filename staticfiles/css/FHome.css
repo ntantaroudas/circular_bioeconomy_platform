@@ -134,6 +134,7 @@
   top: 0px;
   height: max-content;
   margin: auto 90px;
+  z-index: 2;
   @media only screen and (max-width: 1050px) {
     margin-left: 0px;
     margin-right: 0px;
@@ -209,6 +210,7 @@
   right: 0px;
   left: 0px;
   margin: auto;
+  pointer-events: none;
 }
 
 .column {

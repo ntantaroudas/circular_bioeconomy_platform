@@ -112,8 +112,8 @@
 }
 
 .stackvectorfift-1 {
-  height: 4444px;
-  margin-bottom: 334px;
+  height: auto;
+  margin-bottom: 60px;
   flex: 1;
   position: relative;
   align-content: flex-end;
@@ -139,9 +139,11 @@
 
 .stackvectorfift__image--vector53 {
   height: 862px;
-  margin-bottom: 862px;
   width: 86%;
   object-fit: contain;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
 }
 
 .stackvectorfift__column {
@@ -150,13 +152,8 @@
   display: flex;
   flex-direction: column;
   align-items: end;
-  position: absolute;
-  left: 0px;
-  bottom: 0px;
-  right: 0px;
-  top: 0px;
-  height: max-content;
-  margin: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .stackvectorfift__column--one_one {
@@ -221,6 +218,7 @@
   right: 0px;
   left: 0px;
   margin: auto;
+  z-index: 2;
 }
 
 .stackvectorfift__text--aboutfutural {
@@ -245,7 +243,7 @@
 }
 
 .column-1 {
-  gap: 1768px;
+  gap: 200px;
   align-self: end;
   display: flex;
   width: 18%;
@@ -254,13 +252,13 @@
   @media only screen and (max-width: 1050px) {
     align-self: auto;
     width: 100%;
-    gap: 1326px;
+    gap: 100px;
     padding-left: var(--space-4xl);
     padding-right: var(--space-4xl);
   }
 
   @media only screen and (max-width: 550px) {
-    gap: 884px;
+    gap: 60px;
   }
 }
 

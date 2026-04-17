@@ -3,7 +3,7 @@
 <html lang="de">
 <head>
     <meta charset="utf-8" />
-    <title>Leerstehende Geb&auml;ude - Kreislauf-Bio&ouml;konomie</title>
+    <title>Leerstand - Kreislauf-Bio&ouml;konomie</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Entdecken Sie leerstehende Geb&auml;ude in Pongau und dar&uuml;ber hinaus. Nutzen Sie Filter, um Wiederverwendungsm&ouml;glichkeiten zu finden und laden Sie Factsheets f&uuml;r inspirierende Beispiele herunter." />
@@ -390,46 +390,48 @@ footer {
         <!-- Hero Section -->
         <div class="vb-hero">
           <div class="container">
-            <h1>Leerstehende Geb&auml;ude</h1>
-            <p>
-              In vielen St&auml;dten und D&ouml;rfern sind leerstehende Geb&auml;ude eine wachsende Herausforderung, aber auch eine bedeutende Chance.
-              Ehemalige Gesch&auml;fte, Bauernh&ouml;fe, Industriegeb&auml;ude oder Gemeinschaftseinrichtungen stehen oft leer, w&auml;hrend gleichzeitig
-              ein starker Bedarf an Orten zum Arbeiten, Treffen, Schaffen und Leben besteht. Daher ist eine weitere Funktion der Plattform die F&ouml;rderung der Wiederverwendung
-              leerstehender Geb&auml;ude in der Region Pongau und dar&uuml;ber hinaus, im Einklang mit den Prinzipien der Kreislaufwirtschaft.
-              Zu diesem Zweck haben wir bew&auml;hrte Verfahren f&uuml;r die Umnutzung von Geb&auml;uden in l&auml;ndlichen Gebieten untersucht, mit dem Schwerpunkt auf erprobten Strategien und f&ouml;rderlichen Rahmenbedingungen f&uuml;r eine erfolgreiche Geb&auml;udewiederverwendung sowie auf der Identifizierung wesentlicher Faktoren, die Umnutzungsinitiativen unterst&uuml;tzen oder behindern.
-            </p>
-            <p style="margin-top: 10px;">
-              Zu diesem Zweck haben wir einen schrittweisen Leitfaden zur Umnutzung mit umsetzbaren Empfehlungen und Werkzeugen entwickelt und eine Reihe von Factsheets relevanter Praxisbeispiele mit realen F&auml;llen f&uuml;r Gemeinden und Eigent&uuml;mer erstellt.
-            </p>
+            <h1>Leerstand</h1>
+
+            <p style="margin-bottom: 5px; font-size: 1.05rem; opacity: 0.9;">Bitte w&auml;hlen Sie einen Bereich</p>
 
             <!-- Section Selection Buttons -->
-            <div style="display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap; justify-content: center;">
+            <div style="display: flex; gap: 15px; margin-top: 10px; flex-wrap: wrap; justify-content: center;">
               <button class="vb-section-btn active" data-target="guidelines-section" id="btn-guidelines" onclick="switchVBSection('guidelines-section')">
-                Leitfaden zur kreislaufwirtschaftlichen Umnutzung
+                Leitfaden zur Leerstands-Reaktivierung
               </button>
               <button class="vb-section-btn" data-target="prime-examples-section" id="btn-prime-examples" onclick="switchVBSection('prime-examples-section')">
                 Praxisbeispiele
               </button>
             </div>
+
+            <p style="margin-top: 20px;">
+              In vielen St&auml;dten und Gemeinden stellen leerstehende Geb&auml;ude eine wachsende Herausforderung dar. Zugleich bieten sie jedoch gro&szlig;es Potenzial. Ehemalige Gesch&auml;fte, landwirtschaftliche Betriebe, Industriegeb&auml;ude oder Gemeinschaftseinrichtungen stehen h&auml;ufig ungenutzt, w&auml;hrend gleichzeitig ein hoher Bedarf an Orten zum Arbeiten, Treffen, Gestalten und Leben besteht. Die Plattform unterst&uuml;tzt daher die Wiederverwendung leerstehender Geb&auml;ude in der Region Pongau und dar&uuml;ber hinaus, orientiert an den Prinzipien der Kreislaufwirtschaft. Zu diesem Zweck wurden Good Practices zur Umnutzung von Geb&auml;uden in l&auml;ndlichen Gebieten analysiert, mit dem Ziel, bew&auml;hrte Strategien und f&ouml;rderliche Rahmenbedingungen f&uuml;r eine erfolgreiche Reaktivierung sichtbar zu machen sowie zentrale Erfolgs- und Hemmfaktoren zu identifizieren.
+            </p>
+            <p style="margin-top: 10px;">
+              Darauf aufbauend wurden ein praxisorientierter Leitfaden mit umsetzbaren Empfehlungen und Werkzeugen entwickelt sowie eine Reihe von Factsheets relevanter Praxisbeispiele erstellt, die reale F&auml;lle f&uuml;r Gemeinden und Eigent&uuml;mer darstellen.
+            </p>
           </div>
         </div>
 
         <!-- Guidelines Section -->
         <div id="guidelines-section" class="vb-tab-content">
         <div class="container vb-section">
-          <h3 class="vb-section-title">Leitfaden zur kreislaufwirtschaftlichen Umnutzung</h3>
+          <h3 class="vb-section-title">Leitfaden zur Leerstands-Reaktivierung</h3>
           <p class="vb-section-subtitle">
-            Dieser schrittweise Leitfaden folgt einem typischen Entwicklungsprozess eines Wiederverwendungsprojekts
-            und bietet relevante Tipps und Informationen, thematisch gegliedert in aufeinanderfolgende Schritte.
+            Dieser <strong>schrittweise Reaktivierungsleitfaden</strong> orientiert sich am typischen Entwicklungsprozess eines Umnutzungsprojekts und bietet relevante Tipps und strukturierte, praxisnahe Informationen entlang folgender Schritte:
           </p>
+          <div style="margin-bottom: 20px;">
+            <a href="{% static 'docs/How-To-Guide_EN.pdf' %}" class="btn-pdf btn-pdf-en" target="_blank" style="padding: 10px 20px; font-size: 0.9rem;">&#128196; Vollst&auml;ndigen Leitfaden herunterladen (EN)</a>
+            <a href="{% static 'docs/How-To-Guide_DE.pdf' %}" class="btn-pdf btn-pdf-de" target="_blank" style="padding: 10px 20px; font-size: 0.9rem;">&#128196; Vollst&auml;ndigen Leitfaden herunterladen (DE)</a>
+          </div>
           <div class="repurpose-guide">
             <div id="repurposeGuide" class="accordion">
               <div class="card">
                 <div class="card-header" id="guideStep1">
-                  <h5 class="mb-0"><button class="btn btn-link" data-toggle="collapse" data-target="#collapse1" aria-expanded="true">1. Warum ein leerstehendes Geb&auml;ude wiederverwenden?</button></h5>
+                  <h5 class="mb-0"><button class="btn btn-link" data-toggle="collapse" data-target="#collapse1" aria-expanded="true">1. Warum einen Leerstand reaktivieren?</button></h5>
                 </div>
                 <div id="collapse1" class="">
-                  <div class="card-body">Den lokalen Wert und die Auswirkungen der Reaktivierung verstehen.</div>
+                  <div class="card-body">Den lokalen Mehrwert und die Auswirkungen der Reaktivierung eines leerstehenden Geb&auml;udes verstehen.</div>
                 </div>
               </div>
               <div class="card">
@@ -437,23 +439,23 @@ footer {
                   <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse2">2. Von der Idee zur Vision</button></h5>
                 </div>
                 <div id="collapse2" class="">
-                  <div class="card-body">Bed&uuml;rfnisse identifizieren, Ziele definieren und ein realistisches Projektkonzept gestalten.</div>
+                  <div class="card-body">Bedarf erkennen, Ziele definieren und ein realistisches Projektkonzept entwickeln.</div>
                 </div>
               </div>
               <div class="card">
                 <div class="card-header" id="guideStep3">
-                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse3">3. Das Geb&auml;ude finden und verstehen</button></h5>
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse3">3. Geb&auml;ude finden &amp; verstehen</button></h5>
                 </div>
                 <div id="collapse3" class="">
-                  <div class="card-body">Geeignetes Objekt ausw&auml;hlen, Geb&auml;udezustand analysieren und Eigentumsverh&auml;ltnisse kl&auml;ren.</div>
+                  <div class="card-body">Eine passende Immobilie ausw&auml;hlen, den Geb&auml;udezustand analysieren sowie Eigentumsverh&auml;ltnisse und Risiken kl&auml;ren.</div>
                 </div>
               </div>
               <div class="card">
                 <div class="card-header" id="guideStep4">
-                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse4">4. Team und Governance-Struktur aufbauen</button></h5>
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse4">4. Team &amp; Organisationsstruktur aufbauen</button></h5>
                 </div>
                 <div id="collapse4" class="">
-                  <div class="card-body">Ein starkes Projektteam aufbauen und ein geeignetes Organisationsmodell w&auml;hlen.</div>
+                  <div class="card-body">Ein starkes Projektteam zusammenstellen und eine geeignete Organisationsstruktur festlegen.</div>
                 </div>
               </div>
               <div class="card">
@@ -461,47 +463,47 @@ footer {
                   <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse5">5. Nutzungskonzept entwickeln</button></h5>
                 </div>
                 <div id="collapse5" class="">
-                  <div class="card-body">Nachhaltige Nutzungen gestalten, Zielgruppen definieren und flexible Rauml&ouml;sungen planen.</div>
+                  <div class="card-body">(Nachhaltige) Nutzungsm&ouml;glichkeiten entwickeln, Zielgruppen definieren und flexible Rauml&ouml;sungen planen.</div>
                 </div>
               </div>
               <div class="card">
                 <div class="card-header" id="guideStep6">
-                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse6">6. Finanzierung und Wirtschaftsplanung</button></h5>
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse6">6. Finanzierung &amp; wirtschaftliche Planung</button></h5>
                 </div>
                 <div id="collapse6" class="">
-                  <div class="card-body">Kosten sch&auml;tzen, F&ouml;rderm&ouml;glichkeiten erkunden und tragf&auml;hige Finanzmodelle entwickeln.</div>
+                  <div class="card-body">Kosten absch&auml;tzen, F&ouml;rderm&ouml;glichkeiten pr&uuml;fen und tragf&auml;hige Finanzierungsmodelle entwickeln.</div>
                 </div>
               </div>
               <div class="card">
                 <div class="card-header" id="guideStep7">
-                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse7">7. Rechtlicher und administrativer Rahmen</button></h5>
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse7">7. Rechtliche &amp; administrative Rahmenbedingungen</button></h5>
                 </div>
                 <div id="collapse7" class="">
-                  <div class="card-body">Genehmigungen, Vertr&auml;ge, Vorschriften und Versicherungsanforderungen verstehen.</div>
+                  <div class="card-body">Genehmigungen, Vertr&auml;ge, Vorschriften und Versicherungsanforderungen pr&uuml;fen und verstehen.</div>
                 </div>
               </div>
               <div class="card">
                 <div class="card-header" id="guideStep8">
-                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse8">8. Planung, Renovierung und Umsetzung</button></h5>
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse8">8. Planung, Sanierung &amp; Umsetzung</button></h5>
                 </div>
                 <div id="collapse8" class="">
-                  <div class="card-body">Renovierungsprozesse organisieren, Bauphasen verwalten und Akteure koordinieren.</div>
+                  <div class="card-body">Sanierungsma&szlig;nahmen planen, Bauphasen koordinieren und relevante Akteur*innen einbinden.</div>
                 </div>
               </div>
               <div class="card">
                 <div class="card-header" id="guideStep9">
-                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse9">9. Betriebsstart und Aktivierung</button></h5>
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse9">9. Betrieb starten &amp; Ort reaktivieren</button></h5>
                 </div>
                 <div id="collapse9" class="">
-                  <div class="card-body">Das Projekt starten, Nutzer gewinnen und Gemeinschaftsengagement aufbauen.</div>
+                  <div class="card-body">Das Projekt umsetzen, Nutzer*innen gewinnen und ein gemeinschaftliches Engagement f&ouml;rdern.</div>
                 </div>
               </div>
               <div class="card">
                 <div class="card-header" id="guideStep10">
-                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse10">10. Langfristiger Betrieb und Nachhaltigkeit</button></h5>
+                  <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse10">10. Langfristiger Betrieb &amp; Weiterentwicklung</button></h5>
                 </div>
                 <div id="collapse10" class="">
-                  <div class="card-body">Finanzielle Stabilit&auml;t sichern, Ehrenamtsstrukturen verwalten und an zuk&uuml;nftige Bed&uuml;rfnisse anpassen.</div>
+                  <div class="card-body">Die wirtschaftliche Tragf&auml;higkeit sichern, Organisationsstrukturen weiterentwickeln und flexibel auf zuk&uuml;nftige Anforderungen reagieren.</div>
                 </div>
               </div>
             </div>

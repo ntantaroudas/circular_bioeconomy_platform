@@ -6,6 +6,7 @@ class BestPractice(models.Model):
     description = models.TextField()
     link = models.URLField()  # Link to the external source
     factsheet_pdf = models.FileField(upload_to='factsheets/best_practices/', blank=True, null=True)
+    factsheet_pdf_en = models.FileField(upload_to='factsheets/best_practices/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

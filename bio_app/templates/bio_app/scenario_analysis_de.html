@@ -196,7 +196,7 @@ html, body {
   height: 750px;
 }
 
-.iframe-mcdma {
+.iframe-mcda {
   height: 1100px;
 }
 
@@ -215,7 +215,7 @@ html, body {
     height: 600px;
   }
 
-  .iframe-mcdma {
+  .iframe-mcda {
     height: 900px;
   }
 }
@@ -239,7 +239,7 @@ html, body {
     height: 500px;
   }
 
-  .iframe-mcdma {
+  .iframe-mcda {
     height: 750px;
   }
 }
@@ -305,9 +305,9 @@ html, body {
                           <span class="analysis-tool-btn__title">MFA</span>
                           <span class="analysis-tool-btn__subtitle">Materialflussanalyse</span>
                         </button>
-                        <button class="analysis-tool-btn" data-target="mcdma-tab" id="hero-mcdma-btn">
-                          <span class="analysis-tool-btn__title">MCDMA</span>
-                          <span class="analysis-tool-btn__subtitle">Multikriterielle Entscheidungsanalyse</span>
+                        <button class="analysis-tool-btn" data-target="mcda-tab" id="hero-mcda-btn">
+                          <span class="analysis-tool-btn__title">MCDA</span>
+                          <span class="analysis-tool-btn__subtitle">Multi-Kriterien-Analyse</span>
                         </button>
                       </div>
                     </div>
@@ -337,14 +337,14 @@ html, body {
               <a class="nav-link" id="mfa-tab" data-toggle="tab" href="#mfa-pane" role="tab" aria-controls="mfa-pane" aria-selected="false">MFA</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="mcdma-tab" data-toggle="tab" href="#mcdma-pane" role="tab" aria-controls="mcdma-pane" aria-selected="false">MCDMA</a>
+              <a class="nav-link" id="mcda-tab" data-toggle="tab" href="#mcda-pane" role="tab" aria-controls="mcda-pane" aria-selected="false">MCDA</a>
             </li>
           </ul>
 
           <!-- Default intro text, shown when no tab is active -->
           <div id="intro-default" style="padding: 20px 0; color: #2c3e50; line-height: 1.7;">
             <p class="ui text size-textxl">
-              In unserer Analyse haben wir mehrere analytische und partizipative Methoden kombiniert: (i) Mind-Mapping von Ressourcenflüssen &ndash; Identifizierung lokaler Reststoffströme und Kartierung potenzieller Umwandlungsrouten, (ii) Materialflussanalyse (MFA) &ndash; Quantifizierung von Inputs, Outputs und Ressourcenbilanzen für ausgewählte Pfade, (iii) Szenariovisualisierung mit Sankey-Diagrammen &ndash; Erstellung klarer, grafischer Darstellungen von Ressourcenflüssen und -effizienzen, und (iv) Multikriterielle Entscheidungsanalyse (MCDMA) &ndash; Vergleich von Pfaden anhand wirtschaftlicher, ökologischer und sozialer Parameter.
+              In unserer Analyse kombinieren wir mehrere analytische und partizipative Ans&auml;tze: (i) <strong>Mind-Mapping von Ressourcenfl&uuml;ssen</strong> &ndash; Identifikation lokaler Reststoffstr&ouml;me und Erfassung potenzieller Verwertungswege, (ii) <strong>Materialflussanalyse (MFA)</strong> &ndash; Quantifizierung von Inputs, Outputs und Ressourcenbilanzen f&uuml;r ausgew&auml;hlte Pfade, (iii) <strong>Szenariovisualisierung mit Sankey-Diagrammen</strong> &ndash; Grafische Darstellung von Ressourcenfl&uuml;ssen und deren Effizienzen, und (iv) <strong>Multi-Kriterien-Analyse (MCDA)</strong> &ndash; Vergleich von Pfaden anhand &ouml;konomischer, &ouml;kologischer und sozialer Parameter. Diese Methoden werden in <strong>Co-Creation-Workshops</strong> mit regionalen Akteur*innen angewendet, um sicherzustellen, dass die L&ouml;sungen die lokalen Gegebenheiten widerspiegeln. Der Fokus im Pongau liegt auf der <strong>Verwertung von Kl&auml;rschlamm</strong>. Weitere Beispiele mit anderen Ressourcenstr&ouml;men werden im Bereich &ldquo;Best Practices&rdquo; vorgestellt und verdeutlichen das breite Potenzial zirkul&auml;rer Bio&ouml;konomie-Strategien.
             </p>
             <div style="text-align: center; margin-top: 25px;">
               <img src="{% static 'images/scenario_analysis_methodology.png' %}" alt="Methodik der zirkulären Bioökonomie: von der Kartierung der Reststoffströme bis zur Bewertung von Szenarien und Auswirkungen" style="max-width: 700px; width: 100%; height: auto; border-radius: 8px;" />
@@ -354,9 +354,9 @@ html, body {
           <div class="tab-content scenario-tab-content" id="scenarioAnalysisTabContent">
             <!-- Tab 1: MFA -->
             <div class="tab-pane fade" id="mfa-pane" role="tabpanel" aria-labelledby="mfa-tab">
-              <h4 style="margin: 20px 0 10px; color: #2c3e50;">Materialflussanalyse (MFA)</h4>
+              <h4 style="margin: 20px 0 10px; color: #2c3e50;">MFA - Materialflussanalyse</h4>
               <p class="ui text size-textlg" style="margin-bottom: 15px; color: #555; line-height: 1.6;">
-                In diesem ersten Schritt haben wir nach einer Reihe von Co-Creation- und Capacity-Building-Workshops drei zentrale Reststoffströme untersucht &ndash; Aschen aus Biomasseheizwerken, Klärschlamm aus der Abwasserbehandlung und Lebensmittelabfälle aus dem Tourismus &ndash; um alternative Verwertungsmöglichkeiten zu identifizieren. Daraus haben wir Klärschlamm als Schwerpunktstrom ausgewählt.
+                Die Analyse startet mit einer <strong>Materialflussanalyse (MFA)</strong> des Status quo regionaler Ressourcenstr&ouml;me. Sie bildet die Grundlage f&uuml;r das Verst&auml;ndnis der Materialzusammensetzung und die Identifikation zirkul&auml;rer Potenziale. Alternative Verwertungswege, die gemeinsam mit regionalen Stakeholdern im Rahmen von Co-Creation-Aktivit&auml;ten entwickelt wurden, werden anschlie&szlig;end ebenfalls mittels detaillierter MFA analysiert. Zur besseren Interpretation werden die quantifizierten Str&ouml;me mithilfe von <strong>Sankey-Diagrammen</strong> visualisiert, wobei die Breite der Pfeile die jeweilige Gr&ouml;&szlig;enordnung der Ressourcenstr&ouml;me darstellt. Diese Visualisierungen erleichtern das Verst&auml;ndnis der Ressourcenpfade und den Vergleich alternativer Szenarien der zirkul&auml;ren Bio&ouml;konomie. Die Ergebnisse liefern die analytische Grundlage zur Bewertung von M&ouml;glichkeiten der zirkul&auml;ren Verwertung.
               </p>
               <div class="iframe-tab-container">
                 <iframe
@@ -369,22 +369,22 @@ html, body {
               </div>
             </div>
 
-            <!-- Tab 2: MCDMA -->
-            <div class="tab-pane fade" id="mcdma-pane" role="tabpanel" aria-labelledby="mcdma-tab">
-              <h4 style="margin: 20px 0 10px; color: #2c3e50;">Multikriterielle Entscheidungsanalyse (MCDMA)</h4>
+            <!-- Tab 2: MCDA -->
+            <div class="tab-pane fade" id="mcda-pane" role="tabpanel" aria-labelledby="mcda-tab">
+              <h4 style="margin: 20px 0 10px; color: #2c3e50;">MCDA - Multi-Kriterien-Analyse</h4>
               <p class="ui text size-textlg" style="margin-bottom: 15px; color: #555; line-height: 1.6;">
-                In der nächsten Phase wurde eine multikriterielle Entscheidungsanalyse (MCDMA) angewendet, um die ausgewählten Szenarien anhand zentraler ökologischer, sozialer und wirtschaftlicher Kriterien zu bewerten. Diese Kriterien wurden gemeinsam mit regionalen Experten identifiziert, um die Relevanz für lokale Bedingungen sicherzustellen.
+                Im n&auml;chsten Schritt wird eine <strong>Multi-Kriterien-Analyse (MCDA)</strong> angewendet, um die ausgew&auml;hlten Szenarien anhand zentraler &ouml;kologischer, sozialer und &ouml;konomischer Kriterien zu bewerten. Diese Kriterien werden gemeinsam mit regionalen Expert*innen definiert, um ihre Relevanz f&uuml;r lokale Bedingungen und Entscheidungsbedarfe sicherzustellen. Die Bewertung kombiniert qualitative Einsch&auml;tzungen von Expert*innen mit quantitativen Daten aus Literatur und Projektergebnissen. &Uuml;ber eine reine Kosten-Nutzen-Betrachtung hinaus, erm&ouml;glicht die MCDA eine ganzheitliche Bewertung der realen Auswirkungen der Szenarien und unterst&uuml;tzt robustere sowie transparentere Entscheidungsprozesse.
               </p>
               <div style="text-align: center; margin-bottom: 20px;">
-                <img src="{% static 'images/mcdma_methodology.png' %}" alt="MCDMA-Methodik: von der Bestimmung innovativer Szenarien bis zur Priorisierung der vielversprechendsten Pfade" style="max-width: 700px; width: 100%; height: auto; border-radius: 8px;" />
+                <img src="{% static 'images/mcdma_methodology.png' %}" alt="MCDA-Methodik: von der Bestimmung innovativer Szenarien bis zur Priorisierung der vielversprechendsten Pfade" style="max-width: 700px; width: 100%; height: auto; border-radius: 8px;" />
               </div>
               <div class="iframe-tab-container">
                 <iframe
                   src="https://tools-alchemia-nova.eu/mcdma/futural-2025/"
-                  class="iframe-mcdma"
+                  class="iframe-mcda"
                   loading="lazy"
                   allow="clipboard-write"
-                  title="Multi-Criteria Decision Making Analysis Tool"
+                  title="Multi-Kriterien-Analyse Tool"
                 ></iframe>
               </div>
             </div>

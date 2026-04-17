@@ -391,7 +391,20 @@ footer {
         <div class="vb-hero">
           <div class="container">
             <h1>Vacant Buildings</h1>
-            <p>
+
+            <p style="margin-bottom: 5px; font-size: 1.05rem; opacity: 0.9;">Please select a section</p>
+
+            <!-- Section Selection Buttons -->
+            <div style="display: flex; gap: 15px; margin-top: 10px; flex-wrap: wrap; justify-content: center;">
+              <button class="vb-section-btn active" data-target="guidelines-section" id="btn-guidelines" onclick="switchVBSection('guidelines-section')">
+                Guidelines for Circular Repurposing
+              </button>
+              <button class="vb-section-btn" data-target="prime-examples-section" id="btn-prime-examples" onclick="switchVBSection('prime-examples-section')">
+                Prime Examples
+              </button>
+            </div>
+
+            <p style="margin-top: 20px;">
               Across many towns and villages, vacant buildings are a growing challenge, but also a significant opportunity.
               Former shops, farms, industrial buildings or community facilities often stand unused, while at the same time
               there is a strong demand for places to work, meet, create and live. Therefore, a further functionality of the platform is to promote the reuse of vacant buildings in the region of Pongau, and beyond, aligning with circular economy principles.
@@ -400,16 +413,6 @@ footer {
             <p style="margin-top: 10px;">
               For this purpose, we have developed a step-by-step repurpose guide with actionable recommendations and tools, and created a series of fact sheets of relevant prime examples featuring real-life cases for municipalities and owners.
             </p>
-
-            <!-- Section Selection Buttons -->
-            <div style="display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap; justify-content: center;">
-              <button class="vb-section-btn active" data-target="guidelines-section" id="btn-guidelines" onclick="switchVBSection('guidelines-section')">
-                Guidelines for Circular Repurposing
-              </button>
-              <button class="vb-section-btn" data-target="prime-examples-section" id="btn-prime-examples" onclick="switchVBSection('prime-examples-section')">
-                Prime Examples
-              </button>
-            </div>
           </div>
         </div>
 
@@ -420,8 +423,12 @@ footer {
           <h3 class="vb-section-title">Guidelines for Circular Repurposing</h3>
           <p class="vb-section-subtitle">
             This step-by-step repurpose guide follows a typical development process of a reuse project
-            and provides relevant tips and information, thematically structured around a series of incremental steps.
+            and provides relevant tips and information, thematically structured around a series of incremental steps, namely:
           </p>
+          <div style="margin-bottom: 20px;">
+            <a href="{% static 'docs/How-To-Guide_EN.pdf' %}" class="btn-pdf btn-pdf-en" target="_blank" style="padding: 10px 20px; font-size: 0.9rem;">&#128196; Download Full Guide (EN)</a>
+            <a href="{% static 'docs/How-To-Guide_DE.pdf' %}" class="btn-pdf btn-pdf-de" target="_blank" style="padding: 10px 20px; font-size: 0.9rem;">&#128196; Download Full Guide (DE)</a>
+          </div>
           <div class="repurpose-guide">
             <div id="repurposeGuide" class="accordion">
               <div class="card">
@@ -437,7 +444,7 @@ footer {
                   <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse2">2. From idea to vision</button></h5>
                 </div>
                 <div id="collapse2" class="">
-                  <div class="card-body">Identify the needs, defining goals and shape a realistic project concept.</div>
+                  <div class="card-body">Identify the needs, define goals and shape a realistic project concept.</div>
                 </div>
               </div>
               <div class="card">
@@ -461,7 +468,7 @@ footer {
                   <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse5">5. Develop the use concept</button></h5>
                 </div>
                 <div id="collapse5" class="">
-                  <div class="card-body">Design sustainable uses, define target groups and plan flexible spatial solutions.</div>
+                  <div class="card-body">Design (sustainable) uses, define target groups and plan flexible spatial solutions.</div>
                 </div>
               </div>
               <div class="card">

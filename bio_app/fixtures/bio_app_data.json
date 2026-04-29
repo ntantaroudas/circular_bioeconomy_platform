@@ -3,38 +3,145 @@
   "model": "bio_app.bestpractice",
   "pk": 1,
   "fields": {
-    "title": "Cambium - vertECO",
-    "description": "Closing water and nutrient cycles. Cambium in Fehring (Styria, Austria) transforms a former barracks into a sustainable living place for over 70 people, using the vertECO system for wastewater treatment and reuse.",
+    "title_en": "Cambium - vertECO",
+    "title_de": "",
+    "description_en": "Closing water and nutrient cycles. Cambium in Fehring (Styria, Austria) transforms a former barracks into a sustainable living place for over 70 people, using the vertECO system for wastewater treatment and reuse.",
+    "description_de": "",
     "link": "https://www.cambium.at/",
-    "factsheet_pdf": "factsheets/best_practices/Cambium_vertECO_DE.pdf",
-    "created_at": "2025-07-01T12:04:32.804Z"
+    "factsheet_pdf_en": "factsheets/best_practices/BP_Cambium_EN.pdf",
+    "factsheet_pdf_de": "factsheets/best_practices/BP_Cambium_DE.pdf",
+    "created_at": "2026-02-18T13:58:27.903Z"
+  }
+},
+{
+  "model": "bio_app.bestpractice",
+  "pk": 2,
+  "fields": {
+    "title_en": "BeanSaver - Upcycling Coffee Grounds",
+    "title_de": "",
+    "description_en": "BeanSaver® is an Austrian company specializing in the reuse of coffee residues. The focus lies on the development and production of an organic fertilizer based on coffee grounds, combined with sheep wool and wood. The aim is to use this by-product as a valuable resource, return it to natural material cycles, and reintroduce it into economic utilization cycles.",
+    "description_de": "",
+    "link": "https://www.beansaver.at/",
+    "factsheet_pdf_en": "factsheets/best_practices/BP_BeanSaver_EN.pdf",
+    "factsheet_pdf_de": "factsheets/best_practices/BP_BeanSaver_DE.pdf",
+    "created_at": "2026-04-02T11:38:50.453Z"
+  }
+},
+{
+  "model": "bio_app.bestpractice",
+  "pk": 3,
+  "fields": {
+    "title_en": "futureBloc - S",
+    "title_de": "",
+    "description_en": "Recycling wall system with natural insulation materials. futureBloc - S is a research and development project by Salzburg Wohnbau, Fachhochschule Salzburg and several regional partner companies. The aim is to develop a circular wall system that is largely based on regional secondary raw materials, using materials from building demolition as a resource instead of relying on primary materials.",
+    "description_de": "",
+    "link": "https://www.salzburg-wohnbau.at/futurebloc-salzburg-recycling-wandaufbau-mit-natuerlichen-daemmstoffen/",
+    "factsheet_pdf_en": "factsheets/best_practices/BP_FUTUREBLOC_EN.pdf",
+    "factsheet_pdf_de": "factsheets/best_practices/BP_futureBloc_DE.pdf",
+    "created_at": "2026-04-02T11:38:50.455Z"
+  }
+},
+{
+  "model": "bio_app.bestpractice",
+  "pk": 4,
+  "fields": {
+    "title_en": "Unverschwendet",
+    "title_de": "",
+    "description_en": "Upcycling surplus food into high-quality products. Unverschwendet is an Austrian company based in Vienna that focuses on rescuing and utilizing surplus food. In close cooperation with agricultural businesses and producers, the company uses raw food materials that cannot be sold due to overproduction, visual imperfections or lack of market demand, transforming them into jams, syrups, chutneys and sauces.",
+    "description_de": "",
+    "link": "https://www.unverschwendet.at/",
+    "factsheet_pdf_en": "factsheets/best_practices/BP_Unverschwendet_EN.pdf",
+    "factsheet_pdf_de": "factsheets/best_practices/BP_Unverschwendet_DE.pdf",
+    "created_at": "2026-04-02T11:38:50.455Z"
+  }
+},
+{
+  "model": "bio_app.bestpractice",
+  "pk": 5,
+  "fields": {
+    "title_en": "BauKarussell",
+    "title_de": "BauKarussell",
+    "description_en": "Circular deconstruction and reuse of building components. BauKarussell is an Austrian cooperative based in Vienna that uses a \"Social Urban Mining\" approach to analyse buildings, identify reusable materials, and organise their selective dismantling and redistribution — combining material reuse with qualification and employment for people distant from the labour market.",
+    "description_de": "Zirkulärer Rückbau und Wiederverwendung von Bauteilen. BauKarussell ist eine österreichische Genossenschaft mit Sitz in Wien, die mit dem Ansatz des „Social Urban Mining\" Gebäude analysiert, wiederverwendbare Materialien identifiziert und deren gezielte Demontage und Weitervermittlung organisiert — und verbindet Materialkreisläufe mit Qualifizierung und Beschäftigung arbeitsmarktferner Personen.",
+    "link": "https://www.baukarussell.at/",
+    "factsheet_pdf_en": "factsheets/best_practices/BP_BauKarussell_EN.pdf",
+    "factsheet_pdf_de": "factsheets/best_practices/BP_BauKarussell_DE.pdf",
+    "created_at": "2026-04-28T17:40:26.164Z"
+  }
+},
+{
+  "model": "bio_app.bestpractice",
+  "pk": 6,
+  "fields": {
+    "title_en": "HummusPLUS",
+    "title_de": "HummusPLUS",
+    "description_en": "Humus build-up as a circular model for climate-positive agriculture. HUMUS+ is an Austrian programme of the Ökoregion Kaindorf that supports farms in implementing humus-building land management practices, backed by scientific monitoring of soil carbon and nutrient cycles, and integrates participating farmers into a network for knowledge transfer and long-term implementation.",
+    "description_de": "Humusaufbau als Kreislaufmodell für klimapositive Landwirtschaft. HUMUS+ ist ein österreichisches Programm der Ökoregion Kaindorf, das landwirtschaftliche Betriebe bei humusaufbauenden Bewirtschaftungsmaßnahmen unterstützt, den Fortschritt durch wissenschaftliches Monitoring begleitet und Landwirt*innen in ein Netzwerk für Wissenstransfer einbindet.",
+    "link": "https://www.humusplus.at/",
+    "factsheet_pdf_en": "factsheets/best_practices/BP_HummusPLUS_EN.pdf",
+    "factsheet_pdf_de": "factsheets/best_practices/BP_HummusPLUS_DE.pdf",
+    "created_at": "2026-04-28T17:40:26.165Z"
+  }
+},
+{
+  "model": "bio_app.bestpractice",
+  "pk": 7,
+  "fields": {
+    "title_en": "Hut&Stiel",
+    "title_de": "Hut&Stiel",
+    "description_en": "Mushrooms from coffee grounds — circular economy in the heart of Vienna. Hut & Stiel collects spent coffee grounds from Viennese coffee houses and gastronomy and uses them as a nutrient substrate to cultivate edible mushrooms; the harvest is marketed regionally and the used substrate is composted as fertiliser, closing a local urban food loop.",
+    "description_de": "Pilze aus Kaffeesatz — Kreislaufwirtschaft mitten in Wien. Hut & Stiel sammelt Kaffeesatz aus Wiener Kaffeehäusern und Gastronomiebetrieben und nutzt ihn als Nährsubstrat für die Kultivierung von Speisepilzen; die Ernte wird regional vermarktet und das verbrauchte Substrat wird als Dünger in den natürlichen Kreislauf zurückgeführt.",
+    "link": "https://www.hutundstiel.at/",
+    "factsheet_pdf_en": "factsheets/best_practices/BP_HutStiel_EN.pdf",
+    "factsheet_pdf_de": "factsheets/best_practices/BP_HutStiel_DE.pdf",
+    "created_at": "2026-04-28T17:40:26.166Z"
+  }
+},
+{
+  "model": "bio_app.bestpractice",
+  "pk": 8,
+  "fields": {
+    "title_en": "Kern Tec",
+    "title_de": "Kern Tec",
+    "description_en": "Upcycling stone fruit pits into high-value raw materials. Kern Tec is an Austrian B2B supplier that uses unused stone fruit pits — from apricots, cherries or plums — as starting material to produce plant-based pastes, oils and functional ingredients for the food and cosmetics industries, transforming a previously discarded side stream into circular value chains.",
+    "description_de": "Upcycling von Steinobstkernen zu hochwertigen Rohstoffen. Kern Tec ist ein österreichisches B2B-Unternehmen, das ungenutzte Steinobstkerne — etwa von Marillen, Kirschen oder Zwetschken — zu pflanzlichen Pasten, Ölen und funktionellen Inhaltsstoffen für die Lebensmittel- und Kosmetikindustrie verarbeitet und so bisher entsorgte Nebenströme in zirkuläre Wertschöpfungsketten überführt.",
+    "link": "https://www.kern-tec.com/",
+    "factsheet_pdf_en": "factsheets/best_practices/BP_KernTec_EN.pdf",
+    "factsheet_pdf_de": "factsheets/best_practices/BP_KernTec_DE.pdf",
+    "created_at": "2026-04-28T17:40:26.166Z"
+  }
+},
+{
+  "model": "bio_app.bestpractice",
+  "pk": 9,
+  "fields": {
+    "title_en": "blün",
+    "title_de": "blün",
+    "description_en": "Aquaponics — food production in a closed-loop system. blün is a Vienna-based food producer that combines fish farming and vegetable cultivation in an integrated aquaponics system: nutrient-rich fish water fertilises the plants, the plants in turn purify the water, and food is produced without external fertilisers or wastewater.",
+    "description_de": "Aquaponik — Lebensmittelproduktion im geschlossenen Kreislauf. blün ist ein Wiener Lebensmittelproduzent, der Fischzucht und Gemüseanbau in einer integrierten Aquaponik-Anlage verbindet: Nährstoffreiches Fischwasser düngt die Pflanzen, die Pflanzen reinigen das Wasser, und Lebensmittel entstehen ohne externe Düngemittel oder Abwasser.",
+    "link": "https://bluen.at/pages/aquaponik",
+    "factsheet_pdf_en": "factsheets/best_practices/BP_bluen_EN.pdf",
+    "factsheet_pdf_de": "factsheets/best_practices/BP_bluen_DE.pdf",
+    "created_at": "2026-04-28T17:40:26.167Z"
+  }
+},
+{
+  "model": "bio_app.bestpractice",
+  "pk": 10,
+  "fields": {
+    "title_en": "noamol",
+    "title_de": "noamol",
+    "description_en": "Regional network for reuse and circular economy. noamol is a non-profit association in Tyrol that connects municipalities, social enterprises and citizens around reuse, sharing and repair, operating an online platform together with physical drop-off infrastructure (the noamol box) so everyday goods stay in circulation longer and recycling becomes a last resort.",
+    "description_de": "Regionale Kreislaufwirtschaft durch Wiederverwendung. noamol ist ein gemeinnütziger Tiroler Verein, der Gemeinden, Sozialbetriebe und Bürger*innen rund um Re-Use, Sharing und Reparatur vernetzt — über eine Online-Plattform und physische Sammelinfrastruktur (die noamol-Box) bleiben Alltagsgüter länger im Umlauf und Recycling wird zum letzten Schritt.",
+    "link": "https://www.noamol.at/",
+    "factsheet_pdf_en": "factsheets/best_practices/BP_noamol_EN.pdf",
+    "factsheet_pdf_de": "factsheets/best_practices/BP_noamol_DE.pdf",
+    "created_at": "2026-04-28T17:40:26.167Z"
   }
 },
 {
   "model": "bio_app.vacantbuilding",
   "pk": 1,
-  "fields": {
-    "name": "test",
-    "address": "farmakidou 46",
-    "area_sq_ft": "55.00",
-    "available_from": "2025-07-01",
-    "year": 2023,
-    "floor": 6,
-    "proposed_purpose": "Retail",
-    "description": "sell vegetables",
-    "type_of_use": null,
-    "previous_use": null,
-    "facility_size": null,
-    "reachability": null,
-    "governance": null,
-    "previous_state": null,
-    "factsheet_pdf_en": "",
-    "factsheet_pdf_de": ""
-  }
-},
-{
-  "model": "bio_app.vacantbuilding",
-  "pk": 2,
   "fields": {
     "name": "Altes Milchhaus",
     "address": "",
@@ -42,21 +149,23 @@
     "available_from": "2026-02-16",
     "year": 2024,
     "floor": 0,
-    "proposed_purpose": null,
-    "description": null,
+    "proposed_purpose_en": "",
+    "proposed_purpose_de": "",
+    "description_en": "",
+    "description_de": "",
     "type_of_use": "permanent",
     "previous_use": "small_retail",
     "facility_size": "100_200",
     "reachability": "very_central",
     "governance": "private",
     "previous_state": "poor",
-    "factsheet_pdf_en": "factsheets/vacant_buildings/en/Altes_Milchhaus_EN.pdf",
-    "factsheet_pdf_de": "factsheets/vacant_buildings/de/Altes_Milchhaus_DE.pdf"
+    "factsheet_pdf_en": "factsheets/vacant_buildings/en/VB_AltesMilchhaus_EN.pdf",
+    "factsheet_pdf_de": "factsheets/vacant_buildings/de/VB_AltesMilchhaus_DE.pdf"
   }
 },
 {
   "model": "bio_app.vacantbuilding",
-  "pk": 3,
+  "pk": 2,
   "fields": {
     "name": "Arbeit im Dorf",
     "address": "",
@@ -64,21 +173,23 @@
     "available_from": "2026-02-16",
     "year": 2024,
     "floor": 0,
-    "proposed_purpose": null,
-    "description": null,
+    "proposed_purpose_en": "",
+    "proposed_purpose_de": "",
+    "description_en": "",
+    "description_de": "",
     "type_of_use": "long_term",
     "previous_use": "residential",
     "facility_size": "40_100",
     "reachability": "very_central",
     "governance": "civil_society",
     "previous_state": "moderate",
-    "factsheet_pdf_en": "factsheets/vacant_buildings/en/Arbeit_im_Dorf_EN.pdf",
-    "factsheet_pdf_de": "factsheets/vacant_buildings/de/Arbeit_im_Dorf_DE.pdf"
+    "factsheet_pdf_en": "factsheets/vacant_buildings/en/VB_ArbeitImDorf_EN.pdf",
+    "factsheet_pdf_de": "factsheets/vacant_buildings/de/VB_ArbeitImDorf_DE.pdf"
   }
 },
 {
   "model": "bio_app.vacantbuilding",
-  "pk": 4,
+  "pk": 3,
   "fields": {
     "name": "Die Giesserei",
     "address": "",
@@ -86,21 +197,23 @@
     "available_from": "2026-02-16",
     "year": 2024,
     "floor": 0,
-    "proposed_purpose": null,
-    "description": null,
+    "proposed_purpose_en": "",
+    "proposed_purpose_de": "",
+    "description_en": "",
+    "description_de": "",
     "type_of_use": "permanent",
     "previous_use": "industry",
     "facility_size": "over_200",
     "reachability": "very_central",
     "governance": "civil_society",
     "previous_state": "poor",
-    "factsheet_pdf_en": "factsheets/vacant_buildings/en/Die_Giesserei_EN.pdf",
-    "factsheet_pdf_de": "factsheets/vacant_buildings/de/Die_Giesserei_DE.pdf"
+    "factsheet_pdf_en": "factsheets/vacant_buildings/en/VB_DieGiesserei_EN.pdf",
+    "factsheet_pdf_de": "factsheets/vacant_buildings/de/VB_DieGiesserei_DE.pdf"
   }
 },
 {
   "model": "bio_app.vacantbuilding",
-  "pk": 5,
+  "pk": 4,
   "fields": {
     "name": "Leutkircher Bürgerbahnhof",
     "address": "",
@@ -108,21 +221,23 @@
     "available_from": "2026-02-16",
     "year": 2024,
     "floor": 0,
-    "proposed_purpose": null,
-    "description": null,
+    "proposed_purpose_en": "",
+    "proposed_purpose_de": "",
+    "description_en": "",
+    "description_de": "",
     "type_of_use": "permanent",
     "previous_use": "industry",
     "facility_size": "over_200",
     "reachability": "very_central",
     "governance": "civil_society",
     "previous_state": "poor",
-    "factsheet_pdf_en": "factsheets/vacant_buildings/en/Leutkircher_Buergerbahnhof_EN.pdf",
-    "factsheet_pdf_de": "factsheets/vacant_buildings/de/Leutkircher_Buergerbahnhof_DE.pdf"
+    "factsheet_pdf_en": "factsheets/vacant_buildings/en/VB_LeutkircherBuergerbahnhof_EN.pdf",
+    "factsheet_pdf_de": "factsheets/vacant_buildings/de/VB_LeutkircherBuergerbahnhof_DE.pdf"
   }
 },
 {
   "model": "bio_app.vacantbuilding",
-  "pk": 6,
+  "pk": 5,
   "fields": {
     "name": "Dorfplatz St.Andrä-Wördern",
     "address": "",
@@ -130,16 +245,234 @@
     "available_from": "2026-02-16",
     "year": 2024,
     "floor": 0,
-    "proposed_purpose": null,
-    "description": null,
+    "proposed_purpose_en": "",
+    "proposed_purpose_de": "",
+    "description_en": "",
+    "description_de": "",
     "type_of_use": "long_term",
     "previous_use": "residential",
     "facility_size": "over_200",
     "reachability": "very_central",
     "governance": "mixed",
     "previous_state": "moderate",
-    "factsheet_pdf_en": "factsheets/vacant_buildings/en/Dorfplatz_St_Andrae_Woerdern_EN.pdf",
-    "factsheet_pdf_de": "factsheets/vacant_buildings/de/Dorfplatz_St_Andrae_Woerdern_DE.pdf"
+    "factsheet_pdf_en": "factsheets/vacant_buildings/en/VB_DorfplatzStAndraeWoerdern_EN.pdf",
+    "factsheet_pdf_de": "factsheets/vacant_buildings/de/VB_DorfplatzStAndraeWoerdern_DE.pdf"
+  }
+},
+{
+  "model": "bio_app.vacantbuilding",
+  "pk": 6,
+  "fields": {
+    "name": "Coconat",
+    "address": "",
+    "area_sq_ft": "0.00",
+    "available_from": "2026-04-28",
+    "year": 2024,
+    "floor": 0,
+    "proposed_purpose_en": "",
+    "proposed_purpose_de": "",
+    "description_en": "",
+    "description_de": "",
+    "type_of_use": "long_term",
+    "previous_use": "residential",
+    "facility_size": "over_200",
+    "reachability": "not_central",
+    "governance": "private",
+    "previous_state": "excellent",
+    "factsheet_pdf_en": "factsheets/vacant_buildings/en/VB_Coconat_EN.pdf",
+    "factsheet_pdf_de": "factsheets/vacant_buildings/de/VB_Coconat_DE.pdf"
+  }
+},
+{
+  "model": "bio_app.vacantbuilding",
+  "pk": 7,
+  "fields": {
+    "name": "Dorfladenbox-Pinsdorf",
+    "address": "",
+    "area_sq_ft": "0.00",
+    "available_from": "2026-04-28",
+    "year": 2024,
+    "floor": 0,
+    "proposed_purpose_en": "",
+    "proposed_purpose_de": "",
+    "description_en": "",
+    "description_de": "",
+    "type_of_use": "permanent",
+    "previous_use": "small_retail",
+    "facility_size": "15_40",
+    "reachability": "somewhat_central",
+    "governance": "private",
+    "previous_state": "excellent",
+    "factsheet_pdf_en": "factsheets/vacant_buildings/en/VB_DorfladenboxPinsdorf_EN.pdf",
+    "factsheet_pdf_de": "factsheets/vacant_buildings/de/VB_DorfladenboxPinsdorf_DE.pdf"
+  }
+},
+{
+  "model": "bio_app.vacantbuilding",
+  "pk": 8,
+  "fields": {
+    "name": "Garage Grande",
+    "address": "",
+    "area_sq_ft": "0.00",
+    "available_from": "2026-04-28",
+    "year": 2024,
+    "floor": 0,
+    "proposed_purpose_en": "",
+    "proposed_purpose_de": "",
+    "description_en": "",
+    "description_de": "",
+    "type_of_use": "temporary",
+    "previous_use": "industry",
+    "facility_size": "over_200",
+    "reachability": "central",
+    "governance": "mixed",
+    "previous_state": "moderate",
+    "factsheet_pdf_en": "factsheets/vacant_buildings/en/VB_GarageGrande_EN.pdf",
+    "factsheet_pdf_de": "factsheets/vacant_buildings/de/VB_GarageGrande_DE.pdf"
+  }
+},
+{
+  "model": "bio_app.vacantbuilding",
+  "pk": 9,
+  "fields": {
+    "name": "Gut Ziegenberg",
+    "address": "",
+    "area_sq_ft": "0.00",
+    "available_from": "2026-04-28",
+    "year": 2024,
+    "floor": 0,
+    "proposed_purpose_en": "",
+    "proposed_purpose_de": "",
+    "description_en": "",
+    "description_de": "",
+    "type_of_use": "long_term",
+    "previous_use": "residential",
+    "facility_size": "over_200",
+    "reachability": "not_central",
+    "governance": "civil_society",
+    "previous_state": "poor",
+    "factsheet_pdf_en": "factsheets/vacant_buildings/en/VB_GutZiegenberg_EN.pdf",
+    "factsheet_pdf_de": "factsheets/vacant_buildings/de/VB_GutZiegenberg_DE.pdf"
+  }
+},
+{
+  "model": "bio_app.vacantbuilding",
+  "pk": 10,
+  "fields": {
+    "name": "Kleinstadtbiotop",
+    "address": "",
+    "area_sq_ft": "0.00",
+    "available_from": "2026-04-28",
+    "year": 2024,
+    "floor": 0,
+    "proposed_purpose_en": "",
+    "proposed_purpose_de": "",
+    "description_en": "",
+    "description_de": "",
+    "type_of_use": "long_term",
+    "previous_use": "large_retail",
+    "facility_size": "over_200",
+    "reachability": "very_central",
+    "governance": "mixed",
+    "previous_state": "moderate",
+    "factsheet_pdf_en": "factsheets/vacant_buildings/en/VB_Kleinstadtbiotop_EN.pdf",
+    "factsheet_pdf_de": "factsheets/vacant_buildings/de/VB_Kleinstadtbiotop_DE.pdf"
+  }
+},
+{
+  "model": "bio_app.vacantbuilding",
+  "pk": 11,
+  "fields": {
+    "name": "RAZ - Raum auf Zeit",
+    "address": "",
+    "area_sq_ft": "0.00",
+    "available_from": "2026-04-28",
+    "year": 2024,
+    "floor": 0,
+    "proposed_purpose_en": "",
+    "proposed_purpose_de": "",
+    "description_en": "",
+    "description_de": "",
+    "type_of_use": "temporary",
+    "previous_use": "small_retail",
+    "facility_size": "40_100",
+    "reachability": "central",
+    "governance": "mixed",
+    "previous_state": "excellent",
+    "factsheet_pdf_en": "factsheets/vacant_buildings/en/VB_RAZ_EN.pdf",
+    "factsheet_pdf_de": "factsheets/vacant_buildings/de/VB_RAZ_DE.pdf"
+  }
+},
+{
+  "model": "bio_app.vacantbuilding",
+  "pk": 12,
+  "fields": {
+    "name": "Wirtshaus Labor",
+    "address": "",
+    "area_sq_ft": "0.00",
+    "available_from": "2026-04-28",
+    "year": 2024,
+    "floor": 0,
+    "proposed_purpose_en": "",
+    "proposed_purpose_de": "",
+    "description_en": "",
+    "description_de": "",
+    "type_of_use": "temporary",
+    "previous_use": "gastronomy",
+    "facility_size": "40_100",
+    "reachability": "somewhat_central",
+    "governance": "mixed",
+    "previous_state": "excellent",
+    "factsheet_pdf_en": "factsheets/vacant_buildings/en/VB_Wirtshauslabor_EN.pdf",
+    "factsheet_pdf_de": "factsheets/vacant_buildings/de/VB_Wirtshauslabor_DE.pdf"
+  }
+},
+{
+  "model": "bio_app.vacantbuilding",
+  "pk": 13,
+  "fields": {
+    "name": "bugo",
+    "address": "",
+    "area_sq_ft": "0.00",
+    "available_from": "2026-04-28",
+    "year": 2024,
+    "floor": 0,
+    "proposed_purpose_en": "",
+    "proposed_purpose_de": "",
+    "description_en": "",
+    "description_de": "",
+    "type_of_use": "permanent",
+    "previous_use": "large_retail",
+    "facility_size": "over_200",
+    "reachability": "very_central",
+    "governance": "public",
+    "previous_state": "poor",
+    "factsheet_pdf_en": "factsheets/vacant_buildings/en/VB_bugo_EN.pdf",
+    "factsheet_pdf_de": "factsheets/vacant_buildings/de/VB_bugo_DE.pdf"
+  }
+},
+{
+  "model": "bio_app.vacantbuilding",
+  "pk": 14,
+  "fields": {
+    "name": "spielboden",
+    "address": "",
+    "area_sq_ft": "0.00",
+    "available_from": "2026-04-28",
+    "year": 2024,
+    "floor": 0,
+    "proposed_purpose_en": "",
+    "proposed_purpose_de": "",
+    "description_en": "",
+    "description_de": "",
+    "type_of_use": "permanent",
+    "previous_use": "industry",
+    "facility_size": "over_200",
+    "reachability": "somewhat_central",
+    "governance": "civil_society",
+    "previous_state": "moderate",
+    "factsheet_pdf_en": "factsheets/vacant_buildings/en/VB_spielboden_EN.pdf",
+    "factsheet_pdf_de": "factsheets/vacant_buildings/de/VB_spielboden_DE.pdf"
   }
 }
 ]

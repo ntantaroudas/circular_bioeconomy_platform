@@ -46,8 +46,10 @@ def vacant_buildings(request):
         vacant_buildings_list = vacant_buildings_list.filter(
             Q(name__icontains=query) |
             Q(address__icontains=query) |
-            Q(proposed_purpose__icontains=query) |
-            Q(description__icontains=query) |
+            Q(proposed_purpose_en__icontains=query) |
+            Q(proposed_purpose_de__icontains=query) |
+            Q(description_en__icontains=query) |
+            Q(description_de__icontains=query) |
             Q(year__icontains=query)
         )
 
@@ -121,7 +123,10 @@ def best_practices(request):
 
     if query:
         best_practices_list = BestPractice.objects.filter(
-            Q(title__icontains=query) | Q(description__icontains=query)
+            Q(title_en__icontains=query)
+            | Q(title_de__icontains=query)
+            | Q(description_en__icontains=query)
+            | Q(description_de__icontains=query)
         )
     else:
         best_practices_list = BestPractice.objects.all()

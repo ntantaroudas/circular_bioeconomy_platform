@@ -1,17 +1,41 @@
 from django.db import models
+from django.utils.translation import get_language
 
-# Create your models here.
+
+def _localised(obj, base_field):
+    lang = (get_language() or "en").split("-")[0].lower()
+    suffix = "de" if lang == "de" else "en"
+    value = getattr(obj, f"{base_field}_{suffix}", None)
+    if value:
+        return value
+    return getattr(obj, f"{base_field}_en", None) or getattr(obj, f"{base_field}_de", None) or ""
+
+
 class BestPractice(models.Model):
-    title = models.CharField(max_length=200)
-    description = models.TextField()
-    link = models.URLField()  # Link to the external source
-    factsheet_pdf = models.FileField(upload_to='factsheets/best_practices/', blank=True, null=True)
+    title_en = models.CharField(max_length=200, blank=True, default="")
+    title_de = models.CharField(max_length=200, blank=True, default="")
+    description_en = models.TextField(blank=True, default="")
+    description_de = models.TextField(blank=True, default="")
+    link = models.URLField(blank=True, default='')
     factsheet_pdf_en = models.FileField(upload_to='factsheets/best_practices/', blank=True, null=True)
+    factsheet_pdf_de = models.FileField(upload_to='factsheets/best_practices/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def title(self):
+        return _localised(self, "title")
+
+    @property
+    def description(self):
+        return _localised(self, "description")
+
+    @property
+    def factsheet_pdf(self):
+        return _localised(self, "factsheet_pdf")
+
     def __str__(self):
-        return self.title
-    
+        return self.title_en or self.title_de or f"BestPractice #{self.pk}"
+
 
 class VacantBuilding(models.Model):
     TYPE_OF_USE_CHOICES = [
@@ -56,8 +80,10 @@ class VacantBuilding(models.Model):
     available_from = models.DateField()
     year = models.IntegerField(default=2023)
     floor = models.IntegerField()
-    proposed_purpose = models.CharField(max_length=255, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
+    proposed_purpose_en = models.CharField(max_length=255, blank=True, default="")
+    proposed_purpose_de = models.CharField(max_length=255, blank=True, default="")
+    description_en = models.TextField(blank=True, default="")
+    description_de = models.TextField(blank=True, default="")
     type_of_use = models.CharField(max_length=20, choices=TYPE_OF_USE_CHOICES, blank=True, null=True)
     previous_use = models.CharField(max_length=20, choices=PREVIOUS_USE_CHOICES, blank=True, null=True)
     facility_size = models.CharField(max_length=10, choices=FACILITY_SIZE_CHOICES, blank=True, null=True)
@@ -68,7 +94,17 @@ class VacantBuilding(models.Model):
     factsheet_pdf_en = models.FileField(upload_to='factsheets/vacant_buildings/en/', blank=True, null=True)
     factsheet_pdf_de = models.FileField(upload_to='factsheets/vacant_buildings/de/', blank=True, null=True)
 
+    @property
+    def proposed_purpose(self):
+        return _localised(self, "proposed_purpose")
+
+    @property
+    def description(self):
+        return _localised(self, "description")
+
+    @property
+    def factsheet_pdf(self):
+        return _localised(self, "factsheet_pdf")
+
     def __str__(self):
         return self.name
-
-

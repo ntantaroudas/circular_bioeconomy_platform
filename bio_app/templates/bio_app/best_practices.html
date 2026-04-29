@@ -136,10 +136,10 @@
                       {% if practice.factsheet_pdf_en %}
                       <a href="{{ practice.factsheet_pdf_en.url }}" target="_blank" style="background: #70c5c7; color: #fff; padding: 6px 14px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; text-decoration: none;">EN Fact Sheet</a>
                       {% endif %}
-                      {% if practice.factsheet_pdf %}
-                      <a href="{{ practice.factsheet_pdf.url }}" target="_blank" style="background: transparent; color: #70c5c7; border: 2px solid #70c5c7; padding: 6px 14px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; text-decoration: none;">DE Fact Sheet</a>
+                      {% if practice.factsheet_pdf_de %}
+                      <a href="{{ practice.factsheet_pdf_de.url }}" target="_blank" style="background: transparent; color: #70c5c7; border: 2px solid #70c5c7; padding: 6px 14px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; text-decoration: none;">DE Fact Sheet</a>
                       {% endif %}
-                      {% if not practice.factsheet_pdf_en and not practice.factsheet_pdf %}
+                      {% if not practice.factsheet_pdf_en and not practice.factsheet_pdf_de %}
                       <a href="{{ practice.link }}" target="_blank" class="learn-more-link-link">
                         <p class="best-practice-info__link ui text size-textmd" style="margin: 0;">Learn more</p>
                       </a>

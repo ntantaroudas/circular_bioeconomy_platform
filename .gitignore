@@ -6,5 +6,7 @@ venv/
 requirements-gitignore/
 media/*
 !media/factsheets/
+*:Zone.Identifier
+*:ESZone.Identifier
 tickets/
 .claude/
